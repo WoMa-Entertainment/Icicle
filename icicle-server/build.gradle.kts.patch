@@ -3,7 +3,7 @@
 @@ -22,6 +22,16 @@
      minecraftVersion = providers.gradleProperty("mcVersion")
      gitFilePatches = false
-
+ 
 +    val icicle = forks.register("icicle") {
 +        upstream.patchDir("paperServer") {
 +            upstreamPath = "paper-server"
@@ -20,18 +20,18 @@
 @@ -86,7 +96,20 @@
      }
  }
-
+ 
 -val log4jPlugins = sourceSets.create("log4jPlugins")
 +sourceSets {
-+        main {
-+                java { srcDir("../paper-server/src/main/java") }
-+                resources { srcDir("../paper-server/src/main/resources") }
-+            }
-+        test {
-+                java { srcDir("../paper-server/src/test/java") }
-+                resources { srcDir("../paper-server/src/test/resources") }
-+            }
++    main {
++        java { srcDir("../paper-server/src/main/java") }
++        resources { srcDir("../paper-server/src/main/resources") }
 +    }
++    test {
++        java { srcDir("../paper-server/src/test/java") }
++        resources { srcDir("../paper-server/src/test/resources") }
++    }
++}
 +
 +val log4jPlugins = sourceSets.create("log4jPlugins") {
 +    java { srcDir("../paper-server/src/log4jPlugins/java") }
@@ -41,7 +41,7 @@
  }
 @@ -109,7 +132,7 @@
  }
-
+ 
  dependencies {
 -    implementation(project(":paper-api"))
 +    implementation(project(":icicle-api"))
@@ -51,7 +51,7 @@
 @@ -249,7 +272,7 @@
      jvmArgumentProviders.add(provider)
  }
-
+ 
 -val generatedDir: java.nio.file.Path = layout.projectDirectory.dir("src/generated/java").asFile.toPath()
 +val generatedDir: java.nio.file.Path = rootProject.layout.projectDirectory.dir("paper-server/src/generated/java").asFile.toPath()
  idea {

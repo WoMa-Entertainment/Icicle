@@ -5,6 +5,8 @@ plugins {
     id("io.papermc.paperweight.patcher") version "2.0.0-beta.24"
 }
 
+val paperMavenPublicUrl = "https://repo.papermc.io/repository/maven-public/"
+
 paperweight {
     upstreams.paper {
         ref = providers.gradleProperty("paperRef")
@@ -29,19 +31,17 @@ paperweight {
 }
 
 subprojects {
-    apply(plugin = "java-library")
-    apply(plugin = "maven-publish")
+    apply {
+        plugin("java-library")
+        plugin("maven-publish")
+    }
 
     extensions.configure<JavaPluginExtension> {
         toolchain {
             languageVersion = JavaLanguageVersion.of(25)
         }
     }
-}
 
-val paperMavenPublicUrl = "https://repo.papermc.io/repository/maven-public/"
-
-subprojects {
     tasks.withType<JavaCompile>().configureEach {
         options.encoding = Charsets.UTF_8.name()
         options.release = 25
@@ -67,12 +67,25 @@ subprojects {
         maven(paperMavenPublicUrl)
     }
 
-    extensions.configure<PublishingExtension> {
+    /*extensions.configure<PublishingExtension> {
         repositories {
             maven("https://artifactory.papermc.io/artifactory/releases/") {
                 name = "paperReleases"
                 credentials(PasswordCredentials::class)
             }
         }
+    }*/
+}
+
+
+tasks.register("printMinecraftVersion") {
+    doLast {
+        println(providers.gradleProperty("mcVersion").get().trim())
+    }
+}
+
+tasks.register("printIcicleVersion") {
+    doLast {
+        println(project.version)
     }
 }
