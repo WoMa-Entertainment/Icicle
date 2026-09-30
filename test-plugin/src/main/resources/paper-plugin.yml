@@ -1,0 +1,12 @@
+name: Icicle-Test-Plugin
+version: ${version}
+main: de.iciclemc.icicle.testplugin.TestPlugin
+description: Icicle Test Plugin
+author: Icicle Team
+api-version: ${apiversion}
+load: STARTUP
+bootstrapper: de.iciclemc.icicle.testplugin.TestPluginBootstrap
+loader: de.iciclemc.icicle.testplugin.TestPluginLoader
+defaultPerm: FALSE
+permissions:
+dependencies:

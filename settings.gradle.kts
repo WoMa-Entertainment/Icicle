@@ -1,3 +1,5 @@
+import java.util.Locale
+
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -9,14 +11,24 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-rootProject.name = "icicle"
-
-for (name in listOf("icicle-api", "icicle-server")) {
-    include(name)
-    file(name).mkdirs()
+if (!file(".git").exists()) {
+    val errorText = """
+        
+        =====================[ ERROR ]=====================
+         The Icicle project directory is not a properly cloned Git repository.
+        ===================================================
+    """.trimIndent()
+    error(errorText)
 }
 
-// optionalInclude("test-plugin") // possibly include a test plugin for your fork.
+rootProject.name = "icicle"
+for (name in listOf("icicle-api", "icicle-server", "icicle-checkstyle")) {
+    val projName = name.lowercase(Locale.ENGLISH)
+    include(projName)
+    findProject(":$projName")!!.projectDir = file(name)
+}
+
+optionalInclude("test-plugin")
 
 fun optionalInclude(name: String, op: (ProjectDescriptor.() -> Unit)? = null) {
     val settingsFile = file("$name.settings.gradle.kts")
