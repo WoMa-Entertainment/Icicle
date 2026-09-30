@@ -1,9 +1,20 @@
 --- a/paper-server/build.gradle.kts
 +++ b/paper-server/build.gradle.kts
-@@ -22,6 +22,16 @@
+@@ -2,6 +_,8 @@
+ import io.papermc.paperweight.attribute.DevBundleOutput
+ import io.papermc.paperweight.util.*
+ import java.time.Instant
++import kotlin.io.path.createParentDirectories
++import kotlin.io.path.writeText
+ 
+ plugins {
+     `java-library`
+@@ -22,9 +_,21 @@
      minecraftVersion = providers.gradleProperty("mcVersion")
      gitFilePatches = false
  
+-    updatingMinecraft {
++    // Icicle start
 +    val icicle = forks.register("icicle") {
 +        upstream.patchDir("paperServer") {
 +            upstreamPath = "paper-server"
@@ -13,15 +24,21 @@
 +        }
 +    }
 +    activeFork = icicle
++    // Icicle end
 +
-     updatingMinecraft {
++    /*updatingMinecraft { // Icicle start
          //oldPaperCommit = "e5fe71723e2ffde7cc9fafc085ac3bb73e63175e"
-     }
-@@ -86,7 +96,20 @@
+-    }
++    }*/ // Icicle end
+ }
+ 
+ tasks.generateDevelopmentBundle {
+@@ -86,7 +_,21 @@
      }
  }
  
 -val log4jPlugins = sourceSets.create("log4jPlugins")
++// Icicle start
 +sourceSets {
 +    main {
 +        java { srcDir("../paper-server/src/main/java") }
@@ -32,14 +49,14 @@
 +        resources { srcDir("../paper-server/src/test/resources") }
 +    }
 +}
-+
 +val log4jPlugins = sourceSets.create("log4jPlugins") {
 +    java { srcDir("../paper-server/src/log4jPlugins/java") }
 +}
++// Icicle end
  configurations.named(log4jPlugins.compileClasspathConfigurationName) {
      extendsFrom(configurations.compileClasspath.get())
  }
-@@ -109,7 +132,7 @@
+@@ -109,7 +_,7 @@
  }
  
  dependencies {
@@ -53,7 +70,65 @@
  }
  
 -val generatedDir: java.nio.file.Path = layout.projectDirectory.dir("src/generated/java").asFile.toPath()
-+val generatedDir: java.nio.file.Path = rootProject.layout.projectDirectory.dir("paper-server/src/generated/java").asFile.toPath()
++val generatedDir: java.nio.file.Path = layout.projectDirectory.dir("../paper-server/src/generated/java").asFile.toPath()
  idea {
      module {
          generatedSourceDirs.add(generatedDir.toFile())
+@@ -330,7 +_,7 @@
+     mainClass.set(null as String?)
+ }
+ 
+-fill {
++/* fill {
+     project("paper")
+     versionFamily(paperweight.minecraftVersion.map { it.split(".", "-").takeWhile { part -> part.toIntOrNull() != null }.take(2).joinToString(".") })
+     version(paperweight.minecraftVersion)
+@@ -345,4 +_,47 @@
+             }
+         }
+     }
+-}
++} */
++
++// tasks.register("rebuildMinecraftSourcesWithGit") {
++//     group = "temp"
++//
++//     val patchDir = project.rootDir.resolve("purpur-server/minecraft-patches/sources").convertToPath().cleanDir()
++//     val inputDir = this.project.rootDir.resolve("purpur-server/src/minecraft/java").convertToPath()
++//
++//     //val patchDir = project.rootDir.resolve("purpur-server/paper-patches/files").convertToPath().cleanDir()
++//     //val inputDir = this.project.rootDir.resolve("paper-server").convertToPath()
++//
++//     val git = Git(inputDir)
++//     git("stash", "push").executeSilently(silenceErr = true)
++//     git("checkout", "file").executeSilently(silenceErr = true)
++//
++//     rebuildWithGit(git, patchDir)
++// }
++//
++// private fun rebuildWithGit(
++//     git: Git,
++//     patchDir: java.nio.file.Path
++// ): Int {
++//     val files = git("diff-tree", "--name-only", "--no-commit-id", "-r", "HEAD").getText().split("\n")
++//     files.parallelStream().forEach { filename ->
++//         if (filename.isBlank()) return@forEach
++//         val patch = git(
++//             "format-patch",
++//             "--diff-algorithm=myers",
++//             "--full-index",
++//             "--no-signature",
++//             "--no-stat",
++//             "--no-numbered",
++//             "-1",
++//             "HEAD",
++//             "--stdout",
++//             filename
++//         ).getText()
++//         val patchFile = patchDir.resolve("$filename.patch")
++//         patchFile.createParentDirectories()
++//         patchFile.writeText(patch)
++//     }
++//
++//     return files.size
++// }
