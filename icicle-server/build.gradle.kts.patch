@@ -65,7 +65,7 @@
      implementation(platform("ca.spottedleaf.leafpile:bom:1.2.4"))
      implementation("ca.spottedleaf.leafpile:common")
      implementation("ca.spottedleaf.leafpile:concurrentutil")
-@@ -249,7 +272,7 @@
+@@ -249,7 +277,7 @@
      jvmArgumentProviders.add(provider)
  }
  
