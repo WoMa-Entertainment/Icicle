@@ -1,0 +1,20 @@
+--- a/src/main/java/com/destroystokyo/paper/event/block/TNTPrimeEvent.java
++++ b/src/main/java/com/destroystokyo/paper/event/block/TNTPrimeEvent.java
+@@ -1,6 +_,5 @@
+ package com.destroystokyo.paper.event.block;
+ 
+-import org.bukkit.Material;
+ import org.bukkit.Warning;
+ import org.bukkit.block.Block;
+ import org.bukkit.enchantments.Enchantment;
+@@ -108,8 +_,8 @@
+         FIRE,
+ 
+         /**
+-         * When {@link Player} used {@link Material#FLINT_AND_STEEL} or
+-         * {@link Material#FIRE_CHARGE} on given TNT block
++         * When {@link Player} used {@link org.bukkit.inventory.ItemType#FLINT_AND_STEEL} or
++         * {@link org.bukkit.inventory.ItemType#FIRE_CHARGE} on given TNT block
+          */
+         ITEM,
+ 

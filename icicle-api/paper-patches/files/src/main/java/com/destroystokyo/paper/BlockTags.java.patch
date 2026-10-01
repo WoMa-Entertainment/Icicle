@@ -1,0 +1,522 @@
+--- /dev/null
++++ b/src/main/java/com/destroystokyo/paper/BlockTags.java
+@@ -1,0 +_,519 @@
++/*
++ * Copyright (c) 2018 Daniel Ennis (Aikar) MIT License
++ *
++ *  Permission is hereby granted, free of charge, to any person obtaining
++ *  a copy of this software and associated documentation files (the
++ *  "Software"), to deal in the Software without restriction, including
++ *  without limitation the rights to use, copy, modify, merge, publish,
++ *  distribute, sublicense, and/or sell copies of the Software, and to
++ *  permit persons to whom the Software is furnished to do so, subject to
++ *  the following conditions:
++ *
++ *  The above copyright notice and this permission notice shall be
++ *  included in all copies or substantial portions of the Software.
++ *
++ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
++ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
++ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
++ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
++ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++ */
++
++package com.destroystokyo.paper;
++
++import org.bukkit.NamespacedKey;
++import org.bukkit.Tag;
++import org.bukkit.block.BlockType;
++
++import java.util.Objects;
++
++/**
++ * Represents a collection tags to identify materials that share common properties.
++ * Will map to minecraft for missing tags, as well as custom ones that may be useful.
++ * <p>
++ * All tags in this class are unmodifiable, attempting to modify them will throw an
++ * {@link UnsupportedOperationException}.
++ */
++@SuppressWarnings({"NonFinalUtilityClass", "unused", "WeakerAccess"})
++public class BlockTags {
++
++    private static NamespacedKey keyFor(String key) {
++        return new NamespacedKey("paper", key + "_settag");
++    }
++
++    private static BlockSetTag replacedBy(Tag<BlockType> vanillaTag) {
++        return replacedBy(vanillaTag, Objects.requireNonNull(vanillaTag).key().value());
++    }
++
++    @SuppressWarnings("unchecked")
++    private static BlockSetTag replacedBy(Tag<BlockType> vanillaTag, String legacyKey) {
++        Objects.requireNonNull(vanillaTag);
++        return new BlockSetTag(keyFor(legacyKey)).add(vanillaTag).lock();
++    }
++
++    /**
++     * Covers all colors of beds.
++     *
++     * @deprecated in favour of {@link Tag#BEDS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final BlockSetTag BEDS = replacedBy(Tag.BEDS);
++
++    /**
++     * Covers both cobblestone wall variants.
++     */
++    public static final BlockSetTag COBBLESTONE_WALLS = new BlockSetTag(keyFor("cobblestone_walls"))
++        .endsWith("COBBLESTONE_WALL")
++        .ensureSize("COBBLESTONE_WALLS", 2).lock();
++
++    /**
++     * Covers both cobblestone and mossy Cobblestone.
++     */
++    public static final BlockSetTag COBBLESTONES = new BlockSetTag(keyFor("cobblestones"))
++        .add(BlockType.COBBLESTONE, BlockType.MOSSY_COBBLESTONE).lock();
++
++    /**
++     * Covers all colors of concrete.
++     *
++     * @deprecated in favour of {@link Tag#CONCRETE}
++     */
++    @Deprecated(since = "26.2")
++    public static final BlockSetTag CONCRETES = replacedBy(Tag.CONCRETE, "concretes");
++
++    /**
++     * Covers all colors of concrete powder.
++     *
++     * @deprecated in favour of {@link Tag#CONCRETE_POWDERS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final BlockSetTag CONCRETE_POWDER = replacedBy(Tag.CONCRETE_POWDERS);
++
++    /**
++     * Covers all variants of doors.
++     *
++     * @deprecated in favour of {@link Tag#DOORS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final BlockSetTag DOORS = replacedBy(Tag.DOORS);
++
++    /**
++     * Covers all variants of gates.
++     *
++     * @deprecated in favour of {@link Tag#FENCE_GATES}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final BlockSetTag FENCE_GATES = replacedBy(Tag.FENCE_GATES);
++
++    /**
++     * Covers all variants of fences.
++     *
++     * @deprecated in favour of {@link Tag#FENCES}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final BlockSetTag FENCES = replacedBy(Tag.FENCES);
++
++    /**
++     * Covers the non-colored glass and 16 stained glasses (not panes).
++     */
++    public static final BlockSetTag GLASS = new BlockSetTag(keyFor("glass"))
++        .endsWith("_GLASS")
++        .add(BlockType.GLASS)
++        .ensureSize("GLASS", 18).lock();
++
++    /**
++     * Covers the non-colored glass panes and stained glass panes (panes only).
++     */
++    public static final BlockSetTag GLASS_PANES = new BlockSetTag(keyFor("glass_panes"))
++        .endsWith("GLASS_PANE")
++        .ensureSize("GLASS_PANES", 17).lock();
++
++    /**
++     * Covers all glazed terracotta blocks.
++     *
++     * @deprecated in favour of {@link Tag#GLAZED_TERRACOTTA}
++     */
++    @Deprecated(since = "26.2")
++    public static final BlockSetTag GLAZED_TERRACOTTA = replacedBy(Tag.GLAZED_TERRACOTTA);
++
++    /**
++     * Covers the colors of stained terracotta.
++     */
++    public static final BlockSetTag STAINED_TERRACOTTA = new BlockSetTag(keyFor("stained_terracotta"))
++        .endsWith("TERRACOTTA")
++        .not(BlockType.TERRACOTTA)
++        .notEndsWith("GLAZED_TERRACOTTA")
++        .ensureSize("STAINED_TERRACOTTA", 16).lock();
++
++    /**
++     * Covers terracotta along with the stained variants.
++     */
++    public static final BlockSetTag TERRACOTTA = new BlockSetTag(keyFor("terracotta"))
++        .endsWith("TERRACOTTA")
++        .ensureSize("TERRACOTTA", 33).lock();
++
++    /**
++     * Covers the variants of infested blocks.
++     */
++    public static final BlockSetTag INFESTED_BLOCKS = new BlockSetTag(keyFor("infested_blocks"))
++        .startsWith("INFESTED_")
++        .ensureSize("INFESTED_BLOCKS", 7).lock();
++
++    /**
++     * Covers the variants of mushroom blocks.
++     */
++    public static final BlockSetTag MUSHROOM_BLOCKS = new BlockSetTag(keyFor("mushroom_blocks"))
++        .endsWith("MUSHROOM_BLOCK")
++        .add(BlockType.MUSHROOM_STEM)
++        .ensureSize("MUSHROOM_BLOCKS", 3).lock();
++
++    /**
++     * Covers all ores.
++     *
++     * @deprecated in favour of {@link Tag#ORES}, makes sure to also check for ancient debris if you relied on this edge case
++     */
++    @SuppressWarnings("unchecked")
++    @Deprecated(since = "26.3")
++    public static final BlockSetTag ORES = new BlockSetTag(keyFor("ores"))
++        .add(Tag.ORES)
++        .add(BlockType.ANCIENT_DEBRIS).lock();
++
++    /**
++     * Covers all piston typed items and blocks including the piston head and moving piston.
++     */
++    public static final BlockSetTag PISTONS = new BlockSetTag(keyFor("pistons"))
++        .contains("PISTON")
++        .ensureSize("PISTONS", 4).lock();
++
++    /**
++     * Covers all wooden pressure plates and the weighted pressure plates and the stone pressure plate.
++     *
++     * @deprecated in favour of {@link Tag#PRESSURE_PLATES}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final BlockSetTag PRESSURE_PLATES = replacedBy(Tag.PRESSURE_PLATES);
++
++    /**
++     * Covers the variants of prismarine blocks.
++     */
++    public static final BlockSetTag PRISMARINE = new BlockSetTag(keyFor("prismarine"))
++        .add(BlockType.PRISMARINE, BlockType.PRISMARINE_BRICKS, BlockType.DARK_PRISMARINE).lock();
++
++    /**
++     * Covers the variants of prismarine slabs.
++     */
++    public static final BlockSetTag PRISMARINE_SLABS = new BlockSetTag(keyFor("prismarine_slabs"))
++        .add(BlockType.PRISMARINE_SLAB, BlockType.PRISMARINE_BRICK_SLAB, BlockType.DARK_PRISMARINE_SLAB).lock();
++
++    /**
++     * Covers the variants of prismarine stairs.
++     */
++    public static final BlockSetTag PRISMARINE_STAIRS = new BlockSetTag(keyFor("prismarine_stairs"))
++        .add(BlockType.PRISMARINE_STAIRS, BlockType.PRISMARINE_BRICK_STAIRS, BlockType.DARK_PRISMARINE_STAIRS).lock();
++
++    /**
++     * Covers the variants of pumpkins.
++     */
++    public static final BlockSetTag PUMPKINS = new BlockSetTag(keyFor("pumpkins"))
++        .add(BlockType.CARVED_PUMPKIN, BlockType.JACK_O_LANTERN, BlockType.PUMPKIN).lock();
++
++    /**
++     * Covers the variants of quartz blocks.
++     */
++    public static final BlockSetTag QUARTZ_BLOCKS = new BlockSetTag(keyFor("quartz_blocks"))
++        .add(BlockType.QUARTZ_BLOCK, BlockType.QUARTZ_PILLAR, BlockType.CHISELED_QUARTZ_BLOCK, BlockType.SMOOTH_QUARTZ).lock();
++
++    /**
++     * Covers the variants of red sandstone blocks.
++     */
++    public static final BlockSetTag RED_SANDSTONES = new BlockSetTag(keyFor("red_sandstones"))
++        .endsWith("RED_SANDSTONE")
++        .ensureSize("RED_SANDSTONES", 4).lock();
++
++    /**
++     * Covers the variants of sandstone blocks.
++     */
++    public static final BlockSetTag SANDSTONES = new BlockSetTag(keyFor("sandstones"))
++        .add(BlockType.SANDSTONE, BlockType.CHISELED_SANDSTONE, BlockType.CUT_SANDSTONE, BlockType.SMOOTH_SANDSTONE).lock();
++
++    /**
++     * Covers sponge and wet sponge.
++     */
++    public static final BlockSetTag SPONGES = new BlockSetTag(keyFor("sponges"))
++        .endsWith("SPONGE")
++        .ensureSize("SPONGES", 2).lock();
++
++    /**
++     * Covers the non-colored and colored shulker boxes.
++     *
++     * @deprecated in favour of {@link Tag#SHULKER_BOXES}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final BlockSetTag SHULKER_BOXES = replacedBy(Tag.SHULKER_BOXES);
++
++    /**
++     * Covers zombie, creeper, skeleton, dragon, and player heads.
++     */
++    public static final BlockSetTag SKULLS = new BlockSetTag(keyFor("skulls"))
++        .endsWith("_HEAD")
++        .endsWith("_SKULL")
++        .not(BlockType.PISTON_HEAD)
++        .ensureSize("SKULLS", 14).lock();
++
++    /**
++     * Covers all colors of stained glass.
++     */
++    public static final BlockSetTag STAINED_GLASS = new BlockSetTag(keyFor("stained_glass"))
++        .endsWith("_STAINED_GLASS")
++        .ensureSize("STAINED_GLASS", 16).lock();
++
++    /**
++     * Covers all colors of stained glass panes.
++     */
++    public static final BlockSetTag STAINED_GLASS_PANES = new BlockSetTag(keyFor("stained_glass_panes"))
++        .endsWith("STAINED_GLASS_PANE")
++        .ensureSize("STAINED_GLASS_PANES", 16).lock();
++
++    /**
++     * Covers all variants of trapdoors.
++     *
++     * @deprecated in favour of {@link Tag#TRAPDOORS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final BlockSetTag TRAPDOORS = replacedBy(Tag.TRAPDOORS);
++
++    /**
++     * Covers all wood variants of doors.
++     *
++     * @deprecated in favour of {@link Tag#WOODEN_DOORS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final BlockSetTag WOODEN_DOORS = replacedBy(Tag.WOODEN_DOORS);
++
++    /**
++     * Covers all wood variants of fences.
++     *
++     * @deprecated in favour of {@link Tag#WOODEN_FENCES}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final BlockSetTag WOODEN_FENCES = replacedBy(Tag.WOODEN_FENCES);
++
++    /**
++     * Covers all wood variants of trapdoors.
++     *
++     * @deprecated in favour of {@link Tag#WOODEN_TRAPDOORS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final BlockSetTag WOODEN_TRAPDOORS = replacedBy(Tag.WOODEN_TRAPDOORS);
++
++    /**
++     * Covers the wood variants of gates.
++     *
++     * @deprecated in favour of {@link Tag#FENCE_GATES}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final BlockSetTag WOODEN_GATES = replacedBy(Tag.FENCE_GATES, "wooden_gates");
++
++    /**
++     * Covers the variants of purpur.
++     */
++    public static final BlockSetTag PURPUR = new BlockSetTag(keyFor("purpur"))
++        .startsWith("PURPUR_")
++        .ensureSize("PURPUR", 4).lock();
++
++    /**
++     * Covers the variants of signs.
++     *
++     * @deprecated in favour of {@link Tag#ALL_SIGNS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final BlockSetTag SIGNS = replacedBy(Tag.ALL_SIGNS, "signs");
++
++    /**
++     * Covers the variants of a regular torch.
++     */
++    public static final BlockSetTag TORCH = new BlockSetTag(keyFor("torch"))
++        .add(BlockType.TORCH, BlockType.WALL_TORCH)
++        .ensureSize("TORCH", 2).lock();
++
++    /**
++     * Covers the variants of a redstone torch.
++     */
++    public static final BlockSetTag REDSTONE_TORCH = new BlockSetTag(keyFor("redstone_torch"))
++        .add(BlockType.REDSTONE_TORCH, BlockType.REDSTONE_WALL_TORCH)
++        .ensureSize("REDSTONE_TORCH", 2).lock();
++
++    /**
++     * Covers the variants of a soul torch.
++     */
++    public static final BlockSetTag SOUL_TORCH = new BlockSetTag(keyFor("soul_torch"))
++        .add(BlockType.SOUL_TORCH, BlockType.SOUL_WALL_TORCH)
++        .ensureSize("SOUL_TORCH", 2).lock();
++
++    /**
++     * Covers the variants of a copper torch.
++     */
++    public static final BlockSetTag COPPER_TORCH = new BlockSetTag(keyFor("copper_torch"))
++        .add(BlockType.COPPER_TORCH, BlockType.COPPER_WALL_TORCH)
++        .ensureSize("COPPER_TORCH", 2).lock();
++
++    /**
++     * Covers the variants of torches.
++     */
++    public static final BlockSetTag TORCHES = new BlockSetTag(keyFor("torches"))
++        .add(TORCH, REDSTONE_TORCH, SOUL_TORCH, COPPER_TORCH)
++        .ensureSize("TORCHES", 8).lock();
++
++    /**
++     * Covers the variants of lanterns.
++     *
++     * @deprecated in favour of {@link Tag#LANTERNS}
++     */
++    @Deprecated(since = "1.21.9")
++    public static final BlockSetTag LANTERNS = replacedBy(Tag.LANTERNS);
++
++    /**
++     * Covers the variants of rails.
++     *
++     * @deprecated in favour of {@link Tag#RAILS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final BlockSetTag RAILS = replacedBy(Tag.RAILS);
++
++    /**
++     * Covers materials that can be colored, such as wool, shulker boxes, stained glasses etc.
++     */
++    @SuppressWarnings("unchecked")
++    public static final BlockSetTag COLORABLE = new BlockSetTag(keyFor("colorable"))
++        .add(Tag.WOOL, Tag.WOOL_CARPETS, Tag.WOOL_SLABS, Tag.WOOL_STAIRS,
++            Tag.CONCRETE_SLABS, Tag.CONCRETE_STAIRS,
++            Tag.SHULKER_BOXES, Tag.BEDS)
++        .add(STAINED_GLASS, STAINED_GLASS_PANES)
++        .lock();
++
++    /**
++     * Covers the variants of coral.
++     */
++    public static final BlockSetTag CORAL = new BlockSetTag(keyFor("coral"))
++        .endsWith("_CORAL")
++        .ensureSize("CORAL", 10).lock();
++
++    /**
++     * Covers the variants of coral fans.
++     */
++    public static final BlockSetTag CORAL_FANS = new BlockSetTag(keyFor("coral_fans"))
++        .endsWith("_CORAL_FAN")
++        .endsWith("_CORAL_WALL_FAN")
++        .ensureSize("CORAL_FANS", 20).lock();
++
++    /**
++     * Covers the variants of coral blocks.
++     */
++    public static final BlockSetTag CORAL_BLOCKS = new BlockSetTag(keyFor("coral_blocks"))
++        .endsWith("_CORAL_BLOCK")
++        .ensureSize("CORAL_BLOCKS", 10).lock();
++
++    /**
++     * Covers all command block types.
++     */
++    public static final BlockSetTag COMMAND_BLOCKS = new BlockSetTag(keyFor("command_blocks"))
++        .endsWith("COMMAND_BLOCK")
++        .ensureSize("COMMAND_BLOCKS", 3).lock();
++
++    /**
++     * Covers the variants of deepslate ores.
++     */
++    public static final BlockSetTag DEEPSLATE_ORES = new BlockSetTag(keyFor("deepslate_ores"))
++        .add(material -> material.key().value().startsWith("deepslate_") && material.key().value().endsWith("_ore"))
++        .ensureSize("DEEPSLATE_ORES", 8).lock();
++
++    /**
++     * Covers the variants of raw ore blocks.
++     */
++    public static final BlockSetTag RAW_ORE_BLOCKS = new BlockSetTag(keyFor("raw_ore_blocks"))
++        .add(BlockType.RAW_COPPER_BLOCK, BlockType.RAW_GOLD_BLOCK, BlockType.RAW_IRON_BLOCK).lock();
++
++    /**
++     * Covers all oxidized copper blocks.
++     */
++    public static final BlockSetTag OXIDIZED_COPPER_BLOCKS = new BlockSetTag(keyFor("oxidized_copper_blocks"))
++        .startsWith("OXIDIZED_").startsWith("WAXED_OXIDIZED_").ensureSize("OXIDIZED_COPPER_BLOCKS", 30).lock();
++
++    /**
++     * Covers all weathered copper blocks.
++     */
++    public static final BlockSetTag WEATHERED_COPPER_BLOCKS = new BlockSetTag(keyFor("weathered_copper_blocks"))
++        .startsWith("WEATHERED_").startsWith("WAXED_WEATHERED_").ensureSize("WEATHERED_COPPER_BLOCKS", 30).lock();
++
++    /**
++     * Covers all exposed copper blocks.
++     */
++    public static final BlockSetTag EXPOSED_COPPER_BLOCKS = new BlockSetTag(keyFor("exposed_copper_blocks"))
++        .startsWith("EXPOSED_").startsWith("WAXED_EXPOSED_").ensureSize("EXPOSED_COPPER_BLOCKS", 30).lock();
++
++    /**
++     * Covers all un-weathered copper blocks.
++     */
++    public static final BlockSetTag UNAFFECTED_COPPER_BLOCKS = new BlockSetTag(keyFor("unaffected_copper_blocks"))
++        .startsWith("CUT_COPPER").startsWith("WAXED_CUT_COPPER")
++        .startsWith("WAXED_COPPER_").startsWith("COPPER_")
++        .add(BlockType.CHISELED_COPPER, BlockType.WAXED_CHISELED_COPPER)
++        .not(BlockType.COPPER_ORE)
++        .ensureSize("UNAFFECTED_COPPER_BLOCKS", 30).lock();
++
++    /**
++     * Covers all waxed copper blocks.
++     * <p>
++     * Combine with other copper-related tags to filter is-waxed or not.
++     */
++    public static final BlockSetTag WAXED_COPPER_BLOCKS = new BlockSetTag(keyFor("waxed_copper_blocks"))
++        .add(m -> m.key().value().startsWith("WAXED_") && m.key().value().contains("COPPER")).ensureSize("WAXED_COPPER_BLOCKS", 56).lock();
++
++    /**
++     * Covers all un-waxed copper blocks.
++     * <p>
++     * Combine with other copper-related tags to filter is-un-waxed or not.
++     */
++    public static final BlockSetTag UNWAXED_COPPER_BLOCKS = new BlockSetTag(keyFor("unwaxed_copper_blocks"))
++        .startsWith("EXPOSED_").startsWith("WEATHERED_").startsWith("OXIDIZED_")
++        .startsWith("CUT_COPPER")
++        .add(BlockType.COPPER_BLOCK, BlockType.CHISELED_COPPER, BlockType.COPPER_DOOR, BlockType.COPPER_TRAPDOOR, BlockType.COPPER_GRATE, BlockType.COPPER_BULB)
++        .add(BlockType.COPPER_BARS, BlockType.COPPER_TORCH, BlockType.COPPER_CHEST, BlockType.COPPER_CHAIN, BlockType.COPPER_WALL_TORCH, BlockType.COPPER_LANTERN, BlockType.COPPER_GOLEM_STATUE)
++        .ensureSize("UNWAXED_COPPER_BLOCKS", 61).lock();
++
++    /**
++     * Covers all copper block variants.
++     */
++    public static final BlockSetTag COPPER_BLOCKS = new BlockSetTag(keyFor("copper_blocks"))
++        .add(WAXED_COPPER_BLOCKS).add(UNWAXED_COPPER_BLOCKS).ensureSize("COPPER_BLOCKS", 117).lock();
++
++    /**
++     * Covers all weathering/waxed states of the plain copper block.
++     */
++    public static final BlockSetTag FULL_COPPER_BLOCKS = new BlockSetTag(keyFor("full_copper_blocks"))
++        .endsWith("OXIDIZED_COPPER")
++        .endsWith("WEATHERED_COPPER")
++        .endsWith("EXPOSED_COPPER")
++        .endsWith("COPPER_BLOCK")
++        .not(BlockType.RAW_COPPER_BLOCK)
++        .ensureSize("FULL_COPPER_BLOCKS", 8).lock();
++
++    /**
++     * Covers all weathering/waxed states of the cut copper block.
++     */
++    public static final BlockSetTag CUT_COPPER_BLOCKS = new BlockSetTag(keyFor("cut_copper_blocks"))
++        .endsWith("CUT_COPPER").ensureSize("CUT_COPPER_BLOCKS", 8).lock();
++
++    /**
++     * Covers all weathering/waxed states of the cut copper stairs.
++     */
++    public static final BlockSetTag CUT_COPPER_STAIRS = new BlockSetTag(keyFor("cut_copper_stairs"))
++        .endsWith("CUT_COPPER_STAIRS").ensureSize("CUT_COPPER_STAIRS", 8).lock();
++
++    /**
++     * Covers all weathering/waxed states of the cut copper slab.
++     */
++    public static final BlockSetTag CUT_COPPER_SLABS = new BlockSetTag(keyFor("cut_copper_slabs"))
++        .endsWith("CUT_COPPER_SLAB").ensureSize("CUT_COPPER_SLABS", 8).lock();
++}

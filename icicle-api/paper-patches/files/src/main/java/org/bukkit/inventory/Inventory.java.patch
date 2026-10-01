@@ -1,0 +1,64 @@
+--- a/src/main/java/org/bukkit/inventory/Inventory.java
++++ b/src/main/java/org/bukkit/inventory/Inventory.java
+@@ -4,7 +_,6 @@
+ import java.util.List;
+ import java.util.ListIterator;
+ import org.bukkit.Location;
+-import org.bukkit.Material;
+ import org.bukkit.entity.HumanEntity;
+ import org.bukkit.event.inventory.InventoryType;
+ import org.jetbrains.annotations.Contract;
+@@ -13,7 +_,7 @@
+ 
+ /**
+  * Interface to the various inventories. Behavior relating to {@link
+- * Material#AIR} is unspecified.
++ * ItemType#AIR} is unspecified.
+  *
+  * <br>
+  * <b>Note that whilst {@link #iterator()} deals with the entire inventory, add
+@@ -206,7 +_,7 @@
+      * @return true if an ItemStack is found with the given Material
+      * @throws IllegalArgumentException if material is null
+      */
+-    public boolean contains(@NotNull Material material) throws IllegalArgumentException;
++    public boolean contains(@NotNull ItemType material) throws IllegalArgumentException;
+ 
+     /**
+      * Checks if the inventory contains any ItemStacks matching the given
+@@ -232,7 +_,7 @@
+      *     found to add to the given amount
+      * @throws IllegalArgumentException if material is null
+      */
+-    public boolean contains(@NotNull Material material, int amount) throws IllegalArgumentException;
++    public boolean contains(@NotNull ItemType material, int amount) throws IllegalArgumentException;
+ 
+     /**
+      * Checks if the inventory contains at least the minimum amount specified
+@@ -275,7 +_,7 @@
+      * @throws IllegalArgumentException if material is null
+      */
+     @NotNull
+-    public HashMap<Integer, ? extends ItemStack> all(@NotNull Material material) throws IllegalArgumentException;
++    public HashMap<Integer, ? extends ItemStack> all(@NotNull ItemType material) throws IllegalArgumentException;
+ 
+     /**
+      * Finds all slots in the inventory containing any ItemStacks with the
+@@ -300,7 +_,7 @@
+      * @return The slot index of the given Material or -1 if not found
+      * @throws IllegalArgumentException if material is null
+      */
+-    public int first(@NotNull Material material) throws IllegalArgumentException;
++    public int first(@NotNull ItemType material) throws IllegalArgumentException;
+ 
+     /**
+      * Returns the first slot in the inventory containing an ItemStack with
+@@ -333,7 +_,7 @@
+      * @param material The material to remove
+      * @throws IllegalArgumentException if material is null
+      */
+-    public void remove(@NotNull Material material) throws IllegalArgumentException;
++    public void remove(@NotNull ItemType material) throws IllegalArgumentException;
+ 
+     /**
+      * Removes all stacks in the inventory matching the given stack.

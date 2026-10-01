@@ -1,0 +1,156 @@
+--- a/src/main/java/org/bukkit/enchantments/EnchantmentTarget.java
++++ b/src/main/java/org/bukkit/enchantments/EnchantmentTarget.java
+@@ -1,8 +_,8 @@
+ package org.bukkit.enchantments;
+ 
+-import org.bukkit.Material;
+ import org.bukkit.Tag;
+ import org.bukkit.inventory.ItemStack;
++import org.bukkit.inventory.ItemType;
+ import org.jetbrains.annotations.NotNull;
+ 
+ /**
+@@ -20,7 +_,7 @@
+     @Deprecated(since = "1.16.1", forRemoval = true)
+     ALL {
+         @Override
+-        public boolean includes(@NotNull Material item) {
++        public boolean includes(@NotNull ItemType item) {
+             for (EnchantmentTarget target : EnchantmentTarget.values()) {
+                 if (target != this && target.includes(item)) {
+                     return true;
+@@ -36,7 +_,7 @@
+      */
+     ARMOR {
+         @Override
+-        public boolean includes(@NotNull Material item) {
++        public boolean includes(@NotNull ItemType item) {
+             return Tag.ITEMS_ENCHANTABLE_ARMOR.isTagged(item);
+         }
+     },
+@@ -46,7 +_,7 @@
+      */
+     ARMOR_FEET {
+         @Override
+-        public boolean includes(@NotNull Material item) {
++        public boolean includes(@NotNull ItemType item) {
+             return Tag.ITEMS_ENCHANTABLE_FOOT_ARMOR.isTagged(item);
+         }
+     },
+@@ -56,7 +_,7 @@
+      */
+     ARMOR_LEGS {
+         @Override
+-        public boolean includes(@NotNull Material item) {
++        public boolean includes(@NotNull ItemType item) {
+             return Tag.ITEMS_ENCHANTABLE_LEG_ARMOR.isTagged(item);
+         }
+     },
+@@ -66,7 +_,7 @@
+      */
+     ARMOR_TORSO {
+         @Override
+-        public boolean includes(@NotNull Material item) {
++        public boolean includes(@NotNull ItemType item) {
+             return Tag.ITEMS_ENCHANTABLE_CHEST_ARMOR.isTagged(item);
+         }
+     },
+@@ -76,7 +_,7 @@
+      */
+     ARMOR_HEAD {
+         @Override
+-        public boolean includes(@NotNull Material item) {
++        public boolean includes(@NotNull ItemType item) {
+             return Tag.ITEMS_ENCHANTABLE_HEAD_ARMOR.isTagged(item);
+         }
+     },
+@@ -86,7 +_,7 @@
+      */
+     WEAPON {
+         @Override
+-        public boolean includes(@NotNull Material item) {
++        public boolean includes(@NotNull ItemType item) {
+             return Tag.ITEMS_ENCHANTABLE_MELEE_WEAPON.isTagged(item);
+         }
+     },
+@@ -96,7 +_,7 @@
+      */
+     TOOL {
+         @Override
+-        public boolean includes(@NotNull Material item) {
++        public boolean includes(@NotNull ItemType item) {
+             return Tag.ITEMS_ENCHANTABLE_MINING_LOOT.isTagged(item);
+         }
+     },
+@@ -106,7 +_,7 @@
+      */
+     BOW {
+         @Override
+-        public boolean includes(@NotNull Material item) {
++        public boolean includes(@NotNull ItemType item) {
+             return Tag.ITEMS_ENCHANTABLE_BOW.isTagged(item);
+         }
+     },
+@@ -116,7 +_,7 @@
+      */
+     FISHING_ROD {
+         @Override
+-        public boolean includes(@NotNull Material item) {
++        public boolean includes(@NotNull ItemType item) {
+             return Tag.ITEMS_ENCHANTABLE_FISHING.isTagged(item);
+         }
+     },
+@@ -126,7 +_,7 @@
+      */
+     BREAKABLE {
+         @Override
+-        public boolean includes(@NotNull Material item) {
++        public boolean includes(@NotNull ItemType item) {
+             return Tag.ITEMS_ENCHANTABLE_DURABILITY.isTagged(item);
+         }
+     },
+@@ -136,7 +_,7 @@
+      */
+     WEARABLE {
+         @Override
+-        public boolean includes(@NotNull Material item) {
++        public boolean includes(@NotNull ItemType item) {
+             return Tag.ITEMS_ENCHANTABLE_EQUIPPABLE.isTagged(item);
+         }
+     },
+@@ -146,7 +_,7 @@
+      */
+     TRIDENT {
+         @Override
+-        public boolean includes(@NotNull Material item) {
++        public boolean includes(@NotNull ItemType item) {
+             return Tag.ITEMS_ENCHANTABLE_TRIDENT.isTagged(item);
+         }
+     },
+@@ -156,7 +_,7 @@
+      */
+     CROSSBOW {
+         @Override
+-        public boolean includes(@NotNull Material item) {
++        public boolean includes(@NotNull ItemType item) {
+             return Tag.ITEMS_ENCHANTABLE_CROSSBOW.isTagged(item);
+         }
+     },
+@@ -166,7 +_,7 @@
+      */
+     VANISHABLE {
+         @Override
+-        public boolean includes(@NotNull Material item) {
++        public boolean includes(@NotNull ItemType item) {
+             return Tag.ITEMS_ENCHANTABLE_VANISHING.isTagged(item);
+         }
+     };
+@@ -177,7 +_,7 @@
+      * @param item The item to check
+      * @return True if the target includes the item
+      */
+-    public abstract boolean includes(@NotNull Material item);
++    public abstract boolean includes(@NotNull ItemType item);
+ 
+     /**
+      * Check whether this target includes the specified item.

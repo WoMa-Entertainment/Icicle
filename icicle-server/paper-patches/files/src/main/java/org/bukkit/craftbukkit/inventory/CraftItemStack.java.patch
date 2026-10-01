@@ -1,0 +1,138 @@
+--- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
++++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemStack.java
+@@ -44,7 +_,6 @@
+ import net.minecraft.world.item.enchantment.EnchantmentHelper;
+ import net.minecraft.world.item.enchantment.ItemEnchantments;
+ import org.bukkit.Bukkit;
+-import org.bukkit.Material;
+ import org.bukkit.configuration.serialization.DelegateDeserialization;
+ import org.bukkit.craftbukkit.CraftRegistry;
+ import org.bukkit.craftbukkit.enchantments.CraftEnchantment;
+@@ -58,7 +_,6 @@
+ import org.bukkit.inventory.ItemStack;
+ import org.bukkit.inventory.ItemType;
+ import org.bukkit.inventory.meta.ItemMeta;
+-import org.bukkit.material.MaterialData;
+ import org.bukkit.persistence.PersistentDataContainer;
+ import org.jetbrains.annotations.NotNull;
+ import org.jetbrains.annotations.Nullable;
+@@ -184,45 +_,38 @@
+     }
+ 
+     private CraftItemStack(ItemStack item) {
+-        this(item.getType(), item.getAmount(), item.getDurability(), item.hasItemMeta() ? item.getItemMeta() : null);
++        this(item.getType(), item.getAmount(), item.hasItemMeta() ? item.getItemMeta() : null);
+     }
+ 
+-    private CraftItemStack(Material type, int amount, short durability, ItemMeta itemMeta) {
++    private CraftItemStack(ItemType type, int amount, ItemMeta itemMeta) {
+         this.setType(type);
+         this.setAmount(amount);
+-        this.setDurability(durability);
+         this.setItemMeta(itemMeta);
+     }
+ 
+     @Override
+-    public MaterialData getData() {
+-        return this.handle != null ? CraftMagicNumbers.getMaterialData(this.handle.getItem()) : super.getData();
+-    }
+-
+-    @Override
+-    public Material getType() {
+-        return this.handle != null ? CraftItemType.minecraftToBukkit(this.handle.getItem()) : Material.AIR;
+-    }
+-
+-    @Override
+-    public void setType(Material type) {
++    public ItemType getType() {
++        return this.handle != null ? CraftItemType.minecraftHolderToBukkitNew(this.handle.typeHolder()) : ItemType.AIR;
++    }
++
++    @Override
++    public void setType(ItemType type) {
+         if (this.getType() == type) {
+             return;
+-        } else if (type == Material.AIR) {
++        } else if (type == ItemType.AIR) {
+             this.handle = null;
+-        } else if (CraftItemType.bukkitToMinecraft(type) == null) { // :(
++        } else if (CraftItemType.bukkitToMinecraftNew(type) == null) { // :(
+             this.handle = null;
+         } else if (this.handle == null) {
+-            this.handle = new net.minecraft.world.item.ItemStack(CraftItemType.bukkitToMinecraft(type), 1);
++            this.handle = new net.minecraft.world.item.ItemStack(CraftItemType.bukkitToMinecraftNew(type), 1);
+         } else {
+-            final Material oldType = CraftMagicNumbers.getMaterial(this.handle.getItem()); // Paper
+-            this.handle.setItem(CraftItemType.bukkitToMinecraft(type));
++            final ItemType oldType = this.getType(); // Paper
++            this.handle.setItem(CraftItemType.bukkitToMinecraftNew(type));
+             if (this.hasItemMeta()) {
+                 // This will create the appropriate item meta, which will contain all the data we intend to keep
+                 this.adjustTagForItemMeta(oldType); // Paper
+             }
+         }
+-        this.setData((MaterialData) null); // Paper
+     }
+ 
+     @Override
+@@ -240,23 +_,6 @@
+     }
+ 
+     @Override
+-    public void setDurability(final short durability) {
+-        // Ignore damage if item is null
+-        if (this.handle != null) {
+-            this.handle.setDamageValue(durability);
+-        }
+-    }
+-
+-    @Override
+-    public short getDurability() {
+-        if (this.handle != null) {
+-            return (short) this.handle.getDamageValue();
+-        } else {
+-            return -1;
+-        }
+-    }
+-
+-    @Override
+     public int getMaxStackSize() {
+         return (this.handle == null) ? Item.DEFAULT_MAX_STACK_SIZE : this.handle.getMaxStackSize(); // Paper - air stacks to 64
+     }
+@@ -401,7 +_,7 @@
+         return CraftItemStack.getItemMeta(this.handle);
+     }
+     // Paper start - improve handled tags on type change
+-    public void adjustTagForItemMeta(final Material oldType) {
++    public void adjustTagForItemMeta(final ItemType oldType) {
+         final CraftMetaItem oldMeta = (CraftMetaItem) CraftItemFactory.instance().getItemMeta(oldType);
+         final ItemMeta newMeta;
+         if (oldMeta == null) {
+@@ -445,8 +_,8 @@
+         return ((CraftItemType<?>) CraftItemType.minecraftToBukkitNew(item.getItem())).getItemMeta(item, extraHandledComponents); // Paper
+     }
+ 
+-    static Material getType(net.minecraft.world.item.ItemStack item) {
+-        return item == null ? Material.AIR : CraftItemType.minecraftToBukkit(item.getItem());
++    static ItemType getType(net.minecraft.world.item.ItemStack item) {
++        return item == null ? ItemType.AIR : CraftItemType.minecraftToBukkitNew(item.getItem());
+     }
+ 
+     @Override
+@@ -528,13 +_,13 @@
+     }
+     // Paper start - with type
+     @Override
+-    public ItemStack withType(final Material type) {
+-        if (type == Material.AIR) {
++    public ItemStack withType(final ItemType type) {
++        if (type == ItemType.AIR) {
+             return CraftItemStack.asBukkitMirror(null);
+         }
+ 
+         final net.minecraft.world.item.ItemStack copy = new net.minecraft.world.item.ItemStack(
+-            CraftItemType.bukkitToMinecraft(type), this.getAmount()
++            CraftItemType.bukkitToMinecraftNew(type), this.getAmount()
+         );
+ 
+         if (this.handle != null) {

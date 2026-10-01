@@ -1,0 +1,141 @@
+--- a/src/test/java/io/papermc/paper/item/MetaComparisonTest.java
++++ b/src/test/java/io/papermc/paper/item/MetaComparisonTest.java
+@@ -10,12 +_,12 @@
+ import org.bukkit.Bukkit;
+ import org.bukkit.ChatColor;
+ import org.bukkit.Color;
+-import org.bukkit.Material;
+ import org.bukkit.craftbukkit.inventory.CraftItemFactory;
+ import org.bukkit.craftbukkit.inventory.CraftItemStack;
+ import org.bukkit.enchantments.Enchantment;
+ import org.bukkit.inventory.ItemFactory;
+ import org.bukkit.inventory.ItemStack;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.inventory.meta.BookMeta;
+ import org.bukkit.inventory.meta.ItemMeta;
+ import org.bukkit.inventory.meta.PotionMeta;
+@@ -35,51 +_,51 @@
+ 
+     @Test
+     public void testMetaApplication() {
+-        ItemStack itemStack = ItemStack.of(Material.STONE);
++        ItemStack itemStack = ItemStack.of(ItemType.STONE);
+ 
+         ItemMeta meta = itemStack.getItemMeta();
+         meta.setMaxStackSize(1);
+ 
+-        ItemMeta converted = FACTORY.asMetaFor(meta, Material.GOLD_INGOT);
++        ItemMeta converted = FACTORY.asMetaFor(meta, ItemType.GOLD_INGOT);
+         Assertions.assertEquals(converted.getMaxStackSize(), meta.getMaxStackSize());
+ 
+-        ItemMeta convertedAdvanced = FACTORY.asMetaFor(meta, Material.PLAYER_HEAD);
++        ItemMeta convertedAdvanced = FACTORY.asMetaFor(meta, ItemType.PLAYER_HEAD);
+         Assertions.assertEquals(convertedAdvanced.getMaxStackSize(), meta.getMaxStackSize());
+     }
+ 
+     @Test
+     public void testMetaApplicationDowngrading() {
+-        ItemStack itemStack = ItemStack.of(Material.PLAYER_HEAD);
++        ItemStack itemStack = ItemStack.of(ItemType.PLAYER_HEAD);
+         PlayerProfile profile = Bukkit.createProfile("Owen1212055");
+ 
+         SkullMeta meta = (SkullMeta) itemStack.getItemMeta();
+         meta.setPlayerProfile(profile);
+ 
+-        SkullMeta converted = (SkullMeta) FACTORY.asMetaFor(meta, Material.PLAYER_HEAD);
++        SkullMeta converted = (SkullMeta) FACTORY.asMetaFor(meta, ItemType.PLAYER_HEAD);
+         Assertions.assertEquals(converted.getPlayerProfile(), meta.getPlayerProfile());
+ 
+-        SkullMeta downgraded = (SkullMeta) FACTORY.asMetaFor(FACTORY.asMetaFor(meta, Material.STONE), Material.PLAYER_HEAD);
++        SkullMeta downgraded = (SkullMeta) FACTORY.asMetaFor(FACTORY.asMetaFor(meta, ItemType.STONE), ItemType.PLAYER_HEAD);
+         Assertions.assertNull(downgraded.getPlayerProfile());
+     }
+ 
+     @Test
+     public void testMetaApplicationDowngradingPotion() {
+-        ItemStack itemStack = ItemStack.of(Material.POTION);
++        ItemStack itemStack = ItemStack.of(ItemType.POTION);
+         Color color = Color.BLUE;
+ 
+         PotionMeta meta = (PotionMeta) itemStack.getItemMeta();
+         meta.setColor(color);
+ 
+-        PotionMeta converted = (PotionMeta) FACTORY.asMetaFor(meta, Material.POTION);
++        PotionMeta converted = (PotionMeta) FACTORY.asMetaFor(meta, ItemType.POTION);
+         Assertions.assertEquals(converted.getColor(), color);
+ 
+-        PotionMeta downgraded = (PotionMeta) FACTORY.asMetaFor(FACTORY.asMetaFor(meta, Material.STONE), Material.POTION);
++        PotionMeta downgraded = (PotionMeta) FACTORY.asMetaFor(FACTORY.asMetaFor(meta, ItemType.STONE), ItemType.POTION);
+         Assertions.assertNull(downgraded.getColor());
+     }
+ 
+     @Test
+     public void testNullMeta() {
+-        ItemStack itemStack = ItemStack.of(Material.AIR);
++        ItemStack itemStack = ItemStack.of(ItemType.AIR);
+ 
+         Assertions.assertFalse(itemStack.hasItemMeta());
+         Assertions.assertNull(itemStack.getItemMeta());
+@@ -88,7 +_,7 @@
+     @Test
+     public void testPotionMeta() {
+         PotionEffect potionEffect = new PotionEffect(PotionEffectType.SPEED, 10, 10, false);
+-        ItemStack nmsItemStack = ItemStack.of(Material.POTION);
++        ItemStack nmsItemStack = ItemStack.of(ItemType.POTION);
+ 
+         testSetAndGet(nmsItemStack,
+             (meta) -> ((PotionMeta) meta).addCustomEffect(potionEffect, true),
+@@ -98,7 +_,7 @@
+ 
+     @Test
+     public void testEnchantment() {
+-        ItemStack stack = ItemStack.of(Material.STICK);
++        ItemStack stack = ItemStack.of(ItemType.STICK);
+ 
+         testSetAndGet(stack,
+             (meta) -> Assertions.assertTrue(meta.addEnchant(Enchantment.SHARPNESS, 1, true)),
+@@ -110,7 +_,7 @@
+     @Disabled
+     public void testPlayerHead() {
+         PlayerProfile profile = new CraftPlayerProfile(UUID.randomUUID(), "Owen1212055");
+-        ItemStack stack = ItemStack.of(Material.PLAYER_HEAD);
++        ItemStack stack = ItemStack.of(ItemType.PLAYER_HEAD);
+ 
+         testSetAndGet(stack,
+             (meta) -> ((SkullMeta) meta).setPlayerProfile(profile),
+@@ -131,7 +_,7 @@
+ 
+     @Test
+     public void testBookMetaAuthor() {
+-        ItemStack stack = ItemStack.of(Material.WRITTEN_BOOK);
++        ItemStack stack = ItemStack.of(ItemType.WRITTEN_BOOK);
+ 
+         // Legacy string
+         testSetAndGet(stack,
+@@ -156,7 +_,7 @@
+ 
+     @Test
+     public void testBookMetaTitle() {
+-        ItemStack stack = ItemStack.of(Material.WRITTEN_BOOK);
++        ItemStack stack = ItemStack.of(ItemType.WRITTEN_BOOK);
+ 
+         // Legacy string
+         testSetAndGet(stack,
+@@ -182,7 +_,7 @@
+ 
+     @Test
+     public void testWriteableBookPages() {
+-        ItemStack stack = ItemStack.of(Material.WRITABLE_BOOK);
++        ItemStack stack = ItemStack.of(ItemType.WRITABLE_BOOK);
+ 
+         // Writeable books are serialized as plain text, but has weird legacy color support.
+         // So, we need to test to make sure that all works here.
+@@ -226,7 +_,7 @@
+ 
+     @Test
+     public void testWrittenBookPages() {
+-        ItemStack stack = ItemStack.of(Material.WRITTEN_BOOK);
++        ItemStack stack = ItemStack.of(ItemType.WRITTEN_BOOK);
+ 
+         // Writeable books are serialized as plain text, but has weird legacy color support.
+         // So, we need to test to make sure that all works here.

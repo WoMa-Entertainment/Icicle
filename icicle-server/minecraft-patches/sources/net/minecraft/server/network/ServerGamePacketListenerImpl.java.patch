@@ -1,0 +1,11 @@
+--- a/net/minecraft/server/network/ServerGamePacketListenerImpl.java
++++ b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
+@@ -3344,7 +_,7 @@
+                                 ItemStack cursor = this.player.containerMenu.getCarried();
+                                 action = InventoryAction.NOTHING;
+                                 // Quick check for if we have any of the item
+-                                if (inventory.getTopInventory().contains(org.bukkit.craftbukkit.inventory.CraftItemType.minecraftToBukkit(cursor.getItem())) || inventory.getBottomInventory().contains(org.bukkit.craftbukkit.inventory.CraftItemType.minecraftToBukkit(cursor.getItem()))) {
++                                if (inventory.getTopInventory().contains(org.bukkit.craftbukkit.inventory.CraftItemType.minecraftToBukkitNew(cursor.getItem())) || inventory.getBottomInventory().contains(org.bukkit.craftbukkit.inventory.CraftItemType.minecraftToBukkitNew(cursor.getItem()))) {
+                                     action = InventoryAction.COLLECT_TO_CURSOR;
+                                 }
+                             }

@@ -1,0 +1,129 @@
+--- a/src/main/java/org/bukkit/craftbukkit/block/CraftBlockStates.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/CraftBlockStates.java
+@@ -14,10 +_,10 @@
+ import net.minecraft.world.level.block.entity.BlockEntity;
+ import net.minecraft.world.level.block.entity.BlockEntityType;
+ import net.minecraft.world.level.block.entity.BlockEntityTypes;
+-import org.bukkit.Material;
+ import org.bukkit.World;
+ import org.bukkit.block.Block;
+ import org.bukkit.block.BlockState;
++import org.bukkit.block.BlockType;
+ import org.bukkit.craftbukkit.CraftRegistry;
+ import org.bukkit.craftbukkit.CraftWorld;
+ 
+@@ -70,12 +_,12 @@
+         }
+     }
+ 
+-    private static final Map<Material, BlockStateFactory<?>> FACTORIES = new IdentityHashMap<>();
++    private static final Map<BlockType, BlockStateFactory<?>> FACTORIES = new IdentityHashMap<>();
+     private static final BlockStateFactory<?> DEFAULT_FACTORY = new BlockStateFactory<>(CraftBlockState.class) {
+         @Override
+         public CraftBlockState createBlockState(World world, BlockPos pos, net.minecraft.world.level.block.state.BlockState state, BlockEntity blockEntity) {
+             // Paper - revert upstream's revert of the block state changes. Block entities that have already had the block type set to AIR are still valid, upstream decided to ignore them
+-            Preconditions.checkState(blockEntity == null, "Unexpected BlockState for %s", CraftBlockType.minecraftToBukkit(state.getBlock()));
++            Preconditions.checkState(blockEntity == null, "Unexpected BlockState for %s", CraftBlockType.minecraftToBukkitNew(state.getBlock()));
+             return new CraftBlockState(world, pos, state);
+         }
+     };
+@@ -139,7 +_,7 @@
+         // End generate - CraftBlockEntityStates
+     }
+ 
+-    private static void register(Material blockType, BlockStateFactory<?> factory) {
++    private static void register(BlockType blockType, BlockStateFactory<?> factory) {
+         CraftBlockStates.FACTORIES.put(blockType, factory);
+     }
+ 
+@@ -150,16 +_,16 @@
+     ) {
+         BlockStateFactory<B> factory = new BlockEntityStateFactory<>(blockStateType, blockStateConstructor, blockEntityType);
+         for (net.minecraft.world.level.block.Block block : blockEntityType.validBlocks) {
+-            CraftBlockStates.register(CraftBlockType.minecraftToBukkit(block), factory);
++            CraftBlockStates.register(CraftBlockType.minecraftToBukkitNew(block), factory);
+         }
+         CraftBlockStates.register(blockEntityType, factory);
+     }
+ 
+-    private static BlockStateFactory<?> getFactory(Material material) {
++    private static BlockStateFactory<?> getFactory(BlockType material) {
+         return CraftBlockStates.FACTORIES.getOrDefault(material, CraftBlockStates.DEFAULT_FACTORY);
+     }
+ 
+-    private static BlockStateFactory<?> getFactory(Material material, BlockEntityType<?> type) {
++    private static BlockStateFactory<?> getFactory(BlockType material, BlockEntityType<?> type) {
+         if (type != null) {
+             return CraftBlockStates.FACTORIES_BY_BLOCK_ENTITY_TYPE.getOrDefault(type, getFactory(material));
+         } else {
+@@ -167,16 +_,16 @@
+         }
+     }
+ 
+-    public static Class<? extends CraftBlockState> getBlockStateType(Material material) {
++    public static Class<? extends CraftBlockState> getBlockStateType(BlockType material) {
+         Preconditions.checkNotNull(material, "material is null");
+         return CraftBlockStates.getFactory(material).blockStateType;
+     }
+ 
+-    public static BlockEntity createNewBlockEntity(Material material) {
++    public static BlockEntity createNewBlockEntity(BlockType material) {
+         BlockStateFactory<?> factory = CraftBlockStates.getFactory(material);
+ 
+         if (factory instanceof BlockEntityStateFactory) {
+-            return ((BlockEntityStateFactory<?, ?>) factory).createBlockEntity(BlockPos.ZERO, CraftBlockType.bukkitToMinecraft(material).defaultBlockState());
++            return ((BlockEntityStateFactory<?, ?>) factory).createBlockEntity(BlockPos.ZERO, CraftBlockType.bukkitToMinecraftNew(material).defaultBlockState());
+         }
+ 
+         return null;
+@@ -210,17 +_,17 @@
+     }
+ 
+     @Deprecated
+-    public static BlockState getBlockState(BlockPos pos, Material material, @Nullable CompoundTag blockEntityTag) {
++    public static BlockState getBlockState(BlockPos pos, BlockType material, @Nullable CompoundTag blockEntityTag) {
+         return CraftBlockStates.getBlockState(CraftRegistry.getMinecraftRegistry(), pos, material, blockEntityTag);
+     }
+ 
+-    public static BlockState getBlockState(LevelReader level, BlockPos pos, Material material, @Nullable CompoundTag blockEntityTag) {
++    public static BlockState getBlockState(LevelReader level, BlockPos pos, BlockType material, @Nullable CompoundTag blockEntityTag) {
+         return CraftBlockStates.getBlockState(level.registryAccess(), pos, material, blockEntityTag);
+     }
+ 
+-    public static BlockState getBlockState(RegistryAccess registryAccess, BlockPos pos, Material material, @Nullable CompoundTag blockEntityTag) {
++    public static BlockState getBlockState(RegistryAccess registryAccess, BlockPos pos, BlockType material, @Nullable CompoundTag blockEntityTag) {
+         Preconditions.checkNotNull(material, "material is null");
+-        net.minecraft.world.level.block.state.BlockState state = CraftBlockType.bukkitToMinecraft(material).defaultBlockState();
++        net.minecraft.world.level.block.state.BlockState state = CraftBlockType.bukkitToMinecraftNew(material).defaultBlockState();
+         return CraftBlockStates.getBlockState(registryAccess, pos, state, blockEntityTag);
+     }
+ 
+@@ -242,7 +_,7 @@
+ 
+     // See BlockStateFactory#createBlockState(World, BlockPos, BlockState, BlockEntity)
+     public static CraftBlockState getBlockState(World world, BlockPos pos, net.minecraft.world.level.block.state.BlockState state, BlockEntity blockEntity) {
+-        Material material = CraftBlockType.minecraftToBukkit(state.getBlock());
++        BlockType material = CraftBlockType.minecraftToBukkitNew(state.getBlock());
+         BlockStateFactory<?> factory;
+         // For some types of BlockEntity blocks (e.g. moving pistons), Minecraft may in some situations (e.g. when using Block#setType or the
+         // setBlock command) not create a corresponding BlockEntity in the world. We return a normal BlockState in this case.
+@@ -254,8 +_,8 @@
+         return factory.createBlockState(world, pos, state, blockEntity);
+     }
+ 
+-    public static boolean isBlockEntityOptional(Material material) {
+-        return material == Material.MOVING_PISTON;
++    public static boolean isBlockEntityOptional(BlockType material) {
++        return material == BlockType.MOVING_PISTON;
+     }
+ 
+     // This ignores block entity data.
+@@ -264,7 +_,7 @@
+     }
+ 
+     @Nullable
+-    public static BlockEntityType<?> getBlockEntityType(final Material material) {
++    public static BlockEntityType<?> getBlockEntityType(final BlockType material) {
+         final BlockStateFactory<?> factory = org.bukkit.craftbukkit.block.CraftBlockStates.FACTORIES.get(material);
+         return factory instanceof final BlockEntityStateFactory<?,?> blockEntityStateFactory ? blockEntityStateFactory.blockEntityType : null;
+     }

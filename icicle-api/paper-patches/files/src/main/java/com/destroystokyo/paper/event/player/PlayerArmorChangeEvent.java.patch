@@ -1,0 +1,61 @@
+--- a/src/main/java/com/destroystokyo/paper/event/player/PlayerArmorChangeEvent.java
++++ b/src/main/java/com/destroystokyo/paper/event/player/PlayerArmorChangeEvent.java
+@@ -1,17 +_,17 @@
+ package com.destroystokyo.paper.event.player;
+ 
+ import java.util.Set;
+-import org.bukkit.Material;
+ import org.bukkit.entity.Player;
+ import org.bukkit.event.HandlerList;
+ import org.bukkit.event.player.PlayerEvent;
+ import org.bukkit.inventory.EquipmentSlot;
+ import org.bukkit.inventory.ItemStack;
++import org.bukkit.inventory.ItemType;
+ import org.jetbrains.annotations.ApiStatus;
+ import org.jspecify.annotations.NullMarked;
+ import org.jspecify.annotations.Nullable;
+ 
+-import static org.bukkit.Material.*;
++import static org.bukkit.inventory.ItemType.*;
+ 
+ /**
+  * Called when the player themselves change their armor items
+@@ -99,9 +_,9 @@
+         LEGS(COPPER_LEGGINGS, NETHERITE_LEGGINGS, DIAMOND_LEGGINGS, GOLDEN_LEGGINGS, IRON_LEGGINGS, CHAINMAIL_LEGGINGS, LEATHER_LEGGINGS),
+         FEET(COPPER_BOOTS, NETHERITE_BOOTS, DIAMOND_BOOTS, GOLDEN_BOOTS, IRON_BOOTS, CHAINMAIL_BOOTS, LEATHER_BOOTS);
+ 
+-        private final Set<Material> types;
++        private final Set<ItemType> types;
+ 
+-        SlotType(final Material... types) {
++        SlotType(final ItemType... types) {
+             this.types = Set.of(types);
+         }
+ 
+@@ -111,7 +_,7 @@
+          *
+          * @return immutable set of material types
+          */
+-        public Set<Material> getTypes() {
++        public Set<ItemType> getTypes() {
+             return this.types;
+         }
+ 
+@@ -121,7 +_,7 @@
+          * @param material material to get slot by
+          * @return slot type the material will go in, or {@code null} if it won't
+          */
+-        public static @Nullable SlotType getByMaterial(final Material material) {
++        public static @Nullable SlotType getByMaterial(final ItemType material) {
+             for (final SlotType slotType : values()) {
+                 if (slotType.getTypes().contains(material)) {
+                     return slotType;
+@@ -136,7 +_,7 @@
+          * @param material material to check
+          * @return whether this material can be equipped
+          */
+-        public static boolean isEquipable(final Material material) {
++        public static boolean isEquipable(final ItemType material) {
+             return getByMaterial(material) != null;
+         }
+     }

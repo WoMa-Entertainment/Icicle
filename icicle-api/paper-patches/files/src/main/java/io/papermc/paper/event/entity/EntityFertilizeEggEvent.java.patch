@@ -1,0 +1,22 @@
+--- a/src/main/java/io/papermc/paper/event/entity/EntityFertilizeEggEvent.java
++++ b/src/main/java/io/papermc/paper/event/entity/EntityFertilizeEggEvent.java
+@@ -1,6 +_,5 @@
+ package io.papermc.paper.event.entity;
+ 
+-import org.bukkit.Material;
+ import org.bukkit.entity.LivingEntity;
+ import org.bukkit.entity.Player;
+ import org.bukkit.event.Cancellable;
+@@ -19,9 +_,9 @@
+  * <p>
+  * An example of this would be:
+  * <ul>
+- * <li>A frog being marked as "is_pregnant" and laying {@link Material#FROGSPAWN} later.</li>
+- * <li>Sniffers producing the {@link Material#SNIFFER_EGG} item, which needs to be placed before it can begin to hatch.</li>
+- * <li>A turtle being marked with "HasEgg" and laying a {@link Material#TURTLE_EGG} later.</li>
++ * <li>A frog being marked as "is_pregnant" and laying {@link org.bukkit.block.BlockType#FROGSPAWN} later.</li>
++ * <li>Sniffers producing the {@link org.bukkit.block.BlockType#SNIFFER_EGG} item, which needs to be placed before it can begin to hatch.</li>
++ * <li>A turtle being marked with "HasEgg" and laying a {@link org.bukkit.block.BlockType#TURTLE_EGG} later.</li>
+  * </ul>
+  * <p>
+  * The event hence only exposes the two parent entities in the fertilization process and cannot provide the child entity, as it will only exist at a later point in time.

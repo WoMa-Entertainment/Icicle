@@ -1,0 +1,749 @@
+--- /dev/null
++++ b/src/main/java/com/destroystokyo/paper/ItemTags.java
+@@ -1,0 +_,746 @@
++/*
++ * Copyright (c) 2018 Daniel Ennis (Aikar) MIT License
++ *
++ *  Permission is hereby granted, free of charge, to any person obtaining
++ *  a copy of this software and associated documentation files (the
++ *  "Software"), to deal in the Software without restriction, including
++ *  without limitation the rights to use, copy, modify, merge, publish,
++ *  distribute, sublicense, and/or sell copies of the Software, and to
++ *  permit persons to whom the Software is furnished to do so, subject to
++ *  the following conditions:
++ *
++ *  The above copyright notice and this permission notice shall be
++ *  included in all copies or substantial portions of the Software.
++ *
++ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
++ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
++ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
++ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
++ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++ */
++
++package com.destroystokyo.paper;
++
++import org.bukkit.NamespacedKey;
++import org.bukkit.Tag;
++import org.bukkit.inventory.ItemType;
++
++import java.util.Objects;
++
++/**
++ * Represents a collection tags to identify materials that share common properties.
++ * Will map to minecraft for missing tags, as well as custom ones that may be useful.
++ * <p>
++ * All tags in this class are unmodifiable, attempting to modify them will throw an
++ * {@link UnsupportedOperationException}.
++ */
++@SuppressWarnings({"NonFinalUtilityClass", "unused", "WeakerAccess"})
++public class ItemTags {
++
++    private static NamespacedKey keyFor(String key) {
++        return new NamespacedKey("paper", key + "_settag");
++    }
++
++    private static ItemSetTag replacedBy(Tag<ItemType> vanillaTag) {
++        return replacedBy(vanillaTag, Objects.requireNonNull(vanillaTag).key().value());
++    }
++
++    @SuppressWarnings("unchecked")
++    private static ItemSetTag replacedBy(Tag<ItemType> vanillaTag, String legacyKey) {
++        Objects.requireNonNull(vanillaTag);
++        return new ItemSetTag(keyFor(legacyKey)).add(vanillaTag).lock();
++    }
++
++    /**
++     * @deprecated in favour of {@link Tag#ITEMS_ARROWS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag ARROWS = replacedBy(Tag.ITEMS_ARROWS);
++
++    /**
++     * Covers all colors of beds.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_BEDS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag BEDS = replacedBy(Tag.ITEMS_BEDS);
++
++    /**
++     * Covers all bucket items.
++     */
++    public static final ItemSetTag BUCKETS = new ItemSetTag(keyFor("buckets"))
++        .endsWith("BUCKET")
++        .ensureSize("BUCKETS", 12).lock();
++
++    /**
++     * Covers coal and charcoal.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_COALS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag COALS = replacedBy(Tag.ITEMS_COALS);
++
++    /**
++     * Covers both cobblestone wall variants.
++     */
++    public static final ItemSetTag COBBLESTONE_WALLS = new ItemSetTag(keyFor("cobblestone_walls"))
++        .endsWith("COBBLESTONE_WALL")
++        .ensureSize("COBBLESTONE_WALLS", 2).lock();
++
++    /**
++     * Covers both cobblestone and mossy Cobblestone.
++     */
++    public static final ItemSetTag COBBLESTONES = new ItemSetTag(keyFor("cobblestones"))
++        .add(ItemType.COBBLESTONE, ItemType.MOSSY_COBBLESTONE).lock();
++
++    /**
++     * Covers all colors of concrete.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_CONCRETE}
++     */
++    @Deprecated(since = "26.2")
++    public static final ItemSetTag CONCRETES = replacedBy(Tag.ITEMS_CONCRETE, "concretes");
++
++    /**
++     * Covers all colors of concrete powder.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_CONCRETE_POWDERS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag CONCRETE_POWDER = replacedBy(Tag.ITEMS_CONCRETE_POWDERS);
++
++    /**
++     * Covers the two types of cooked fish.
++     */
++    public static final ItemSetTag COOKED_FISH = new ItemSetTag(keyFor("cooked_fish"))
++        .add(ItemType.COOKED_COD, ItemType.COOKED_SALMON).lock();
++
++    /**
++     * Covers all variants of doors.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_DOORS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag DOORS = replacedBy(Tag.ITEMS_DOORS);
++
++    /**
++     * Covers all dyes.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_DYES}
++     */
++    @Deprecated(since = "26.1")
++    public static final ItemSetTag DYES = replacedBy(Tag.ITEMS_DYES);
++
++    /**
++     * Covers all variants of gates.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_FENCE_GATES}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag FENCE_GATES = replacedBy(Tag.ITEMS_FENCE_GATES);
++
++    /**
++     * Covers all variants of fences.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_FENCES}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag FENCES = replacedBy(Tag.ITEMS_FENCES);
++
++    /**
++     * Covers all variants of fish buckets.
++     */
++    public static final ItemSetTag FISH_BUCKETS = new ItemSetTag(keyFor("fish_buckets"))
++        .add(ItemType.COD_BUCKET, ItemType.PUFFERFISH_BUCKET, ItemType.SALMON_BUCKET, ItemType.TROPICAL_FISH_BUCKET).lock();
++
++    /**
++     * Covers the non-colored glass and 16 stained glasses (not panes).
++     */
++    public static final ItemSetTag GLASS = new ItemSetTag(keyFor("glass"))
++        .endsWith("_GLASS")
++        .add(ItemType.GLASS)
++        .ensureSize("GLASS", 18).lock();
++
++    /**
++     * Covers the non-colored glass panes and stained glass panes (panes only).
++     */
++    public static final ItemSetTag GLASS_PANES = new ItemSetTag(keyFor("glass_panes"))
++        .endsWith("GLASS_PANE")
++        .ensureSize("GLASS_PANES", 17).lock();
++
++    /**
++     * Covers all glazed terracotta blocks.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_GLAZED_TERRACOTTA}
++     */
++    @Deprecated(since = "26.2")
++    public static final ItemSetTag GLAZED_TERRACOTTA = replacedBy(Tag.ITEMS_GLAZED_TERRACOTTA);
++
++    /**
++     * Covers the colors of stained terracotta.
++     */
++    public static final ItemSetTag STAINED_TERRACOTTA = new ItemSetTag(keyFor("stained_terracotta"))
++        .endsWith("TERRACOTTA")
++        .not(ItemType.TERRACOTTA)
++        .notEndsWith("GLAZED_TERRACOTTA")
++        .ensureSize("STAINED_TERRACOTTA", 16).lock();
++
++    /**
++     * Covers terracotta along with the stained variants.
++     */
++    public static final ItemSetTag TERRACOTTA = new ItemSetTag(keyFor("terracotta"))
++        .endsWith("TERRACOTTA")
++        .ensureSize("TERRACOTTA", 33).lock();
++
++    /**
++     * Covers both golden apples.
++     */
++    public static final ItemSetTag GOLDEN_APPLES = new ItemSetTag(keyFor("golden_apples"))
++        .endsWith("GOLDEN_APPLE")
++        .ensureSize("GOLDEN_APPLES", 2).lock();
++
++    /**
++     * Covers the variants of horse armor.
++     */
++    public static final ItemSetTag HORSE_ARMORS = new ItemSetTag(keyFor("horse_armors"))
++        .endsWith("_HORSE_ARMOR")
++        .ensureSize("HORSE_ARMORS", 6).lock();
++
++    /**
++     * Covers the variants of infested blocks.
++     */
++    public static final ItemSetTag INFESTED_BLOCKS = new ItemSetTag(keyFor("infested_blocks"))
++        .startsWith("INFESTED_")
++        .ensureSize("INFESTED_BLOCKS", 7).lock();
++
++    /**
++     * Covers the variants of mushroom blocks.
++     */
++    public static final ItemSetTag MUSHROOM_BLOCKS = new ItemSetTag(keyFor("mushroom_blocks"))
++        .endsWith("MUSHROOM_BLOCK")
++        .add(ItemType.MUSHROOM_STEM)
++        .ensureSize("MUSHROOM_BLOCKS", 3).lock();
++
++    /**
++     * Covers all mushrooms.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_MUSHROOMS}
++     */
++    @Deprecated(since = "26.3")
++    public static final ItemSetTag MUSHROOMS = replacedBy(Tag.ITEMS_MUSHROOMS);
++
++    /**
++     * Covers all music disc items.
++     */
++    public static final ItemSetTag MUSIC_DISCS = new ItemSetTag(keyFor("music_discs"))
++        .startsWith("MUSIC_DISC_").lock();
++
++    /**
++     * Covers all ores.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_ORES}, makes sure to also check for ancient debris if you relied on this edge case
++     */
++    @SuppressWarnings("unchecked")
++    @Deprecated(since = "26.3")
++    public static final ItemSetTag ORES = new ItemSetTag(keyFor("ores"))
++        .add(Tag.ITEMS_ORES)
++        .add(ItemType.ANCIENT_DEBRIS).lock();
++
++    /**
++     * Covers all potato items.
++     */
++    public static final ItemSetTag POTATOES = new ItemSetTag(keyFor("potatoes"))
++        .endsWith("POTATO")
++        .ensureSize("POTATOES", 3).lock();
++
++    /**
++     * Covers the variants of prismarine blocks.
++     */
++    public static final ItemSetTag PRISMARINE = new ItemSetTag(keyFor("prismarine"))
++        .add(ItemType.PRISMARINE, ItemType.PRISMARINE_BRICKS, ItemType.DARK_PRISMARINE).lock();
++
++    /**
++     * Covers the variants of prismarine slabs.
++     */
++    public static final ItemSetTag PRISMARINE_SLABS = new ItemSetTag(keyFor("prismarine_slabs"))
++        .add(ItemType.PRISMARINE_SLAB, ItemType.PRISMARINE_BRICK_SLAB, ItemType.DARK_PRISMARINE_SLAB).lock();
++
++    /**
++     * Covers the variants of prismarine stairs.
++     */
++    public static final ItemSetTag PRISMARINE_STAIRS = new ItemSetTag(keyFor("prismarine_stairs"))
++        .add(ItemType.PRISMARINE_STAIRS, ItemType.PRISMARINE_BRICK_STAIRS, ItemType.DARK_PRISMARINE_STAIRS).lock();
++
++    /**
++     * Covers the variants of pumpkins.
++     */
++    public static final ItemSetTag PUMPKINS = new ItemSetTag(keyFor("pumpkins"))
++        .add(ItemType.CARVED_PUMPKIN, ItemType.JACK_O_LANTERN, ItemType.PUMPKIN).lock();
++
++    /**
++     * Covers the variants of quartz blocks.
++     */
++    public static final ItemSetTag QUARTZ_BLOCKS = new ItemSetTag(keyFor("quartz_blocks"))
++        .add(ItemType.QUARTZ_BLOCK, ItemType.QUARTZ_PILLAR, ItemType.CHISELED_QUARTZ_BLOCK, ItemType.SMOOTH_QUARTZ).lock();
++
++    /**
++     * Covers all uncooked fish items.
++     */
++    public static final ItemSetTag RAW_FISH = new ItemSetTag(keyFor("raw_fish"))
++        .add(ItemType.COD, ItemType.PUFFERFISH, ItemType.SALMON, ItemType.TROPICAL_FISH).lock();
++
++    /**
++     * Covers the variants of red sandstone blocks.
++     */
++    public static final ItemSetTag RED_SANDSTONES = new ItemSetTag(keyFor("red_sandstones"))
++        .endsWith("RED_SANDSTONE")
++        .ensureSize("RED_SANDSTONES", 4).lock();
++
++    /**
++     * Covers the variants of sandstone blocks.
++     */
++    public static final ItemSetTag SANDSTONES = new ItemSetTag(keyFor("sandstones"))
++        .add(ItemType.SANDSTONE, ItemType.CHISELED_SANDSTONE, ItemType.CUT_SANDSTONE, ItemType.SMOOTH_SANDSTONE).lock();
++
++    /**
++     * Covers sponge and wet sponge.
++     */
++    public static final ItemSetTag SPONGES = new ItemSetTag(keyFor("sponges"))
++        .endsWith("SPONGE")
++        .ensureSize("SPONGES", 2).lock();
++
++    /**
++     * Covers the non-colored and colored shulker boxes.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_SHULKER_BOXES}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag SHULKER_BOXES = replacedBy(Tag.ITEMS_SHULKER_BOXES);
++
++    /**
++     * Covers zombie, creeper, skeleton, dragon, and player heads.
++     */
++    public static final ItemSetTag SKULLS = new ItemSetTag(keyFor("skulls"))
++        .endsWith("_HEAD")
++        .endsWith("_SKULL")
++        .ensureSize("SKULLS", 14).lock();
++
++    /**
++     * Covers all spawn egg items.
++     */
++    public static final ItemSetTag SPAWN_EGGS = new ItemSetTag(keyFor("spawn_eggs"))
++        .endsWith("_SPAWN_EGG")
++        .ensureSize("SPAWN_EGGS", 88).lock();
++
++    /**
++     * Covers all colors of stained glass.
++     */
++    public static final ItemSetTag STAINED_GLASS = new ItemSetTag(keyFor("stained_glass"))
++        .endsWith("_STAINED_GLASS")
++        .ensureSize("STAINED_GLASS", 16).lock();
++
++    /**
++     * Covers all colors of stained glass panes.
++     */
++    public static final ItemSetTag STAINED_GLASS_PANES = new ItemSetTag(keyFor("stained_glass_panes"))
++        .endsWith("STAINED_GLASS_PANE")
++        .ensureSize("STAINED_GLASS_PANES", 16).lock();
++
++    /**
++     * Covers all variants of trapdoors.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_TRAPDOORS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag TRAPDOORS = replacedBy(Tag.ITEMS_TRAPDOORS);
++
++    /**
++     * Covers all wood variants of doors.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_WOODEN_DOORS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag WOODEN_DOORS = replacedBy(Tag.ITEMS_WOODEN_DOORS);
++
++    /**
++     * Covers all wood variants of fences.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_WOODEN_FENCES}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag WOODEN_FENCES = replacedBy(Tag.ITEMS_WOODEN_FENCES);
++
++    /**
++     * Covers all wood variants of trapdoors.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_WOODEN_TRAPDOORS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag WOODEN_TRAPDOORS = replacedBy(Tag.ITEMS_WOODEN_TRAPDOORS);
++
++    /**
++     * Covers the wood variants of gates.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_FENCE_GATES}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag WOODEN_GATES = replacedBy(Tag.ITEMS_FENCE_GATES, "wooden_gates");
++
++    /**
++     * Covers the variants of purpur.
++     */
++    public static final ItemSetTag PURPUR = new ItemSetTag(keyFor("purpur"))
++        .startsWith("PURPUR_")
++        .ensureSize("PURPUR", 4).lock();
++
++    /**
++     * Covers the variants of signs.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_SIGNS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag SIGNS = replacedBy(Tag.ITEMS_SIGNS, "signs");
++
++    /**
++     * Covers the variants of lanterns.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_LANTERNS}
++     */
++    @Deprecated(since = "1.21.9")
++    public static final ItemSetTag LANTERNS = replacedBy(Tag.ITEMS_LANTERNS);
++
++    /**
++     * Covers the variants of rails.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_RAILS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag RAILS = replacedBy(Tag.ITEMS_RAILS);
++
++    /**
++     * Covers the variants of swords.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_SWORDS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag SWORDS = replacedBy(Tag.ITEMS_SWORDS);
++
++    /**
++     * Covers the variants of shovels.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_SHOVELS}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag SHOVELS = replacedBy(Tag.ITEMS_SHOVELS);
++
++    /**
++     * Covers the variants of pickaxes.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_PICKAXES}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag PICKAXES = replacedBy(Tag.ITEMS_PICKAXES);
++
++    /**
++     * Covers the variants of axes.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_AXES}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag AXES = replacedBy(Tag.ITEMS_AXES);
++
++    /**
++     * Covers the variants of hoes.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_HOES}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag HOES = replacedBy(Tag.ITEMS_HOES);
++
++    /**
++     * Covers the variants of helmets.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_HEAD_ARMOR}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag HELMETS = replacedBy(Tag.ITEMS_HEAD_ARMOR, "helmets");
++
++    /**
++     * Covers the variants of items that can be equipped in the helmet slot.
++     *
++     * @deprecated any item can be equippable with the right data component set on it
++     */
++    @Deprecated(since = "1.21.8")
++    @SuppressWarnings("unchecked")
++    public static final ItemSetTag HEAD_EQUIPPABLE = new ItemSetTag(keyFor("head_equippable"))
++        .add(Tag.ITEMS_HEAD_ARMOR, Tag.ITEMS_SKULLS)
++        .add(ItemType.CARVED_PUMPKIN).lock();
++
++    /**
++     * Covers the variants of chestplate.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_CHEST_ARMOR}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag CHESTPLATES = replacedBy(Tag.ITEMS_CHEST_ARMOR, "chestplates");
++
++    /**
++     * Covers the variants of items that can be equipped in the chest slot.
++     *
++     * @deprecated any item can be equippable with the right data component set on it
++     */
++    @Deprecated(since = "1.21.8")
++    @SuppressWarnings("unchecked")
++    public static final ItemSetTag CHEST_EQUIPPABLE = new ItemSetTag(keyFor("chest_equippable"))
++        .add(Tag.ITEMS_CHEST_ARMOR)
++        .add(ItemType.ELYTRA).lock();
++
++    /**
++     * Covers the variants of leggings.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_LEG_ARMOR}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag LEGGINGS = replacedBy(Tag.ITEMS_LEG_ARMOR, "leggings");
++
++    /**
++     * Covers the variants of boots.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_FOOT_ARMOR}
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag BOOTS = replacedBy(Tag.ITEMS_FOOT_ARMOR, "boots");
++
++    /**
++     * Covers all variants of armor.
++     */
++    @SuppressWarnings("unchecked")
++    public static final ItemSetTag ARMOR = new ItemSetTag(keyFor("armor"))
++        .add(Tag.ITEMS_HEAD_ARMOR, Tag.ITEMS_CHEST_ARMOR, Tag.ITEMS_LEG_ARMOR, Tag.ITEMS_FOOT_ARMOR)
++        .lock();
++
++    /**
++     * Covers the variants of bows.
++     */
++    public static final ItemSetTag BOWS = new ItemSetTag(keyFor("bows"))
++        .add(ItemType.BOW)
++        .add(ItemType.CROSSBOW)
++        .lock();
++
++    /**
++     * Covers the variants of player-throwable projectiles (not requiring a bow or any other "assistance").
++     */
++    @SuppressWarnings("unchecked")
++    public static final ItemSetTag THROWABLE_PROJECTILES = new ItemSetTag(keyFor("throwable_projectiles"))
++        .add(Tag.ITEMS_EGGS)
++        .add(ItemType.SNOWBALL, ItemType.SPLASH_POTION, ItemType.LINGERING_POTION,
++                ItemType.TRIDENT, ItemType.ENDER_PEARL, ItemType.EXPERIENCE_BOTTLE, ItemType.FIREWORK_ROCKET,
++                ItemType.WIND_CHARGE)
++        .lock();
++
++    /**
++     * Covers materials that can be colored, such as wool, shulker boxes, stained glasses etc.
++     */
++    @SuppressWarnings("unchecked")
++    public static final ItemSetTag COLORABLE = new ItemSetTag(keyFor("colorable"))
++        .add(Tag.ITEMS_WOOL, Tag.ITEMS_WOOL_CARPETS, Tag.ITEMS_WOOL_SLABS, Tag.ITEMS_WOOL_STAIRS,
++            Tag.ITEMS_CONCRETE_SLABS, Tag.ITEMS_CONCRETE_STAIRS,
++            Tag.ITEMS_SHULKER_BOXES, Tag.ITEMS_BEDS, Tag.ITEMS_CUSHIONS)
++        .add(STAINED_GLASS, STAINED_GLASS_PANES)
++        .lock();
++
++    /**
++     * Covers the variants of coral.
++     */
++    public static final ItemSetTag CORAL = new ItemSetTag(keyFor("coral"))
++        .endsWith("_CORAL")
++        .ensureSize("CORAL", 10).lock();
++
++    /**
++     * Covers the variants of coral fans.
++     */
++    public static final ItemSetTag CORAL_FANS = new ItemSetTag(keyFor("coral_fans"))
++        .endsWith("_CORAL_FAN")
++        .endsWith("_CORAL_WALL_FAN")
++        .ensureSize("CORAL_FANS", 20).lock();
++
++    /**
++     * Covers the variants of coral blocks.
++     */
++    public static final ItemSetTag CORAL_BLOCKS = new ItemSetTag(keyFor("coral_blocks"))
++        .endsWith("_CORAL_BLOCK")
++        .ensureSize("CORAL_BLOCKS", 10).lock();
++
++    /**
++     * Covers all items that can be enchanted from the enchantment table or anvil.
++     *
++     * @deprecated in favour of {@link Tag#ITEMS_ENCHANTABLE_VANISHING} and other similar enchantable tags
++     */
++    @Deprecated(since = "1.21.8")
++    public static final ItemSetTag ENCHANTABLE = replacedBy(Tag.ITEMS_ENCHANTABLE_VANISHING, "enchantable"); // this tag already cover the others
++
++    /**
++     * Covers the variants of raw ores.
++     */
++    public static final ItemSetTag RAW_ORES = new ItemSetTag(keyFor("raw_ores"))
++        .add(ItemType.RAW_COPPER, ItemType.RAW_GOLD, ItemType.RAW_IRON).lock();
++
++    /**
++     * Covers all command block types.
++     */
++    public static final ItemSetTag COMMAND_BLOCKS = new ItemSetTag(keyFor("command_blocks"))
++        .endsWith("COMMAND_BLOCK")
++        .ensureSize("COMMAND_BLOCKS", 3).lock();
++
++    /**
++     * Covers the variants of deepslate ores.
++     */
++    public static final ItemSetTag DEEPSLATE_ORES = new ItemSetTag(keyFor("deepslate_ores"))
++        .add(material -> material.key().value().startsWith("DEEPSLATE_") && material.key().value().endsWith("_ORE"))
++        .ensureSize("DEEPSLATE_ORES", 8).lock();
++
++    /**
++     * Covers the variants of raw ore blocks.
++     */
++    public static final ItemSetTag RAW_ORE_BLOCKS = new ItemSetTag(keyFor("raw_ore_blocks"))
++        .add(ItemType.RAW_COPPER_BLOCK, ItemType.RAW_GOLD_BLOCK, ItemType.RAW_IRON_BLOCK).lock();
++
++    /**
++     * Covers all oxidized copper blocks.
++     */
++    public static final ItemSetTag OXIDIZED_COPPER_BLOCKS = new ItemSetTag(keyFor("oxidized_copper_blocks"))
++        .startsWith("OXIDIZED_").startsWith("WAXED_OXIDIZED_").ensureSize("OXIDIZED_COPPER_BLOCKS", 30).lock();
++
++    /**
++     * Covers all weathered copper blocks.
++     */
++    public static final ItemSetTag WEATHERED_COPPER_BLOCKS = new ItemSetTag(keyFor("weathered_copper_blocks"))
++        .startsWith("WEATHERED_").startsWith("WAXED_WEATHERED_").ensureSize("WEATHERED_COPPER_BLOCKS", 30).lock();
++
++    /**
++     * Covers all exposed copper blocks.
++     */
++    public static final ItemSetTag EXPOSED_COPPER_BLOCKS = new ItemSetTag(keyFor("exposed_copper_blocks"))
++        .startsWith("EXPOSED_").startsWith("WAXED_EXPOSED_").ensureSize("EXPOSED_COPPER_BLOCKS", 30).lock();
++
++    /**
++     * Covers all un-weathered copper blocks.
++     */
++    public static final ItemSetTag UNAFFECTED_COPPER_BLOCKS = new ItemSetTag(keyFor("unaffected_copper_blocks"))
++        .startsWith("CUT_COPPER").startsWith("WAXED_CUT_COPPER")
++        .startsWith("WAXED_COPPER_").startsWith("COPPER_")
++        .add(ItemType.CHISELED_COPPER, ItemType.WAXED_CHISELED_COPPER)
++        .not(ItemType.COPPER_INGOT, ItemType.COPPER_ORE, ItemType.COPPER_NUGGET)
++        .not(ItemType.COPPER_HORSE_ARMOR, ItemType.COPPER_GOLEM_SPAWN_EGG)
++        .not(ItemType.COPPER_HELMET, ItemType.COPPER_CHESTPLATE, ItemType.COPPER_LEGGINGS, ItemType.COPPER_BOOTS)
++        .not(ItemType.COPPER_AXE, ItemType.COPPER_HOE, ItemType.COPPER_PICKAXE, ItemType.COPPER_SHOVEL, ItemType.COPPER_SWORD)
++        .not(ItemType.COPPER_NAUTILUS_ARMOR, ItemType.COPPER_SPEAR)
++        .ensureSize("UNAFFECTED_COPPER_BLOCKS", 30).lock();
++
++    /**
++     * Covers all waxed copper blocks.
++     * <p>
++     * Combine with other copper-related tags to filter is-waxed or not.
++     */
++    public static final ItemSetTag WAXED_COPPER_BLOCKS = new ItemSetTag(keyFor("waxed_copper_blocks"))
++        .add(m -> m.key().value().startsWith("WAXED_") && m.key().value().contains("COPPER")).ensureSize("WAXED_COPPER_BLOCKS", 56).lock();
++
++    /**
++     * Covers all un-waxed copper blocks.
++     * <p>
++     * Combine with other copper-related tags to filter is-un-waxed or not.
++     */
++    public static final ItemSetTag UNWAXED_COPPER_BLOCKS = new ItemSetTag(keyFor("unwaxed_copper_blocks"))
++        .startsWith("EXPOSED_").startsWith("WEATHERED_").startsWith("OXIDIZED_")
++        .startsWith("CUT_COPPER")
++        .add(ItemType.COPPER_BLOCK, ItemType.CHISELED_COPPER, ItemType.COPPER_DOOR, ItemType.COPPER_TRAPDOOR, ItemType.COPPER_GRATE, ItemType.COPPER_BULB)
++        .add(ItemType.COPPER_BARS, ItemType.COPPER_TORCH, ItemType.COPPER_CHEST, ItemType.COPPER_CHAIN, ItemType.COPPER_LANTERN, ItemType.COPPER_GOLEM_STATUE)
++        .ensureSize("UNWAXED_COPPER_BLOCKS", 60).lock();
++
++    /**
++     * Covers all copper block variants.
++     */
++    public static final ItemSetTag COPPER_BLOCKS = new ItemSetTag(keyFor("copper_blocks"))
++        .add(WAXED_COPPER_BLOCKS).add(UNWAXED_COPPER_BLOCKS).ensureSize("COPPER_BLOCKS", 117).lock();
++
++    /**
++     * Covers all weathering/waxed states of the plain copper block.
++     */
++    public static final ItemSetTag FULL_COPPER_BLOCKS = new ItemSetTag(keyFor("full_copper_blocks"))
++        .endsWith("OXIDIZED_COPPER")
++        .endsWith("WEATHERED_COPPER")
++        .endsWith("EXPOSED_COPPER")
++        .endsWith("COPPER_BLOCK")
++        .not(ItemType.RAW_COPPER_BLOCK)
++        .ensureSize("FULL_COPPER_BLOCKS", 8).lock();
++
++    /**
++     * Covers all weathering/waxed states of the cut copper block.
++     */
++    public static final ItemSetTag CUT_COPPER_BLOCKS = new ItemSetTag(keyFor("cut_copper_blocks"))
++        .endsWith("CUT_COPPER").ensureSize("CUT_COPPER_BLOCKS", 8).lock();
++
++    /**
++     * Covers all weathering/waxed states of the cut copper stairs.
++     */
++    public static final ItemSetTag CUT_COPPER_STAIRS = new ItemSetTag(keyFor("cut_copper_stairs"))
++        .endsWith("CUT_COPPER_STAIRS").ensureSize("CUT_COPPER_STAIRS", 8).lock();
++
++    /**
++     * Covers all weathering/waxed states of the cut copper slab.
++     */
++    public static final ItemSetTag CUT_COPPER_SLABS = new ItemSetTag(keyFor("cut_copper_slabs"))
++        .endsWith("CUT_COPPER_SLAB").ensureSize("CUT_COPPER_SLABS", 8).lock();
++
++    /**
++     * Covers all Wooden Tools.
++     */
++    public static final ItemSetTag WOODEN_TOOLS = new ItemSetTag(keyFor("wooden_tools"))
++        .add(ItemType.WOODEN_AXE, ItemType.WOODEN_HOE, ItemType.WOODEN_PICKAXE, ItemType.WOODEN_SHOVEL, ItemType.WOODEN_SWORD, ItemType.WOODEN_SPEAR)
++        .lock();
++
++    /**
++     * Covers all Stone Tools.
++     */
++    public static final ItemSetTag STONE_TOOLS = new ItemSetTag(keyFor("stone_tools"))
++        .add(ItemType.STONE_AXE, ItemType.STONE_HOE, ItemType.STONE_PICKAXE, ItemType.STONE_SHOVEL, ItemType.STONE_SWORD, ItemType.STONE_SPEAR)
++        .lock();
++
++    /**
++     * Covers all copper Tools.
++     */
++    public static final ItemSetTag COPPER_TOOLS = new ItemSetTag(keyFor("copper_tools"))
++        .add(ItemType.COPPER_AXE, ItemType.COPPER_HOE, ItemType.COPPER_PICKAXE, ItemType.COPPER_SHOVEL, ItemType.COPPER_SWORD, ItemType.COPPER_SPEAR)
++        .lock();
++
++    /**
++     * Covers all Iron Tools.
++     */
++    public static final ItemSetTag IRON_TOOLS = new ItemSetTag(keyFor("iron_tools"))
++        .add(ItemType.IRON_AXE, ItemType.IRON_HOE, ItemType.IRON_PICKAXE, ItemType.IRON_SHOVEL, ItemType.IRON_SWORD, ItemType.IRON_SPEAR)
++        .lock();
++
++    /**
++     * Covers all Gold Tools.
++     */
++    public static final ItemSetTag GOLDEN_TOOLS = new ItemSetTag(keyFor("golden_tools"))
++        .add(ItemType.GOLDEN_AXE, ItemType.GOLDEN_HOE, ItemType.GOLDEN_PICKAXE, ItemType.GOLDEN_SHOVEL, ItemType.GOLDEN_SWORD, ItemType.GOLDEN_SPEAR)
++        .lock();
++
++    /**
++     * Covers all Diamond Tools.
++     */
++    public static final ItemSetTag DIAMOND_TOOLS = new ItemSetTag(keyFor("diamond_tools"))
++        .add(ItemType.DIAMOND_AXE, ItemType.DIAMOND_HOE, ItemType.DIAMOND_PICKAXE, ItemType.DIAMOND_SHOVEL, ItemType.DIAMOND_SWORD, ItemType.DIAMOND_SPEAR)
++        .lock();
++
++    /**
++     * Covers all Netherite Tools.
++     */
++    public static final ItemSetTag NETHERITE_TOOLS = new ItemSetTag(keyFor("netherite_tools"))
++        .add(ItemType.NETHERITE_AXE, ItemType.NETHERITE_HOE, ItemType.NETHERITE_PICKAXE, ItemType.NETHERITE_SHOVEL, ItemType.NETHERITE_SWORD, ItemType.NETHERITE_SPEAR)
++        .lock();
++
++}

@@ -1,0 +1,92 @@
+--- a/src/main/java/org/bukkit/inventory/SmithingTrimRecipe.java
++++ b/src/main/java/org/bukkit/inventory/SmithingTrimRecipe.java
+@@ -1,10 +_,12 @@
+ package org.bukkit.inventory;
+ 
+-import org.bukkit.Material;
+ import org.bukkit.NamespacedKey;
++import org.bukkit.Registry;
+ import org.bukkit.inventory.meta.trim.TrimPattern;
+ import org.jetbrains.annotations.NotNull;
+ 
++import java.util.Map;
++
+ /**
+  * Represents a smithing trim recipe.
+  */
+@@ -23,7 +_,7 @@
+      * @param pattern The trim pattern
+      */
+     public SmithingTrimRecipe(@NotNull NamespacedKey key, @NotNull RecipeChoice template, @NotNull RecipeChoice base, @NotNull RecipeChoice addition, @NotNull TrimPattern pattern) {
+-        super(key, new ItemStack(Material.AIR), base, addition);
++        super(key, new ItemStack(ItemType.AIR), base, addition);
+         this.template = template == null ? RecipeChoice.empty() : template.validate(true).clone(); // Don't use null
+         this.pattern = pattern;
+     }
+@@ -39,7 +_,7 @@
+      * @param copyDataComponents whether to copy the data components from the input base item to the output
+      */
+     public SmithingTrimRecipe(@NotNull NamespacedKey key, @NotNull RecipeChoice template, @NotNull RecipeChoice base, @NotNull RecipeChoice addition, @NotNull TrimPattern pattern, boolean copyDataComponents) {
+-        super(key, new ItemStack(Material.AIR), base, addition, copyDataComponents);
++        super(key, new ItemStack(ItemType.AIR), base, addition, copyDataComponents);
+         this.template = template == null ? RecipeChoice.empty() : template.validate(true).clone(); // Don't use null
+         this.pattern = pattern;
+     }
+@@ -96,34 +_,33 @@
+     private static TrimPattern patternFromTemplate(@NotNull RecipeChoice template) {
+         if (template instanceof RecipeChoice.ExactChoice exactChoice) {
+             return patternFromMaterial(exactChoice.getItemStack().getType());
+-        } else if (template instanceof RecipeChoice.MaterialChoice materialChoice) {
+-            return patternFromMaterial(materialChoice.getItemStack().getType());
++        } else if (template instanceof RecipeChoice.ItemTypeChoice itemTypeChoice) {
++            return patternFromMaterial(Registry.ITEM.getOrThrow(itemTypeChoice.itemTypes().iterator().next()));
+         } else {
+             return TrimPattern.BOLT;
+         }
+     }
+ 
+-    private static TrimPattern patternFromMaterial(final @NotNull Material material) {
+-        return switch (material) {
+-            case BOLT_ARMOR_TRIM_SMITHING_TEMPLATE -> TrimPattern.BOLT;
+-            case COAST_ARMOR_TRIM_SMITHING_TEMPLATE -> TrimPattern.COAST;
+-            case DUNE_ARMOR_TRIM_SMITHING_TEMPLATE -> TrimPattern.DUNE;
+-            case EYE_ARMOR_TRIM_SMITHING_TEMPLATE -> TrimPattern.EYE;
+-            case FLOW_ARMOR_TRIM_SMITHING_TEMPLATE -> TrimPattern.FLOW;
+-            case HOST_ARMOR_TRIM_SMITHING_TEMPLATE -> TrimPattern.HOST;
+-            case RAISER_ARMOR_TRIM_SMITHING_TEMPLATE -> TrimPattern.RAISER;
+-            case RIB_ARMOR_TRIM_SMITHING_TEMPLATE -> TrimPattern.RIB;
+-            case SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE -> TrimPattern.SENTRY;
+-            case SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE -> TrimPattern.SHAPER;
+-            case SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE -> TrimPattern.SILENCE;
+-            case SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE -> TrimPattern.SNOUT;
+-            case SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE -> TrimPattern.SPIRE;
+-            case TIDE_ARMOR_TRIM_SMITHING_TEMPLATE -> TrimPattern.TIDE;
+-            case VEX_ARMOR_TRIM_SMITHING_TEMPLATE -> TrimPattern.VEX;
+-            case WARD_ARMOR_TRIM_SMITHING_TEMPLATE -> TrimPattern.WARD;
+-            case WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE -> TrimPattern.WAYFINDER;
+-            case WILD_ARMOR_TRIM_SMITHING_TEMPLATE -> TrimPattern.WILD;
+-            default -> TrimPattern.BOLT;
+-        };
++    private static TrimPattern patternFromMaterial(final @NotNull ItemType material) {
++        return Map.ofEntries(
++            Map.entry(ItemType.BOLT_ARMOR_TRIM_SMITHING_TEMPLATE, TrimPattern.BOLT),
++            Map.entry(ItemType.COAST_ARMOR_TRIM_SMITHING_TEMPLATE, TrimPattern.COAST),
++            Map.entry(ItemType.DUNE_ARMOR_TRIM_SMITHING_TEMPLATE, TrimPattern.DUNE),
++            Map.entry(ItemType.EYE_ARMOR_TRIM_SMITHING_TEMPLATE, TrimPattern.EYE),
++            Map.entry(ItemType.FLOW_ARMOR_TRIM_SMITHING_TEMPLATE, TrimPattern.FLOW),
++            Map.entry(ItemType.HOST_ARMOR_TRIM_SMITHING_TEMPLATE, TrimPattern.HOST),
++            Map.entry(ItemType.RAISER_ARMOR_TRIM_SMITHING_TEMPLATE, TrimPattern.RAISER),
++            Map.entry(ItemType.RIB_ARMOR_TRIM_SMITHING_TEMPLATE, TrimPattern.RIB),
++            Map.entry(ItemType.SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE, TrimPattern.SENTRY),
++            Map.entry(ItemType.SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE, TrimPattern.SHAPER),
++            Map.entry(ItemType.SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE, TrimPattern.SILENCE),
++            Map.entry(ItemType.SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE, TrimPattern.SNOUT),
++            Map.entry(ItemType.SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE, TrimPattern.SPIRE),
++            Map.entry(ItemType.TIDE_ARMOR_TRIM_SMITHING_TEMPLATE, TrimPattern.TIDE),
++            Map.entry(ItemType.VEX_ARMOR_TRIM_SMITHING_TEMPLATE, TrimPattern.VEX),
++            Map.entry(ItemType.WARD_ARMOR_TRIM_SMITHING_TEMPLATE, TrimPattern.WARD),
++            Map.entry(ItemType.WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE, TrimPattern.WAYFINDER),
++            Map.entry(ItemType.WILD_ARMOR_TRIM_SMITHING_TEMPLATE, TrimPattern.WILD)
++        ).getOrDefault(material, TrimPattern.BOLT);
+     }
+ }

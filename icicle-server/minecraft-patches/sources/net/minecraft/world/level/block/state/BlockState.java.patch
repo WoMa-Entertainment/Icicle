@@ -1,0 +1,17 @@
+--- a/net/minecraft/world/level/block/state/BlockState.java
++++ b/net/minecraft/world/level/block/state/BlockState.java
+@@ -16,11 +_,11 @@
+     );
+ 
+     // Paper start - optimise getType calls
+-    org.bukkit.@org.jspecify.annotations.Nullable Material cachedMaterial;
++    org.bukkit.block.@org.jspecify.annotations.Nullable BlockType cachedMaterial;
+ 
+-    public final org.bukkit.Material getBukkitMaterial() {
++    public final org.bukkit.block.BlockType getBukkitMaterial() {
+         if (this.cachedMaterial == null) {
+-            this.cachedMaterial = org.bukkit.craftbukkit.block.CraftBlockType.minecraftToBukkit(this.getBlock());
++            this.cachedMaterial = org.bukkit.craftbukkit.block.CraftBlockType.minecraftToBukkitNew(this.getBlock());
+         }
+         return this.cachedMaterial;
+     }

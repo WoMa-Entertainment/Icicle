@@ -1,0 +1,130 @@
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+@@ -151,7 +_,6 @@
+ import org.bukkit.Input;
+ import org.bukkit.Instrument;
+ import org.bukkit.Location;
+-import org.bukkit.Material;
+ import org.bukkit.NamespacedKey;
+ import org.bukkit.Note;
+ import org.bukkit.OfflinePlayer;
+@@ -165,6 +_,7 @@
+ import org.bukkit.ban.ProfileBanList;
+ import org.bukkit.block.Block;
+ import org.bukkit.block.BlockState;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.Sign;
+ import org.bukkit.block.TileState;
+ import org.bukkit.block.data.BlockData;
+@@ -202,7 +_,6 @@
+ import org.bukkit.craftbukkit.scoreboard.CraftScoreboard;
+ import org.bukkit.craftbukkit.util.CraftChatMessage;
+ import org.bukkit.craftbukkit.util.CraftLocation;
+-import org.bukkit.craftbukkit.util.CraftMagicNumbers;
+ import org.bukkit.craftbukkit.util.CraftNamespacedKey;
+ import org.bukkit.entity.EnderPearl;
+ import org.bukkit.entity.EntityType;
+@@ -914,14 +_,6 @@
+     }
+ 
+     @Override
+-    public void sendBlockChange(Location loc, Material material, byte data) {
+-        if (this.getHandle().connection == null) return;
+-
+-        ClientboundBlockUpdatePacket packet = new ClientboundBlockUpdatePacket(CraftLocation.toBlockPos(loc), CraftMagicNumbers.getBlock(material, data));
+-        this.getHandle().connection.send(packet);
+-    }
+-
+-    @Override
+     public void sendBlockChange(Location loc, BlockData block) {
+         if (this.getHandle().connection == null) return;
+ 
+@@ -1472,32 +_,62 @@
+     }
+ 
+     @Override
+-    public void incrementStatistic(Statistic statistic, Material material) {
+-        CraftStatistic.incrementStatistic(this.getHandle().getStats(), statistic, material, this.getHandle());
+-    }
+-
+-    @Override
+-    public void decrementStatistic(Statistic statistic, Material material) {
+-        CraftStatistic.decrementStatistic(this.getHandle().getStats(), statistic, material, this.getHandle());
+-    }
+-
+-    @Override
+-    public int getStatistic(Statistic statistic, Material material) {
+-        return CraftStatistic.getStatistic(this.getHandle().getStats(), statistic, material);
+-    }
+-
+-    @Override
+-    public void incrementStatistic(Statistic statistic, Material material, int amount) {
+-        CraftStatistic.incrementStatistic(this.getHandle().getStats(), statistic, material, amount, this.getHandle());
+-    }
+-
+-    @Override
+-    public void decrementStatistic(Statistic statistic, Material material, int amount) {
+-        CraftStatistic.decrementStatistic(this.getHandle().getStats(), statistic, material, amount, this.getHandle());
+-    }
+-
+-    @Override
+-    public void setStatistic(Statistic statistic, Material material, int newValue) {
++    public void incrementStatistic(Statistic statistic, ItemType material) {
++        CraftStatistic.incrementStatistic(this.getHandle().getStats(), statistic, material, this.getHandle());
++    }
++
++    @Override
++    public void incrementStatistic(Statistic statistic, BlockType material) {
++        CraftStatistic.incrementStatistic(this.getHandle().getStats(), statistic, material, this.getHandle());
++    }
++
++    @Override
++    public void decrementStatistic(Statistic statistic, ItemType material) {
++        CraftStatistic.decrementStatistic(this.getHandle().getStats(), statistic, material, this.getHandle());
++    }
++
++    @Override
++    public void decrementStatistic(Statistic statistic, BlockType material) {
++        CraftStatistic.decrementStatistic(this.getHandle().getStats(), statistic, material, this.getHandle());
++    }
++
++    @Override
++    public int getStatistic(Statistic statistic, ItemType material) {
++        return CraftStatistic.getStatistic(this.getHandle().getStats(), statistic, material);
++    }
++
++    @Override
++    public int getStatistic(Statistic statistic, BlockType material) {
++        return CraftStatistic.getStatistic(this.getHandle().getStats(), statistic, material);
++    }
++
++    @Override
++    public void incrementStatistic(Statistic statistic, ItemType material, int amount) {
++        CraftStatistic.incrementStatistic(this.getHandle().getStats(), statistic, material, amount, this.getHandle());
++    }
++
++    @Override
++    public void incrementStatistic(Statistic statistic, BlockType material, int amount) {
++        CraftStatistic.incrementStatistic(this.getHandle().getStats(), statistic, material, amount, this.getHandle());
++    }
++
++    @Override
++    public void decrementStatistic(Statistic statistic, ItemType material, int amount) {
++        CraftStatistic.decrementStatistic(this.getHandle().getStats(), statistic, material, amount, this.getHandle());
++    }
++
++    @Override
++    public void decrementStatistic(Statistic statistic, BlockType material, int amount) {
++        CraftStatistic.decrementStatistic(this.getHandle().getStats(), statistic, material, amount, this.getHandle());
++    }
++
++    @Override
++    public void setStatistic(Statistic statistic, ItemType material, int newValue) {
++        CraftStatistic.setStatistic(this.getHandle().getStats(), statistic, material, newValue, this.getHandle());
++    }
++
++    @Override
++    public void setStatistic(Statistic statistic, BlockType material, int newValue) {
+         CraftStatistic.setStatistic(this.getHandle().getStats(), statistic, material, newValue, this.getHandle());
+     }
+ 

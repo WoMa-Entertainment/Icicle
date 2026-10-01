@@ -1,0 +1,22 @@
+--- a/src/test/java/org/bukkit/craftbukkit/inventory/ItemMetaImplementationOverrideTest.java
++++ b/src/test/java/org/bukkit/craftbukkit/inventory/ItemMetaImplementationOverrideTest.java
+@@ -7,9 +_,9 @@
+ import java.util.List;
+ import java.util.concurrent.Callable;
+ import java.util.stream.Stream;
+-import org.bukkit.Material;
+ import org.bukkit.configuration.serialization.DelegateDeserialization;
+ import org.bukkit.craftbukkit.Overridden;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.support.environment.AllFeatures;
+ import org.junit.jupiter.params.ParameterizedTest;
+ import org.junit.jupiter.params.provider.Arguments;
+@@ -23,7 +_,7 @@
+         final List<Arguments> testData = new ArrayList<>();
+         List<Class<? extends CraftMetaItem>> classes = new ArrayList<Class<? extends CraftMetaItem>>();
+ 
+-        for (Material material : ItemStackTest.COMPOUND_MATERIALS) {
++        for (ItemType material : ItemStackTest.COMPOUND_MATERIALS) {
+             Class<? extends CraftMetaItem> clazz = CraftItemFactory.instance().getItemMeta(material).getClass().asSubclass(ItemMetaImplementationOverrideTest.parent);
+             if (clazz != ItemMetaImplementationOverrideTest.parent) {
+                 classes.add(clazz);

@@ -1,0 +1,69 @@
+--- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaShield.java
++++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaShield.java
+@@ -11,9 +_,9 @@
+ import net.minecraft.core.component.DataComponents;
+ import net.minecraft.world.level.block.entity.BannerPatternLayers;
+ import org.bukkit.DyeColor;
+-import org.bukkit.Material;
+ import org.bukkit.block.Banner;
+ import org.bukkit.block.BlockState;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.banner.Pattern;
+ import org.bukkit.block.banner.PatternType;
+ import org.bukkit.configuration.serialization.DelegateDeserialization;
+@@ -249,7 +_,7 @@
+     }
+ 
+     private static Banner getBlockState(DyeColor color) {
+-        Material stateMaterial = CraftMetaShield.shieldToBannerHack(color);
++        BlockType stateMaterial = CraftMetaShield.shieldToBannerHack(color);
+         return (Banner) CraftBlockStates.getBlockState(CraftRegistry.getMinecraftRegistry(), BlockPos.ZERO, stateMaterial, null);
+     }
+ 
+@@ -261,28 +_,28 @@
+         return meta;
+     }
+ 
+-    static Material shieldToBannerHack(DyeColor color) {
++    static BlockType shieldToBannerHack(DyeColor color) {
+         if (color == null) {
+-            return Material.WHITE_BANNER;
++            return BlockType.WHITE_BANNER;
+         }
+ 
+         return switch (color) {
+-            case WHITE -> Material.WHITE_BANNER;
+-            case ORANGE -> Material.ORANGE_BANNER;
+-            case MAGENTA -> Material.MAGENTA_BANNER;
+-            case LIGHT_BLUE -> Material.LIGHT_BLUE_BANNER;
+-            case YELLOW -> Material.YELLOW_BANNER;
+-            case LIME -> Material.LIME_BANNER;
+-            case PINK -> Material.PINK_BANNER;
+-            case GRAY -> Material.GRAY_BANNER;
+-            case LIGHT_GRAY -> Material.LIGHT_GRAY_BANNER;
+-            case CYAN -> Material.CYAN_BANNER;
+-            case PURPLE -> Material.PURPLE_BANNER;
+-            case BLUE -> Material.BLUE_BANNER;
+-            case BROWN -> Material.BROWN_BANNER;
+-            case GREEN -> Material.GREEN_BANNER;
+-            case RED -> Material.RED_BANNER;
+-            case BLACK -> Material.BLACK_BANNER;
++            case WHITE -> BlockType.WHITE_BANNER;
++            case ORANGE -> BlockType.ORANGE_BANNER;
++            case MAGENTA -> BlockType.MAGENTA_BANNER;
++            case LIGHT_BLUE -> BlockType.LIGHT_BLUE_BANNER;
++            case YELLOW -> BlockType.YELLOW_BANNER;
++            case LIME -> BlockType.LIME_BANNER;
++            case PINK -> BlockType.PINK_BANNER;
++            case GRAY -> BlockType.GRAY_BANNER;
++            case LIGHT_GRAY -> BlockType.LIGHT_GRAY_BANNER;
++            case CYAN -> BlockType.CYAN_BANNER;
++            case PURPLE -> BlockType.PURPLE_BANNER;
++            case BLUE -> BlockType.BLUE_BANNER;
++            case BROWN -> BlockType.BROWN_BANNER;
++            case GREEN -> BlockType.GREEN_BANNER;
++            case RED -> BlockType.RED_BANNER;
++            case BLACK -> BlockType.BLACK_BANNER;
+         };
+     }
+ }

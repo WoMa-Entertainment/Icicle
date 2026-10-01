@@ -1,0 +1,18 @@
+--- a/src/main/java/org/bukkit/inventory/meta/WritableBookMeta.java
++++ b/src/main/java/org/bukkit/inventory/meta/WritableBookMeta.java
+@@ -2,13 +_,12 @@
+ 
+ import java.util.List;
+ import net.kyori.adventure.inventory.BookLike;
+-import org.bukkit.Material;
+ import org.jetbrains.annotations.NotNull;
+ 
+ /**
+- * Represents a book ({@link Material#WRITABLE_BOOK}) that can have pages.
++ * Represents a book ({@link org.bukkit.inventory.ItemType#WRITABLE_BOOK}) that can have pages.
+  * <p>
+- * For {@link Material#WRITTEN_BOOK}, use {@link BookMeta}.
++ * For {@link org.bukkit.inventory.ItemType#WRITTEN_BOOK}, use {@link BookMeta}.
+  * <p>
+  * Before using this type, make sure to check the itemstack's material with
+  * {@link org.bukkit.inventory.ItemStack#getType()}. {@code instanceof} on

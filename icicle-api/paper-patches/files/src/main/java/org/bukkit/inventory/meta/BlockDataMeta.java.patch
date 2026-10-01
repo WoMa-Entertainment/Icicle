@@ -1,0 +1,19 @@
+--- a/src/main/java/org/bukkit/inventory/meta/BlockDataMeta.java
++++ b/src/main/java/org/bukkit/inventory/meta/BlockDataMeta.java
+@@ -1,6 +_,6 @@
+ package org.bukkit.inventory.meta;
+ 
+-import org.bukkit.Material;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.data.BlockData;
+ import org.jetbrains.annotations.NotNull;
+ 
+@@ -24,7 +_,7 @@
+      * @return the attached data or new data
+      */
+     @NotNull
+-    BlockData getBlockData(@NotNull Material material);
++    BlockData getBlockData(@NotNull BlockType material);
+ 
+     /**
+      * Attaches a copy of the passed block data to the item.

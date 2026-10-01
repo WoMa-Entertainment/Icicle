@@ -1,0 +1,80 @@
+--- a/src/main/java/org/bukkit/World.java
++++ b/src/main/java/org/bukkit/World.java
+@@ -16,6 +_,7 @@
+ import java.util.function.Predicate;
+ import org.bukkit.block.Biome;
+ import org.bukkit.block.Block;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.data.BlockData;
+ import org.bukkit.boss.DragonBattle;
+ import org.bukkit.entity.AbstractArrow;
+@@ -36,7 +_,6 @@
+ import org.bukkit.generator.structure.Structure;
+ import org.bukkit.generator.structure.StructureType;
+ import org.bukkit.inventory.ItemStack;
+-import org.bukkit.material.MaterialData;
+ import org.bukkit.metadata.Metadatable;
+ import org.bukkit.persistence.PersistentDataHolder;
+ import org.bukkit.plugin.Plugin;
+@@ -2528,25 +_,6 @@
+ 
+     /**
+      * Spawn a {@link FallingBlock} entity at the given {@link Location} of
+-     * the specified {@link MaterialData}. The MaterialData dictates what is falling.
+-     * When the FallingBlock hits the ground, it will place that block.
+-     * <p>
+-     * The Material must be a block type, check with {@link Material#isBlock()
+-     * data.getItemType().isBlock()}. The Material may not be air.
+-     *
+-     * @param location The {@link Location} to spawn the FallingBlock
+-     * @param data The block data
+-     * @return The spawned {@link FallingBlock} instance
+-     * @throws IllegalArgumentException if {@link Location} or {@link
+-     *     MaterialData} are null or {@link Material} of the {@link MaterialData} is not a block
+-     * @deprecated Use {@link #spawn(Location, Class, Consumer)} (or a variation thereof) in combination with {@link FallingBlock#setBlockData(BlockData)}
+-     */
+-    @NotNull
+-    @Deprecated(since = "1.20.2", forRemoval = true)
+-    public FallingBlock spawnFallingBlock(@NotNull Location location, @NotNull MaterialData data) throws IllegalArgumentException;
+-
+-    /**
+-     * Spawn a {@link FallingBlock} entity at the given {@link Location} of
+      * the specified {@link BlockData}. The BlockData dictates what is falling.
+      * When the FallingBlock hits the ground, it will place that block.
+      *
+@@ -2562,26 +_,6 @@
+     public FallingBlock spawnFallingBlock(@NotNull Location location, @NotNull BlockData data) throws IllegalArgumentException;
+ 
+     /**
+-     * Spawn a {@link FallingBlock} entity at the given {@link Location} of the
+-     * specified {@link Material}. The material dictates what is falling.
+-     * When the FallingBlock hits the ground, it will place that block.
+-     * <p>
+-     * The Material must be a block type, check with {@link Material#isBlock()
+-     * material.isBlock()}. The Material may not be air.
+-     *
+-     * @param location The {@link Location} to spawn the FallingBlock
+-     * @param material The block {@link Material} type
+-     * @param data The block data
+-     * @return The spawned {@link FallingBlock} instance
+-     * @throws IllegalArgumentException if {@link Location} or {@link
+-     *     Material} are null or {@link Material} is not a block
+-     * @deprecated Magic value. Use {@link #spawn(Location, Class, Consumer)} (or a variation thereof) in combination with {@link FallingBlock#setBlockData(BlockData)}
+-     */
+-    @Deprecated(since = "1.7.5", forRemoval = true)
+-    @NotNull
+-    public FallingBlock spawnFallingBlock(@NotNull Location location, @NotNull Material material, byte data) throws IllegalArgumentException;
+-
+-    /**
+      * Plays an effect to all players within a default radius around a given
+      * location.
+      *
+@@ -4437,7 +_,7 @@
+      * @return the materials that will forever stay lit by fire
+      */
+     @NotNull
+-    Collection<Material> getInfiniburn();
++    Collection<BlockType> getInfiniburn();
+ 
+     /**
+      * Posts a specified game event at a location

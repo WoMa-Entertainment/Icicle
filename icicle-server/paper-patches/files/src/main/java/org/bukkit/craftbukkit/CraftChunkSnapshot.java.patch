@@ -1,0 +1,39 @@
+--- a/src/main/java/org/bukkit/craftbukkit/CraftChunkSnapshot.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftChunkSnapshot.java
+@@ -11,12 +_,11 @@
+ import net.minecraft.world.level.chunk.PalettedContainerRO;
+ import net.minecraft.world.level.levelgen.Heightmap;
+ import org.bukkit.ChunkSnapshot;
+-import org.bukkit.Material;
+ import org.bukkit.block.Biome;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.data.BlockData;
+ import org.bukkit.craftbukkit.block.CraftBiome;
+ import org.bukkit.craftbukkit.block.data.CraftBlockData;
+-import org.bukkit.craftbukkit.util.CraftMagicNumbers;
+ 
+ /**
+  * Represents a static, thread-safe snapshot of chunk of blocks
+@@ -101,7 +_,7 @@
+     }
+ 
+     @Override
+-    public Material getBlockType(int x, int y, int z) {
++    public BlockType getBlockType(int x, int y, int z) {
+         this.validateChunkCoordinates(x, y, z);
+ 
+         return this.blockIds[this.getSectionIndex(y)].get(x, y & 0xF, z).getBukkitMaterial(); // Paper - optimise get calls
+@@ -112,13 +_,6 @@
+         this.validateChunkCoordinates(x, y, z);
+ 
+         return this.blockIds[this.getSectionIndex(y)].get(x, y & 0xF, z).asBlockData();
+-    }
+-
+-    @Override
+-    public final int getData(int x, int y, int z) {
+-        this.validateChunkCoordinates(x, y, z);
+-
+-        return CraftMagicNumbers.toLegacyData(this.blockIds[this.getSectionIndex(y)].get(x, y & 0xF, z));
+     }
+ 
+     @Override

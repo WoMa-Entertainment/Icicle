@@ -1,0 +1,39 @@
+--- a/src/main/java/org/bukkit/event/player/PlayerInteractEvent.java
++++ b/src/main/java/org/bukkit/event/player/PlayerInteractEvent.java
+@@ -1,7 +_,6 @@
+ package org.bukkit.event.player;
+ 
+ import org.bukkit.Location;
+-import org.bukkit.Material;
+ import org.bukkit.block.Block;
+ import org.bukkit.block.BlockFace;
+ import org.bukkit.entity.Player;
+@@ -11,6 +_,7 @@
+ import org.bukkit.event.block.BlockCanBuildEvent;
+ import org.bukkit.inventory.EquipmentSlot;
+ import org.bukkit.inventory.ItemStack;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.util.Vector;
+ import org.jetbrains.annotations.ApiStatus;
+ import org.jetbrains.annotations.NotNull;
+@@ -122,9 +_,9 @@
+      * @return Material the material of the item used
+      */
+     @NotNull
+-    public Material getMaterial() {
++    public ItemType getMaterial() {
+         if (!this.hasItem()) {
+-            return Material.AIR;
++            return ItemType.AIR;
+         }
+ 
+         return this.item.getType();
+@@ -159,7 +_,7 @@
+             return false;
+         }
+ 
+-        return this.item.getType().isBlock();
++        return this.item.getType().hasBlockType();
+     }
+ 
+     /**

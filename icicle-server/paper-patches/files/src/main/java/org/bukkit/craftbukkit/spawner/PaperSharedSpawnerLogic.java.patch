@@ -1,0 +1,19 @@
+--- a/src/main/java/org/bukkit/craftbukkit/spawner/PaperSharedSpawnerLogic.java
++++ b/src/main/java/org/bukkit/craftbukkit/spawner/PaperSharedSpawnerLogic.java
+@@ -15,6 +_,7 @@
+ import net.minecraft.world.level.storage.TagValueOutput;
+ import org.bukkit.craftbukkit.inventory.CraftItemStack;
+ import org.bukkit.inventory.ItemStack;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.spawner.Spawner;
+ import org.slf4j.Logger;
+ 
+@@ -46,7 +_,7 @@
+     }
+ 
+     default void setSpawnedItem(final ItemStack itemStack) {
+-        Preconditions.checkArgument(itemStack != null && !itemStack.getType().isAir(), "spawners cannot spawn air");
++        Preconditions.checkArgument(itemStack != null && itemStack.getType() != ItemType.AIR, "spawners cannot spawn air");
+ 
+         final net.minecraft.world.item.ItemStack item = CraftItemStack.asNMSCopy(itemStack);
+ 

@@ -1,0 +1,18 @@
+--- a/src/main/java/org/bukkit/inventory/BrewerInventory.java
++++ b/src/main/java/org/bukkit/inventory/BrewerInventory.java
+@@ -1,6 +_,5 @@
+ package org.bukkit.inventory;
+ 
+-import org.bukkit.Material;
+ import org.bukkit.block.BrewingStand;
+ import org.jetbrains.annotations.Nullable;
+ 
+@@ -34,7 +_,7 @@
+ 
+     /**
+      * Set the current fuel for brewing. Generally only
+-     * {@link Material#BLAZE_POWDER} will be of use.
++     * {@link ItemType#BLAZE_POWDER} will be of use.
+      *
+      * @param fuel The fuel
+      */

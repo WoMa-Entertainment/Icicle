@@ -1,0 +1,146 @@
+--- a/src/main/java/org/bukkit/scoreboard/Criteria.java
++++ b/src/main/java/org/bukkit/scoreboard/Criteria.java
+@@ -3,10 +_,11 @@
+ import com.google.common.base.Preconditions;
+ import io.papermc.paper.InternalAPIBridge;
+ import org.bukkit.Bukkit;
+-import org.bukkit.Material;
+ import org.bukkit.Statistic;
+ import org.bukkit.Statistic.Type;
++import org.bukkit.block.BlockType;
+ import org.bukkit.entity.EntityType;
++import org.bukkit.inventory.ItemType;
+ import org.jetbrains.annotations.NotNull;
+ 
+ /**
+@@ -218,13 +_,12 @@
+     public RenderType getDefaultRenderType();
+ 
+     /**
+-     * Get a {@link Criteria} for the specified statistic pertaining to blocks or items.
++     * Get a {@link Criteria} for the specified statistic pertaining to items.
+      * <p>
+-     * This method expects a {@link Statistic} of {@link Type#BLOCK} or {@link Type#ITEM} and the
+-     * {@link Material} matching said type (e.g. BLOCK statistics require materials where
+-     * {@link Material#isBlock()} is true). This acts as a convenience to create more complex
++     * This method expects a {@link Statistic} of {@link Type#ITEM} and the
++     * {@link ItemType} matching said type. This acts as a convenience to create more complex
+      * compound criteria such as those that increment on block breaks, or item uses. An example
+-     * would be {@code Criteria.statistic(Statistic.CRAFT_ITEM, Material.STICK)}, returning a
++     * would be {@code Criteria.statistic(Statistic.CRAFT_ITEM, ItemType.STICK)}, returning a
+      * Criteria representing "minecraft.crafted:minecraft.stick" which will increment when the
+      * player crafts a stick.
+      * <p>
+@@ -236,46 +_,60 @@
+      * @param statistic the statistic for which to get a criteria
+      * @param material the relevant material
+      * @return the criteria
+-     * @throws IllegalArgumentException if {@link Statistic#getType()} is anything other than
+-     * {@link Type#BLOCK} or {@link Type#ITEM}
+-     * @throws IllegalArgumentException if {@link Statistic#getType()} is {@link Type#BLOCK}, but
+-     * {@link Material#isBlock()} is false
+-     * @throws IllegalArgumentException if {@link Statistic#getType()} is {@link Type#ITEM}, but
+-     * {@link Material#isItem()} is false
+-     */
+-    @NotNull
+-    public static Criteria statistic(@NotNull Statistic statistic, @NotNull Material material) {
+-        Preconditions.checkArgument(statistic != null, "statistic must not be null");
+-        Preconditions.checkArgument(material != null, "material must not be null");
+-
+-        Type type = statistic.getType();
+-        Preconditions.checkArgument(type == Type.BLOCK || type == Type.ITEM, "statistic type must be either BLOCK or ITEM, given %s", type);
+-        Preconditions.checkArgument(type != Type.BLOCK || material.isBlock(), "statistic type is BLOCK but got non-block Material, %s", material);
+-        Preconditions.checkArgument(type != Type.ITEM || material.isItem(), "statistic type is ITEM but got non-item Material, %s", material);
+-
+-        // Good use case for a switch expression
+-        if (type == Type.BLOCK) {
+-            switch (statistic) {
+-                case MINE_BLOCK:
+-                    return Bukkit.getScoreboardCriteria("minecraft.mined:minecraft." + material.getKey().getKey());
+-                default:
+-                    break;
+-            }
+-        } else if (type == Type.ITEM) {
+-            switch (statistic) {
+-                case BREAK_ITEM:
+-                    return Bukkit.getScoreboardCriteria("minecraft.broken:minecraft." + material.getKey().getKey());
+-                case CRAFT_ITEM:
+-                    return Bukkit.getScoreboardCriteria("minecraft.crafted:minecraft." + material.getKey().getKey());
+-                case USE_ITEM:
+-                    return Bukkit.getScoreboardCriteria("minecraft.used:minecraft." + material.getKey().getKey());
+-                case PICKUP:
+-                    return Bukkit.getScoreboardCriteria("minecraft.picked_up:minecraft." + material.getKey().getKey());
+-                case DROP:
+-                    return Bukkit.getScoreboardCriteria("minecraft.dropped:minecraft." + material.getKey().getKey());
+-                default:
+-                    break;
+-            }
++     * @throws IllegalArgumentException if {@link Statistic#getType()} is not {@link Type#ITEM}
++     */
++    @NotNull
++    public static Criteria statistic(@NotNull Statistic statistic, @NotNull ItemType material) {
++        Preconditions.checkArgument(statistic != null, "statistic must not be null");
++        Preconditions.checkArgument(material != null, "material must not be null");
++        Preconditions.checkArgument(statistic.getType() == Type.ITEM, "statistic type must be ITEM, given %s", statistic.getType());
++
++        switch (statistic) {
++            case BREAK_ITEM:
++                return Bukkit.getScoreboardCriteria("minecraft.broken:minecraft." + material.getKey().getKey());
++            case CRAFT_ITEM:
++                return Bukkit.getScoreboardCriteria("minecraft.crafted:minecraft." + material.getKey().getKey());
++            case USE_ITEM:
++                return Bukkit.getScoreboardCriteria("minecraft.used:minecraft." + material.getKey().getKey());
++            case PICKUP:
++                return Bukkit.getScoreboardCriteria("minecraft.picked_up:minecraft." + material.getKey().getKey());
++            case DROP:
++                return Bukkit.getScoreboardCriteria("minecraft.dropped:minecraft." + material.getKey().getKey());
++            default:
++                break;
++        }
++
++        return statistic(statistic); // Fallback to a regular statistic
++    }
++
++    /**
++     * Get a {@link Criteria} for the specified statistic pertaining to blocks.
++     * <p>
++     * This method expects a {@link Statistic} of {@link Type#BLOCK} and the
++     * {@link BlockType} matching said type. This acts as a convenience to create more complex
++     * compound criteria such as those that increment on block breaks, or item uses.
++     * <p>
++     * If the provided statistic does not require additional data, {@link #statistic(Statistic)}
++     * is called and returned instead.
++     * <p>
++     * This method provides no guarantee that any given criteria exists on the vanilla server.
++     *
++     * @param statistic the statistic for which to get a criteria
++     * @param material the relevant material
++     * @return the criteria
++     * @throws IllegalArgumentException if {@link Statistic#getType()} is not {@link Type#BLOCK}
++     */
++    @NotNull
++    public static Criteria statistic(@NotNull Statistic statistic, @NotNull BlockType material) {
++        Preconditions.checkArgument(statistic != null, "statistic must not be null");
++        Preconditions.checkArgument(material != null, "material must not be null");
++        Preconditions.checkArgument(statistic.getType() == Type.BLOCK, "statistic type must be BLOCK, given %s", statistic.getType());
++
++        switch (statistic) {
++            case MINE_BLOCK:
++                return Bukkit.getScoreboardCriteria("minecraft.mined:minecraft." + material.getKey().getKey());
++            default:
++                break;
+         }
+ 
+         return statistic(statistic); // Fallback to a regular statistic
+@@ -327,8 +_,9 @@
+      * <p>
+      * This method provides no guarantee that any given criteria exists on the vanilla server. All
+      * statistics are accepted, however some may not operate as expected if additional data is
+-     * required. For block/item-related statistics, see {@link #statistic(Statistic, Material)},
+-     * and for entity-related statistics, see {@link #statistic(Statistic, EntityType)}
++     * required. For block/item-related statistics, see {@link #statistic(Statistic, ItemType)},
++     * {@link #statistic(Statistic, BlockType)}, and for entity-related statistics,
++     * see {@link #statistic(Statistic, EntityType)}.
+      *
+      * @param statistic the statistic for which to get a criteria
+      * @return the criteria

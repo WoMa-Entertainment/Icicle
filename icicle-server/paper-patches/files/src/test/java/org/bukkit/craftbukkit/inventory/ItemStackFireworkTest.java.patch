@@ -1,0 +1,20 @@
+--- a/src/test/java/org/bukkit/craftbukkit/inventory/ItemStackFireworkTest.java
++++ b/src/test/java/org/bukkit/craftbukkit/inventory/ItemStackFireworkTest.java
+@@ -7,15 +_,15 @@
+ import org.bukkit.Color;
+ import org.bukkit.FireworkEffect;
+ import org.bukkit.FireworkEffect.Type;
+-import org.bukkit.Material;
+ import org.bukkit.inventory.ItemStack;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.inventory.meta.FireworkMeta;
+ import org.junit.jupiter.params.provider.Arguments;
+ 
+ public class ItemStackFireworkTest extends ItemStackTest {
+ 
+     public static Stream<Arguments> data() {
+-        return ItemProvider.compound(ItemStackFireworkTest.operators(), "%s %s", NAME_PARAMETER, Material.FIREWORK_ROCKET);
++        return ItemProvider.compound(ItemStackFireworkTest.operators(), "%s %s", NAME_PARAMETER, ItemType.FIREWORK_ROCKET);
+     }
+ 
+     @SuppressWarnings("unchecked")

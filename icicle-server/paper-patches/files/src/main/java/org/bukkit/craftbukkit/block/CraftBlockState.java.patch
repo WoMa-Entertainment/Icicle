@@ -1,0 +1,81 @@
+--- a/src/main/java/org/bukkit/craftbukkit/block/CraftBlockState.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/CraftBlockState.java
+@@ -9,16 +_,14 @@
+ import net.minecraft.world.level.LevelAccessor;
+ import org.bukkit.Chunk;
+ import org.bukkit.Location;
+-import org.bukkit.Material;
+ import org.bukkit.World;
+ import org.bukkit.block.Block;
+ import org.bukkit.block.BlockState;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.data.BlockData;
+ import org.bukkit.craftbukkit.CraftWorld;
+ import org.bukkit.craftbukkit.block.data.CraftBlockData;
+ import org.bukkit.craftbukkit.util.CraftLocation;
+-import org.bukkit.craftbukkit.util.CraftMagicNumbers;
+-import org.bukkit.material.MaterialData;
+ import org.bukkit.metadata.MetadataValue;
+ import org.bukkit.plugin.Plugin;
+ 
+@@ -150,32 +_,16 @@
+     }
+ 
+     @Override
+-    public void setData(final MaterialData data) {
+-        Material mat = CraftMagicNumbers.getMaterial(this.block).getItemType();
+-
+-        if (mat != null) {
+-            Preconditions.checkArgument((data.getClass() == mat.getData()) || (data.getClass() == MaterialData.class), "Provided data is not of type %s, found %s", mat.getData().getName(), data.getClass().getName());
+-        }
+-        this.block = CraftMagicNumbers.getBlock(data);
+-    }
+-
+-    @Override
+-    public MaterialData getData() {
+-        return CraftMagicNumbers.getMaterial(this.block);
+-    }
+-
+-    @Override
+-    public void setType(final Material type) {
+-        Preconditions.checkArgument(type != null, "Material cannot be null");
+-        Preconditions.checkArgument(type.isBlock(), "Material must be a block!");
++    public void setType(final BlockType type) {
++        Preconditions.checkArgument(type != null, "BlockType cannot be null");
+ 
+         if (this.getType() != type) {
+-            this.block = CraftBlockType.bukkitToMinecraft(type).defaultBlockState();
++            this.block = CraftBlockType.bukkitToMinecraftNew(type).defaultBlockState();
+         }
+     }
+ 
+     @Override
+-    public Material getType() {
++    public BlockType getType() {
+         return this.block.getBukkitMaterial();
+     }
+ 
+@@ -248,11 +_,6 @@
+     }
+ 
+     @Override
+-    public byte getRawData() {
+-        return CraftMagicNumbers.toLegacyData(this.block);
+-    }
+-
+-    @Override
+     public Location getLocation() {
+         return CraftLocation.toBukkit(this.position, this.world);
+     }
+@@ -268,11 +_,6 @@
+         }
+ 
+         return loc;
+-    }
+-
+-    @Override
+-    public void setRawData(byte data) {
+-        this.block = CraftMagicNumbers.getBlock(this.getType(), data);
+     }
+ 
+     @Override

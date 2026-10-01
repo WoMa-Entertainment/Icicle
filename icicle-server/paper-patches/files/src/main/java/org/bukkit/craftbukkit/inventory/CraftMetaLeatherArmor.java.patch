@@ -1,0 +1,27 @@
+--- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaLeatherArmor.java
++++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaLeatherArmor.java
+@@ -7,8 +_,8 @@
+ import net.minecraft.core.component.DataComponents;
+ import net.minecraft.world.item.component.DyedItemColor;
+ import org.bukkit.Color;
+-import org.bukkit.Material;
+ import org.bukkit.configuration.serialization.DelegateDeserialization;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.inventory.meta.ColorableArmorMeta;
+ import org.bukkit.inventory.meta.LeatherArmorMeta;
+ 
+@@ -60,12 +_,8 @@
+     }
+ 
+     @Override
+-    boolean applicableTo(Material type) {
+-        if (!type.isItem()) {
+-            return false;
+-        }
+-
+-        return type.asItemType().getItemMetaClass() == LeatherArmorMeta.class || type.asItemType().getItemMetaClass() == ColorableArmorMeta.class;
++    boolean applicableTo(ItemType type) {
++        return type.getItemMetaClass() == LeatherArmorMeta.class || type.getItemMetaClass() == ColorableArmorMeta.class;
+     }
+ 
+     @Override

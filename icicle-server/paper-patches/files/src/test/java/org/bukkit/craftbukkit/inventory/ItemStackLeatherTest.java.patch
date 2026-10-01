@@ -1,0 +1,20 @@
+--- a/src/test/java/org/bukkit/craftbukkit/inventory/ItemStackLeatherTest.java
++++ b/src/test/java/org/bukkit/craftbukkit/inventory/ItemStackLeatherTest.java
+@@ -5,15 +_,15 @@
+ import java.util.List;
+ import java.util.stream.Stream;
+ import org.bukkit.Color;
+-import org.bukkit.Material;
+ import org.bukkit.inventory.ItemStack;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.inventory.meta.LeatherArmorMeta;
+ import org.junit.jupiter.params.provider.Arguments;
+ 
+ public class ItemStackLeatherTest extends ItemStackTest {
+ 
+     public static Stream<Arguments> data() {
+-        return ItemProvider.compound(ItemStackLeatherTest.operators(), "%s %s", NAME_PARAMETER, Material.LEATHER_BOOTS, Material.LEATHER_CHESTPLATE, Material.LEATHER_HELMET, Material.LEATHER_LEGGINGS);
++        return ItemProvider.compound(ItemStackLeatherTest.operators(), "%s %s", NAME_PARAMETER, ItemType.LEATHER_BOOTS, ItemType.LEATHER_CHESTPLATE, ItemType.LEATHER_HELMET, ItemType.LEATHER_LEGGINGS);
+     }
+ 
+     @SuppressWarnings("unchecked")

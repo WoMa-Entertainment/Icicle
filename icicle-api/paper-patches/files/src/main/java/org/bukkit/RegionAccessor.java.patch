@@ -1,0 +1,57 @@
+--- a/src/main/java/org/bukkit/RegionAccessor.java
++++ b/src/main/java/org/bukkit/RegionAccessor.java
+@@ -8,6 +_,7 @@
+ import java.util.function.Predicate;
+ import org.bukkit.block.Biome;
+ import org.bukkit.block.BlockState;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.data.BlockData;
+ import org.bukkit.entity.Entity;
+ import org.bukkit.entity.EntityType;
+@@ -197,7 +_,7 @@
+      * @return Material at the given coordinates
+      */
+     @NotNull
+-    default Material getType(@NotNull Location location) {
++    default BlockType getType(@NotNull Location location) {
+         return this.getType(location.getBlockX(), location.getBlockY(), location.getBlockZ());
+     }
+ 
+@@ -210,7 +_,7 @@
+      * @return Material at the given coordinates
+      */
+     @NotNull
+-    Material getType(int x, int y, int z);
++    BlockType getType(int x, int y, int z);
+ 
+     /**
+      * Sets the {@link BlockData} at the given {@link Location}.
+@@ -243,24 +_,24 @@
+     void setBlockData(int x, int y, int z, @NotNull BlockData blockData);
+ 
+     /**
+-     * Sets the {@link Material} at the given {@link Location}.
++     * Sets the {@link BlockType} at the given {@link Location}.
+      *
+      * @param location The location of the block
+      * @param material The type to set the block to
+      */
+-    default void setType(@NotNull Location location, @NotNull Material material) {
++    default void setType(@NotNull Location location, @NotNull BlockType material) {
+         this.setType(location.getBlockX(), location.getBlockY(), location.getBlockZ(), material);
+     }
+ 
+     /**
+-     * Sets the {@link Material} at the given coordinates.
++     * Sets the {@link BlockType} at the given coordinates.
+      *
+      * @param x X-coordinate of the block
+      * @param y Y-coordinate of the block
+      * @param z Z-coordinate of the block
+      * @param material The type to set the block to
+      */
+-    default void setType(int x, int y, int z, @NotNull Material material) {
++    default void setType(int x, int y, int z, @NotNull BlockType material) {
+         this.setBlockData(x, y, z, material.createBlockData());
+     }
+ 

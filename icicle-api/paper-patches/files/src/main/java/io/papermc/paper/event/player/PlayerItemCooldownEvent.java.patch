@@ -1,0 +1,35 @@
+--- a/src/main/java/io/papermc/paper/event/player/PlayerItemCooldownEvent.java
++++ b/src/main/java/io/papermc/paper/event/player/PlayerItemCooldownEvent.java
+@@ -1,9 +_,9 @@
+ package io.papermc.paper.event.player;
+ 
+-import org.bukkit.Material;
+ import org.bukkit.NamespacedKey;
+ import org.bukkit.entity.Player;
+ import org.bukkit.event.HandlerList;
++import org.bukkit.inventory.ItemType;
+ import org.jetbrains.annotations.ApiStatus;
+ import org.jspecify.annotations.NullMarked;
+ 
+@@ -15,10 +_,10 @@
+ @NullMarked
+ public class PlayerItemCooldownEvent extends PlayerItemGroupCooldownEvent {
+ 
+-    private final Material type;
++    private final ItemType type;
+ 
+     @ApiStatus.Internal
+-    public PlayerItemCooldownEvent(final Player player, final Material type, final NamespacedKey cooldownGroup, final int cooldown) {
++    public PlayerItemCooldownEvent(final Player player, final ItemType type, final NamespacedKey cooldownGroup, final int cooldown) {
+         super(player, cooldownGroup, cooldown);
+         this.type = type;
+     }
+@@ -28,7 +_,7 @@
+      *
+      * @return material affected by the cooldown
+      */
+-    public Material getType() {
++    public ItemType getType() {
+         return this.type;
+     }
+ }

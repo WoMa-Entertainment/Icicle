@@ -1,0 +1,77 @@
+--- a/src/test/java/org/bukkit/craftbukkit/inventory/ItemStackTest.java
++++ b/src/test/java/org/bukkit/craftbukkit/inventory/ItemStackTest.java
+@@ -12,11 +_,13 @@
+ import java.util.List;
+ import java.util.Map;
+ import java.util.stream.Stream;
+-import org.bukkit.Material;
++
++import org.bukkit.Registry;
+ import org.bukkit.configuration.InvalidConfigurationException;
+ import org.bukkit.configuration.file.YamlConfiguration;
+ import org.bukkit.inventory.ItemFactory;
+ import org.bukkit.inventory.ItemStack;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.inventory.meta.ItemMeta;
+ import org.bukkit.support.environment.AllFeatures;
+ import org.bukkit.util.io.BukkitObjectInputStream;
+@@ -37,9 +_,9 @@
+ @AllFeatures
+ public class ItemStackTest {
+     abstract static class ItemProvider {
+-        final Material material;
++        final ItemType material;
+ 
+-        ItemProvider(Material material) {
++        ItemProvider(ItemType material) {
+             this.material = material;
+         }
+ 
+@@ -58,11 +_,11 @@
+          * For each item in parameterList, it will apply nameFormat at nameIndex.
+          * For each item in parameterList for each item in materials, it will create a stack provider at each array index that contains an Operator.
+          */
+-        static Stream<Arguments> compound(final List<Object[]> parameterList, final String nameFormat, final int nameIndex, final Material... materials) {
++        static Stream<Arguments> compound(final List<Object[]> parameterList, final String nameFormat, final int nameIndex, final ItemType... materials) {
+             final List<Arguments> out = new ArrayList<>();
+             for (Object[] params : parameterList) {
+                 final int len = params.length;
+-                for (final Material material : materials) {
++                for (final ItemType material : materials) {
+                     final Object[] paramsOut = params.clone();
+                     for (int i = 0; i < len; i++) {
+                         final Object param = paramsOut[i];
+@@ -258,7 +_,7 @@
+ 
+     static class NoOpProvider extends ItemProvider {
+ 
+-        NoOpProvider(Material material) {
++        NoOpProvider(ItemType material) {
+             super(material);
+         }
+ 
+@@ -281,20 +_,20 @@
+     /**
+      * Materials that generate unique item meta types.
+      */
+-    static final Material[] COMPOUND_MATERIALS;
++    static final ItemType[] COMPOUND_MATERIALS;
+     static final int NAME_PARAMETER = 2;
+     static {
+         final ItemFactory factory = CraftItemFactory.instance();
+-        final Map<Class<? extends ItemMeta>, Material> possibleMaterials = new HashMap<Class<? extends ItemMeta>, Material>();
++        final Map<Class<? extends ItemMeta>, ItemType> possibleMaterials = new HashMap<Class<? extends ItemMeta>, ItemType>();
+         ItemMeta meta;
+-        for (final Material material : Material.values()) {
++        for (final ItemType material : Registry.ITEM) {
+             meta = factory.getItemMeta(material);
+             if (meta == null || possibleMaterials.containsKey(meta.getClass()))
+                 continue;
+             possibleMaterials.put(meta.getClass(), material);
+ 
+         }
+-        COMPOUND_MATERIALS = possibleMaterials.values().toArray(new Material[possibleMaterials.size()]);
++        COMPOUND_MATERIALS = possibleMaterials.values().toArray(new ItemType[possibleMaterials.size()]);
+     }
+ 
+     @ParameterizedTest(name = "[{index}]:{" + ItemStackTest.NAME_PARAMETER + "}")

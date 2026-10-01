@@ -1,0 +1,37 @@
+--- a/src/main/java/org/bukkit/craftbukkit/block/CraftBlockType.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/CraftBlockType.java
+@@ -25,7 +_,6 @@
+ import net.minecraft.world.level.block.state.BlockBehaviour;
+ import net.minecraft.world.level.block.state.BlockState;
+ import net.minecraft.world.phys.BlockHitResult;
+-import org.bukkit.Material;
+ import org.bukkit.Registry;
+ import org.bukkit.World;
+ import org.bukkit.block.BlockType;
+@@ -44,14 +_,6 @@
+ public class CraftBlockType<B extends @NonNull BlockData> extends HolderableBase<Block> implements BlockType.Typed<B>, io.papermc.paper.world.flag.PaperFeatureDependent<Block> { // Paper - feature flag API
+ 
+ 
+-    public static Material minecraftToBukkit(Block block) {
+-        return CraftMagicNumbers.getMaterial(block);
+-    }
+-
+-    public static Block bukkitToMinecraft(Material material) {
+-        return CraftMagicNumbers.getBlock(material);
+-    }
+-
+     public static BlockType minecraftToBukkitNew(Block minecraft) {
+         return CraftRegistry.minecraftToBukkit(minecraft, Registries.BLOCK);
+     }
+@@ -232,11 +_,6 @@
+     @Override
+     public String getTranslationKey() {
+         return this.getHandle().getDescriptionId();
+-    }
+-
+-    @Override
+-    public @Nullable Material asMaterial() {
+-        return Registry.MATERIAL.get(this.getKey());
+     }
+ 
+     // Paper start - add Translatable

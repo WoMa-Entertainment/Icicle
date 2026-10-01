@@ -1,0 +1,23 @@
+--- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaArmorStand.java
++++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaArmorStand.java
+@@ -9,8 +_,8 @@
+ import net.minecraft.world.entity.EntityType;
+ import net.minecraft.world.entity.EntityTypes;
+ import net.minecraft.world.item.component.TypedEntityData;
+-import org.bukkit.Material;
+ import org.bukkit.configuration.serialization.DelegateDeserialization;
++import org.bukkit.inventory.ItemType;
+ 
+ @DelegateDeserialization(SerializableMeta.class)
+ public class CraftMetaArmorStand extends CraftMetaItem implements com.destroystokyo.paper.inventory.meta.ArmorStandMeta {
+@@ -104,8 +_,8 @@
+     }
+ 
+     @Override
+-    boolean applicableTo(Material type) {
+-        return type == Material.ARMOR_STAND;
++    boolean applicableTo(ItemType type) {
++        return type == ItemType.ARMOR_STAND;
+     }
+ 
+     @Override

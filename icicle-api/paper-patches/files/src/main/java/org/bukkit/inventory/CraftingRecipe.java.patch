@@ -1,0 +1,10 @@
+--- a/src/main/java/org/bukkit/inventory/CraftingRecipe.java
++++ b/src/main/java/org/bukkit/inventory/CraftingRecipe.java
+@@ -2,7 +_,6 @@
+ 
+ import com.google.common.base.Preconditions;
+ import org.bukkit.Keyed;
+-import org.bukkit.Material;
+ import org.bukkit.NamespacedKey;
+ import org.bukkit.inventory.recipe.CraftingBookCategory;
+ import org.jetbrains.annotations.ApiStatus;

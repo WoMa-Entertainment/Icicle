@@ -1,0 +1,66 @@
+--- a/src/main/java/org/bukkit/entity/Piglin.java
++++ b/src/main/java/org/bukkit/entity/Piglin.java
+@@ -1,8 +_,8 @@
+ package org.bukkit.entity;
+ 
+ import java.util.Set;
+-import org.bukkit.Material;
+ import org.bukkit.inventory.InventoryHolder;
++import org.bukkit.inventory.ItemType;
+ import org.jetbrains.annotations.NotNull;
+ 
+ /**
+@@ -31,7 +_,7 @@
+      *
+      * @return true if the item has been added successfully, false otherwise
+      */
+-    public boolean addBarterMaterial(@NotNull Material material);
++    public boolean addBarterMaterial(@NotNull ItemType material);
+ 
+     /**
+      * Removes a material from the allowed list of materials to barter with.
+@@ -44,7 +_,7 @@
+      *
+      * @return true if the item has been removed successfully, false otherwise
+      */
+-    public boolean removeBarterMaterial(@NotNull Material material);
++    public boolean removeBarterMaterial(@NotNull ItemType material);
+ 
+     /**
+      * Adds a material the piglin will pickup and store in his inventory.
+@@ -53,7 +_,7 @@
+      *
+      * @return true if the item has been added successfully, false otherwise
+      */
+-    public boolean addMaterialOfInterest(@NotNull Material material);
++    public boolean addMaterialOfInterest(@NotNull ItemType material);
+ 
+     /**
+      * Removes a material from the list of materials the piglin will pickup.
+@@ -65,7 +_,7 @@
+      * @param material The material you want removed from the interest list
+      * @return true if the item has been removed successfully, false otherwise
+      */
+-    public boolean removeMaterialOfInterest(@NotNull Material material);
++    public boolean removeMaterialOfInterest(@NotNull ItemType material);
+ 
+     /**
+      * Returns an immutable set of materials the piglins will pickup.
+@@ -77,7 +_,7 @@
+      * @return An immutable materials set
+      */
+     @NotNull
+-    public Set<Material> getInterestList();
++    public Set<ItemType> getInterestList();
+ 
+     /**
+      * Returns an immutable set of materials the piglins will barter with.
+@@ -89,7 +_,7 @@
+      * @return An immutable materials set
+      */
+     @NotNull
+-    public Set<Material> getBarterList();
++    public Set<ItemType> getBarterList();
+ 
+     /**
+      * Causes the piglin to appear as if they are charging

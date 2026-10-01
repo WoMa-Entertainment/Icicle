@@ -1,0 +1,346 @@
+--- a/src/test/java/org/bukkit/craftbukkit/inventory/ItemMetaTest.java
++++ b/src/test/java/org/bukkit/craftbukkit/inventory/ItemMetaTest.java
+@@ -12,12 +_,12 @@
+ import org.bukkit.DyeColor;
+ import org.bukkit.FireworkEffect;
+ import org.bukkit.FireworkEffect.Type;
+-import org.bukkit.Material;
+ import org.bukkit.MusicInstrument;
+ import org.bukkit.NamespacedKey;
+ import org.bukkit.Registry;
+ import org.bukkit.attribute.Attribute;
+ import org.bukkit.attribute.AttributeModifier;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.banner.Pattern;
+ import org.bukkit.block.banner.PatternType;
+ import org.bukkit.craftbukkit.block.data.CraftBlockData;
+@@ -97,7 +_,7 @@
+ 
+     @Test
+     public void testConflictingEnchantment() {
+-        ItemMeta itemMeta = Bukkit.getItemFactory().getItemMeta(Material.DIAMOND_PICKAXE);
++        ItemMeta itemMeta = Bukkit.getItemFactory().getItemMeta(ItemType.DIAMOND_PICKAXE);
+         assertThat(itemMeta.hasConflictingEnchant(Enchantment.UNBREAKING), is(false));
+ 
+         itemMeta.addEnchant(Enchantment.SILK_TOUCH, 1, false);
+@@ -108,7 +_,7 @@
+ 
+     @Test
+     public void testConflictingStoredEnchantment() {
+-        EnchantmentStorageMeta itemMeta = (EnchantmentStorageMeta) Bukkit.getItemFactory().getItemMeta(Material.ENCHANTED_BOOK);
++        EnchantmentStorageMeta itemMeta = (EnchantmentStorageMeta) Bukkit.getItemFactory().getItemMeta(ItemType.ENCHANTED_BOOK);
+         assertThat(itemMeta.hasConflictingStoredEnchant(Enchantment.UNBREAKING), is(false));
+ 
+         itemMeta.addStoredEnchant(Enchantment.SILK_TOUCH, 1, false);
+@@ -119,7 +_,7 @@
+ 
+     @Test
+     public void testConflictingEnchantments() {
+-        ItemMeta itemMeta = Bukkit.getItemFactory().getItemMeta(Material.DIAMOND_PICKAXE);
++        ItemMeta itemMeta = Bukkit.getItemFactory().getItemMeta(ItemType.DIAMOND_PICKAXE);
+         itemMeta.addEnchant(Enchantment.UNBREAKING, 6, true);
+         itemMeta.addEnchant(Enchantment.EFFICIENCY, 6, true);
+         assertThat(itemMeta.hasConflictingEnchant(Enchantment.FORTUNE), is(false));
+@@ -131,7 +_,7 @@
+ 
+     @Test
+     public void testConflictingStoredEnchantments() {
+-        EnchantmentStorageMeta itemMeta = (EnchantmentStorageMeta) Bukkit.getItemFactory().getItemMeta(Material.ENCHANTED_BOOK);
++        EnchantmentStorageMeta itemMeta = (EnchantmentStorageMeta) Bukkit.getItemFactory().getItemMeta(ItemType.ENCHANTED_BOOK);
+         itemMeta.addStoredEnchant(Enchantment.UNBREAKING, 6, true);
+         itemMeta.addStoredEnchant(Enchantment.EFFICIENCY, 6, true);
+         assertThat(itemMeta.hasConflictingStoredEnchant(Enchantment.FORTUNE), is(false));
+@@ -142,7 +_,7 @@
+     }
+ 
+     private static FireworkMeta newFireworkMeta() {
+-        return ((FireworkMeta) Bukkit.getItemFactory().getItemMeta(Material.FIREWORK_ROCKET));
++        return ((FireworkMeta) Bukkit.getItemFactory().getItemMeta(ItemType.FIREWORK_ROCKET));
+     }
+ 
+     // Paper start - check entity tag metas
+@@ -155,10 +_,10 @@
+     public void testEntityTagMeta() {
+         for (final Item item : BuiltInRegistries.ITEM) {
+             if (item instanceof net.minecraft.world.item.HangingEntityItem || item instanceof net.minecraft.world.item.MobBucketItem) {
+-                Material type = CraftItemType.minecraftToBukkit(item);
++                ItemType type = CraftItemType.minecraftToBukkitNew(item);
+                 ItemStack stack = new ItemStack(type);
+                 assertTrue(ENTITY_TAG_METAS.contains(stack.getItemMeta().getClass()), "missing entity tag meta handling for " + item);
+-                stack = ItemStack.of(Material.STONE);
++                stack = ItemStack.of(ItemType.STONE);
+                 stack.editMeta(meta -> meta.displayName(net.kyori.adventure.text.Component.text("hello")));
+                 stack.setType(type);
+                 assertTrue(ENTITY_TAG_METAS.contains(stack.getItemMeta().getClass()), "missing entity tag meta handling for " + item);
+@@ -170,7 +_,7 @@
+     @Test
+     public void testEachExtraData() {
+         final List<ItemProvider> providers = Arrays.asList(
+-            new ItemProvider(Material.WRITABLE_BOOK) {
++            new ItemProvider(ItemType.WRITABLE_BOOK) {
+                 @Override ItemStack operate(final ItemStack cleanStack) {
+                     final BookMeta meta = (BookMeta) cleanStack.getItemMeta();
+                     meta.setAuthor("Some author");
+@@ -180,7 +_,7 @@
+                     return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.WRITTEN_BOOK) {
++            new ItemProvider(ItemType.WRITTEN_BOOK) {
+                 @Override ItemStack operate(final ItemStack cleanStack) {
+                     final BookMeta meta = (BookMeta) cleanStack.getItemMeta();
+                     meta.setAuthor("Some author");
+@@ -200,7 +_,7 @@
+                 }
+             },
+             */
+-            new ItemProvider(Material.FILLED_MAP) {
++            new ItemProvider(ItemType.FILLED_MAP) {
+                 @Override ItemStack operate(final ItemStack cleanStack) {
+                     final MapMeta meta = (MapMeta) cleanStack.getItemMeta();
+                     meta.setScaling(true);
+@@ -208,7 +_,7 @@
+                     return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.DIAMOND_CHESTPLATE) {
++            new ItemProvider(ItemType.DIAMOND_CHESTPLATE) {
+                 @Override ItemStack operate(final ItemStack cleanStack) {
+                     final ArmorMeta meta = (ArmorMeta) cleanStack.getItemMeta();
+                     meta.setTrim(new ArmorTrim(TrimMaterial.AMETHYST, TrimPattern.COAST));
+@@ -216,7 +_,7 @@
+                     return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.LEATHER_HORSE_ARMOR) {
++            new ItemProvider(ItemType.LEATHER_HORSE_ARMOR) {
+                 @Override ItemStack operate(final ItemStack cleanStack) {
+                     final LeatherArmorMeta meta = (LeatherArmorMeta) cleanStack.getItemMeta();
+                     meta.setColor(Color.FUCHSIA);
+@@ -224,7 +_,7 @@
+                     return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.LEATHER_CHESTPLATE) {
++            new ItemProvider(ItemType.LEATHER_CHESTPLATE) {
+                 @Override ItemStack operate(final ItemStack cleanStack) {
+                     final ColorableArmorMeta meta = (ColorableArmorMeta) cleanStack.getItemMeta();
+                     meta.setTrim(new ArmorTrim(TrimMaterial.COPPER, TrimPattern.DUNE));
+@@ -233,7 +_,7 @@
+                     return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.POTION) {
++            new ItemProvider(ItemType.POTION) {
+                 @Override ItemStack operate(final ItemStack cleanStack) {
+                     final PotionMeta meta = (PotionMeta) cleanStack.getItemMeta();
+                     meta.setBasePotionType(PotionType.WATER);
+@@ -242,7 +_,7 @@
+                     return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.FIREWORK_ROCKET) {
++            new ItemProvider(ItemType.FIREWORK_ROCKET) {
+                 @Override ItemStack operate(final ItemStack cleanStack) {
+                     final FireworkMeta meta = (FireworkMeta) cleanStack.getItemMeta();
+                     meta.addEffect(FireworkEffect.builder().withColor(Color.GREEN).withFade(Color.OLIVE).with(Type.BALL_LARGE).build());
+@@ -250,7 +_,7 @@
+                     return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.ENCHANTED_BOOK) {
++            new ItemProvider(ItemType.ENCHANTED_BOOK) {
+                 @Override ItemStack operate(final ItemStack cleanStack) {
+                     final EnchantmentStorageMeta meta = (EnchantmentStorageMeta) cleanStack.getItemMeta();
+                     meta.addStoredEnchant(Enchantment.FLAME, 1, true);
+@@ -258,7 +_,7 @@
+                     return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.FIREWORK_STAR) {
++            new ItemProvider(ItemType.FIREWORK_STAR) {
+                 @Override ItemStack operate(final ItemStack cleanStack) {
+                     final FireworkEffectMeta meta = (FireworkEffectMeta) cleanStack.getItemMeta();
+                     meta.setEffect(FireworkEffect.builder().withColor(Color.MAROON, Color.BLACK).with(Type.CREEPER).withFlicker().build());
+@@ -266,7 +_,7 @@
+                     return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.WHITE_BANNER) {
++            new ItemProvider(ItemType.WHITE_BANNER) {
+                 @Override ItemStack operate(ItemStack cleanStack) {
+                     final BannerMeta meta = (BannerMeta) cleanStack.getItemMeta();
+                     meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.BRICKS));
+@@ -284,7 +_,7 @@
+                 }
+             },
+             */
+-            new ItemProvider(Material.KNOWLEDGE_BOOK) {
++            new ItemProvider(ItemType.KNOWLEDGE_BOOK) {
+                 @Override ItemStack operate(ItemStack cleanStack) {
+                     final KnowledgeBookMeta meta = (KnowledgeBookMeta) cleanStack.getItemMeta();
+                     meta.addRecipe(new NamespacedKey("minecraft", "test"), new NamespacedKey("plugin", "test"));
+@@ -292,7 +_,7 @@
+                     return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.TROPICAL_FISH_BUCKET) {
++            new ItemProvider(ItemType.TROPICAL_FISH_BUCKET) {
+                 @Override ItemStack operate(ItemStack cleanStack) {
+                     final TropicalFishBucketMeta meta = (TropicalFishBucketMeta) cleanStack.getItemMeta();
+                     meta.setBodyColor(DyeColor.ORANGE);
+@@ -302,7 +_,7 @@
+                     return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.AXOLOTL_BUCKET) {
++            new ItemProvider(ItemType.AXOLOTL_BUCKET) {
+                 @Override ItemStack operate(ItemStack cleanStack) {
+                      final AxolotlBucketMeta meta = (AxolotlBucketMeta) cleanStack.getItemMeta();
+                      meta.setVariant(Axolotl.Variant.BLUE);
+@@ -310,15 +_,15 @@
+                      return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.CROSSBOW) {
++            new ItemProvider(ItemType.CROSSBOW) {
+                 @Override ItemStack operate(ItemStack cleanStack) {
+                     final CrossbowMeta meta = (CrossbowMeta) cleanStack.getItemMeta();
+-                    meta.addChargedProjectile(new ItemStack(Material.ARROW));
++                    meta.addChargedProjectile(new ItemStack(ItemType.ARROW));
+                     cleanStack.setItemMeta(meta);
+                     return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.ARMOR_STAND) {
++            new ItemProvider(ItemType.ARMOR_STAND) {
+                 @Override ItemStack operate(ItemStack cleanStack) {
+                     final CraftMetaArmorStand meta = (CraftMetaArmorStand) cleanStack.getItemMeta();
+                     meta.entityTag = new CompoundTag();
+@@ -329,7 +_,7 @@
+                     return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.SUSPICIOUS_STEW) {
++            new ItemProvider(ItemType.SUSPICIOUS_STEW) {
+                 @Override ItemStack operate(ItemStack cleanStack) {
+                     final CraftMetaSuspiciousStew meta = ((CraftMetaSuspiciousStew) cleanStack.getItemMeta());
+                     meta.addCustomEffect(PotionEffectType.NAUSEA.createEffect(1, 0), false);
+@@ -337,7 +_,7 @@
+                     return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.ITEM_FRAME) {
++            new ItemProvider(ItemType.ITEM_FRAME) {
+                 @Override ItemStack operate(ItemStack cleanStack) {
+                     final CraftMetaEntityTag meta = ((CraftMetaEntityTag) cleanStack.getItemMeta());
+                     meta.entityTag = new CompoundTag();
+@@ -347,7 +_,7 @@
+                     return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.COMPASS) {
++            new ItemProvider(ItemType.COMPASS) {
+                 @Override ItemStack operate(ItemStack cleanStack) {
+                     final CraftMetaCompass meta = ((CraftMetaCompass) cleanStack.getItemMeta());
+                     meta.setLodestoneTracked(false);
+@@ -355,15 +_,15 @@
+                     return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.BUNDLE) {
++            new ItemProvider(ItemType.BUNDLE) {
+                 @Override ItemStack operate(ItemStack cleanStack) {
+                     final BundleMeta meta = (BundleMeta) cleanStack.getItemMeta();
+-                    meta.addItem(new ItemStack(Material.STONE));
++                    meta.addItem(new ItemStack(ItemType.STONE));
+                     cleanStack.setItemMeta(meta);
+                     return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.GOAT_HORN) {
++            new ItemProvider(ItemType.GOAT_HORN) {
+                 @Override ItemStack operate(ItemStack cleanStack) {
+                     final CraftMetaMusicInstrument meta = (CraftMetaMusicInstrument) cleanStack.getItemMeta();
+                     meta.setInstrument(MusicInstrument.ADMIRE_GOAT_HORN);
+@@ -371,7 +_,7 @@
+                     return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.OMINOUS_BOTTLE) {
++            new ItemProvider(ItemType.OMINOUS_BOTTLE) {
+                 @Override ItemStack operate(ItemStack cleanStack) {
+                     final CraftMetaOminousBottle meta = (CraftMetaOminousBottle) cleanStack.getItemMeta();
+                     meta.setAmplifier(3);
+@@ -379,7 +_,7 @@
+                     return cleanStack;
+                 }
+             },
+-            new ItemProvider(Material.SHIELD) {
++            new ItemProvider(ItemType.SHIELD) {
+                 @Override ItemStack operate(ItemStack cleanStack) {
+                     final CraftMetaShield meta = (CraftMetaShield) cleanStack.getItemMeta();
+                     meta.setBaseColor(DyeColor.ORANGE);
+@@ -398,19 +_,19 @@
+ 
+     @Test
+     public void testAttributeModifiers() {
+-        ItemMeta itemMeta = Bukkit.getItemFactory().getItemMeta(Material.DIAMOND_PICKAXE);
++        ItemMeta itemMeta = Bukkit.getItemFactory().getItemMeta(ItemType.DIAMOND_PICKAXE);
+         NamespacedKey sameKey = NamespacedKey.minecraft("abc");
+         itemMeta.addAttributeModifier(Attribute.ATTACK_SPEED, new AttributeModifier(sameKey, 10, AttributeModifier.Operation.ADD_NUMBER));
+ 
+-        ItemMeta equalMeta = Bukkit.getItemFactory().getItemMeta(Material.DIAMOND_PICKAXE);
++        ItemMeta equalMeta = Bukkit.getItemFactory().getItemMeta(ItemType.DIAMOND_PICKAXE);
+         equalMeta.addAttributeModifier(Attribute.ATTACK_SPEED, new AttributeModifier(sameKey, 10, AttributeModifier.Operation.ADD_NUMBER));
+ 
+         assertThat(itemMeta.equals(equalMeta), is(true));
+ 
+-        ItemMeta itemMeta2 = Bukkit.getItemFactory().getItemMeta(Material.DIAMOND_PICKAXE);
++        ItemMeta itemMeta2 = Bukkit.getItemFactory().getItemMeta(ItemType.DIAMOND_PICKAXE);
+         itemMeta2.addAttributeModifier(Attribute.ATTACK_SPEED, new AttributeModifier(sameKey, 10, AttributeModifier.Operation.ADD_NUMBER));
+ 
+-        ItemMeta notEqualMeta2 = Bukkit.getItemFactory().getItemMeta(Material.DIAMOND_PICKAXE);
++        ItemMeta notEqualMeta2 = Bukkit.getItemFactory().getItemMeta(ItemType.DIAMOND_PICKAXE);
+         notEqualMeta2.addAttributeModifier(Attribute.ATTACK_SPEED, new AttributeModifier(sameKey, 11, AttributeModifier.Operation.ADD_NUMBER));
+ 
+         assertThat(itemMeta2.equals(notEqualMeta2), is(false));
+@@ -418,9 +_,9 @@
+ 
+     @Test
+     public void testBlockData() {
+-        BlockDataMeta itemMeta = (BlockDataMeta) Bukkit.getItemFactory().getItemMeta(Material.CHEST);
++        BlockDataMeta itemMeta = (BlockDataMeta) Bukkit.getItemFactory().getItemMeta(ItemType.CHEST);
+         itemMeta.setBlockData(CraftBlockData.fromString(null, "minecraft:chest[waterlogged=true]"));
+-        assertThat(itemMeta.getBlockData(Material.CHEST), is(CraftBlockData.fromString(null, "minecraft:chest[waterlogged=true]")));
++        assertThat(itemMeta.getBlockData(BlockType.CHEST), is(CraftBlockData.fromString(null, "minecraft:chest[waterlogged=true]")));
+     }
+ 
+     @Test
+@@ -430,7 +_,7 @@
+                 return;
+             }
+ 
+-            ItemMeta meta = new ItemStack(itemType.asMaterial()).getItemMeta();
++            ItemMeta meta = new ItemStack(itemType).getItemMeta();
+             Class<?> internal = meta == null ? CraftMetaItem.class : meta.getClass();
+             Class<?>[] interfaces = internal.getInterfaces();
+             Class<?> expected;
+@@ -448,7 +_,7 @@
+ 
+     private void downCastTest(final ItemWrapper provider) {
+         final String name = provider.toString();
+-        final ItemStack blank = new ItemStack(Material.STONE);
++        final ItemStack blank = new ItemStack(ItemType.STONE);
+ 
+         // Check that equality and similarity works for each meta implementation
+         assertThat(provider.stack(), is(provider.stack()), name);
+@@ -463,7 +_,7 @@
+         assertThat(stack, is(not(blank)), name);
+         assertThat(stack.getItemMeta(), is(not(blank.getItemMeta())), name);
+ 
+-        stack.setType(Material.STONE);
++        stack.setType(ItemType.STONE);
+ 
+         assertThat(stack, is(blank), name);
+     }

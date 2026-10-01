@@ -1,0 +1,21 @@
+--- a/src/main/java/org/bukkit/event/block/BlockPistonEvent.java
++++ b/src/main/java/org/bukkit/event/block/BlockPistonEvent.java
+@@ -1,8 +_,8 @@
+ package org.bukkit.event.block;
+ 
+-import org.bukkit.Material;
+ import org.bukkit.block.Block;
+ import org.bukkit.block.BlockFace;
++import org.bukkit.block.BlockType;
+ import org.bukkit.event.Cancellable;
+ import org.jetbrains.annotations.NotNull;
+ 
+@@ -25,7 +_,7 @@
+      * @return stickiness of the piston
+      */
+     public boolean isSticky() {
+-        return this.block.getType() == Material.STICKY_PISTON || this.block.getType() == Material.MOVING_PISTON;
++        return this.block.getType() == BlockType.STICKY_PISTON || this.block.getType() == BlockType.MOVING_PISTON;
+     }
+ 
+     /**

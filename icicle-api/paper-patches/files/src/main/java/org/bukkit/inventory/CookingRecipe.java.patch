@@ -1,0 +1,32 @@
+--- a/src/main/java/org/bukkit/inventory/CookingRecipe.java
++++ b/src/main/java/org/bukkit/inventory/CookingRecipe.java
+@@ -3,7 +_,6 @@
+ import com.google.common.base.Preconditions;
+ import java.util.Collections;
+ import org.bukkit.Keyed;
+-import org.bukkit.Material;
+ import org.bukkit.NamespacedKey;
+ import org.bukkit.inventory.recipe.CookingBookCategory;
+ import org.jetbrains.annotations.NotNull;
+@@ -30,8 +_,8 @@
+      * @param experience The experience given by this recipe
+      * @param cookingTime The cooking time (in ticks)
+      */
+-    public CookingRecipe(@NotNull NamespacedKey key, @NotNull ItemStack result, @NotNull Material source, float experience, int cookingTime) {
+-        this(key, result, new RecipeChoice.MaterialChoice(Collections.singletonList(source)), experience, cookingTime);
++    public CookingRecipe(@NotNull NamespacedKey key, @NotNull ItemStack result, @NotNull ItemType source, float experience, int cookingTime) {
++        this(key, result, RecipeChoice.itemType(source), experience, cookingTime);
+     }
+ 
+     /**
+@@ -59,8 +_,8 @@
+      * @return The changed recipe, so you can chain calls.
+      */
+     @NotNull
+-    public CookingRecipe setInput(@NotNull Material input) {
+-        this.ingredient = new RecipeChoice.MaterialChoice(Collections.singletonList(input));
++    public CookingRecipe setInput(@NotNull ItemType input) {
++        this.ingredient = RecipeChoice.itemType(input);
+         return this;
+     }
+ 

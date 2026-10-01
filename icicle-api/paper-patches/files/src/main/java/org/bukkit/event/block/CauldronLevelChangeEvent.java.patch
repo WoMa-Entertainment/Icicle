@@ -1,0 +1,40 @@
+--- a/src/main/java/org/bukkit/event/block/CauldronLevelChangeEvent.java
++++ b/src/main/java/org/bukkit/event/block/CauldronLevelChangeEvent.java
+@@ -1,9 +_,9 @@
+ package org.bukkit.event.block;
+ 
+ import com.google.common.base.Preconditions;
+-import org.bukkit.Material;
+ import org.bukkit.block.Block;
+ import org.bukkit.block.BlockState;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.data.BlockData;
+ import org.bukkit.block.data.Levelled;
+ import org.bukkit.entity.Entity;
+@@ -66,7 +_,7 @@
+     @Deprecated(since = "1.17")
+     public int getOldLevel() {
+         BlockData oldBlock = this.getBlock().getBlockData();
+-        return (oldBlock instanceof Levelled) ? ((Levelled) oldBlock).getLevel() : ((oldBlock.getMaterial() == Material.CAULDRON) ? 0 : 3);
++        return (oldBlock instanceof Levelled) ? ((Levelled) oldBlock).getLevel() : ((oldBlock.getMaterial() == BlockType.CAULDRON) ? 0 : 3);
+     }
+ 
+     /**
+@@ -79,7 +_,7 @@
+     @Deprecated(since = "1.17")
+     public int getNewLevel() {
+         BlockData newBlock = this.newState.getBlockData();
+-        return (newBlock instanceof Levelled) ? ((Levelled) newBlock).getLevel() : ((newBlock.getMaterial() == Material.CAULDRON) ? 0 : 3);
++        return (newBlock instanceof Levelled) ? ((Levelled) newBlock).getLevel() : ((newBlock.getMaterial() == BlockType.CAULDRON) ? 0 : 3);
+     }
+ 
+     /**
+@@ -93,7 +_,7 @@
+     public void setNewLevel(int newLevel) {
+         Preconditions.checkArgument(0 <= newLevel && newLevel <= 3, "Cauldron level out of bounds 0 <= %s <= 3", newLevel);
+         if (newLevel == 0) {
+-            this.newState.setType(Material.CAULDRON);
++            this.newState.setType(BlockType.CAULDRON);
+         } else if (this.newState.getBlockData() instanceof Levelled) {
+             ((Levelled) this.newState.getBlockData()).setLevel(newLevel);
+         } else {

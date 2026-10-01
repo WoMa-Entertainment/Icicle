@@ -1,0 +1,22 @@
+--- a/src/test/java/org/bukkit/craftbukkit/generator/ChunkDataTest.java
++++ b/src/test/java/org/bukkit/craftbukkit/generator/ChunkDataTest.java
+@@ -3,7 +_,7 @@
+ import static org.junit.jupiter.api.Assertions.*;
+ 
+ import net.minecraft.world.level.chunk.PalettedContainerFactory;
+-import org.bukkit.Material;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.data.BlockData;
+ import org.bukkit.support.RegistryHelper;
+ import org.bukkit.support.environment.Legacy;
+@@ -12,8 +_,8 @@
+ @Legacy
+ public class ChunkDataTest {
+ 
+-    private static final BlockData RED_WOOL = Material.RED_WOOL.createBlockData();
+-    private static final BlockData AIR = Material.AIR.createBlockData();
++    private static final BlockData RED_WOOL = BlockType.RED_WOOL.createBlockData();
++    private static final BlockData AIR = BlockType.AIR.createBlockData();
+ 
+     private boolean testSetBlock(OldCraftChunkData data, int x, int y, int z, BlockData type, BlockData expected) {
+         data.setBlock(x, y, z, type);

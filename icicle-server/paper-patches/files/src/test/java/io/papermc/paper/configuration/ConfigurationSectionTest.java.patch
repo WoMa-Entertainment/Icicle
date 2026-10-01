@@ -1,0 +1,41 @@
+--- a/src/test/java/io/papermc/paper/configuration/ConfigurationSectionTest.java
++++ b/src/test/java/io/papermc/paper/configuration/ConfigurationSectionTest.java
+@@ -1,8 +_,8 @@
+ package io.papermc.paper.configuration;
+ 
+-import org.bukkit.Material;
+ import org.bukkit.configuration.ConfigurationSection;
+ import org.bukkit.inventory.ItemStack;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.support.environment.VanillaFeature;
+ import org.junit.jupiter.api.Test;
+ 
+@@ -18,7 +_,7 @@
+     public void testGetItemStack_String() {
+         ConfigurationSection section = getConfigurationSection();
+         String key = "exists";
+-        ItemStack value = new ItemStack(Material.ACACIA_WOOD, 50);
++        ItemStack value = new ItemStack(ItemType.ACACIA_WOOD, 50);
+ 
+         section.set(key, value);
+ 
+@@ -30,8 +_,8 @@
+     public void testGetItemStack_String_ItemStack() {
+         ConfigurationSection section = getConfigurationSection();
+         String key = "exists";
+-        ItemStack value = new ItemStack(Material.ACACIA_WOOD, 50);
+-        ItemStack def = new ItemStack(Material.STONE, 1);
++        ItemStack value = new ItemStack(ItemType.ACACIA_WOOD, 50);
++        ItemStack def = new ItemStack(ItemType.STONE, 1);
+ 
+         section.set(key, value);
+ 
+@@ -43,7 +_,7 @@
+     public void testIsItemStack() {
+         ConfigurationSection section = getConfigurationSection();
+         String key = "exists";
+-        ItemStack value = new ItemStack(Material.ACACIA_WOOD, 50);
++        ItemStack value = new ItemStack(ItemType.ACACIA_WOOD, 50);
+ 
+         section.set(key, value);
+ 

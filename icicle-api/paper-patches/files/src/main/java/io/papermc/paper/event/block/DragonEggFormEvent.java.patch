@@ -1,0 +1,18 @@
+--- a/src/main/java/io/papermc/paper/event/block/DragonEggFormEvent.java
++++ b/src/main/java/io/papermc/paper/event/block/DragonEggFormEvent.java
+@@ -1,6 +_,5 @@
+ package io.papermc.paper.event.block;
+ 
+-import org.bukkit.Material;
+ import org.bukkit.block.Block;
+ import org.bukkit.block.BlockState;
+ import org.bukkit.boss.DragonBattle;
+@@ -12,7 +_,7 @@
+ 
+ /**
+  * Called when the {@link EnderDragon} is defeated (killed) in a {@link DragonBattle},
+- * causing a {@link Material#DRAGON_EGG} (more formally: {@link #getNewState()})
++ * causing a {@link org.bukkit.block.BlockType#DRAGON_EGG} (more formally: {@link #getNewState()})
+  * to possibly appear depending on {@link #isCancelled()}.
+  * <p>
+  * <b>This event might be cancelled by default depending on

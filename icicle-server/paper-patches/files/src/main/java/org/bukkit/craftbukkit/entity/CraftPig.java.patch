@@ -1,0 +1,25 @@
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPig.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPig.java
+@@ -9,10 +_,10 @@
+ import net.minecraft.world.entity.animal.pig.PigVariant;
+ import net.minecraft.world.item.ItemStack;
+ import net.minecraft.world.item.Items;
+-import org.bukkit.Material;
+ import org.bukkit.craftbukkit.CraftRegistry;
+ import org.bukkit.craftbukkit.CraftServer;
+ import org.bukkit.entity.Pig;
++import org.bukkit.inventory.ItemType;
+ import org.jspecify.annotations.NullMarked;
+ 
+ @NullMarked
+@@ -67,8 +_,8 @@
+     }
+ 
+     @Override
+-    public Material getSteerMaterial() {
+-        return Material.CARROT_ON_A_STICK;
++    public ItemType getSteerMaterial() {
++        return ItemType.CARROT_ON_A_STICK;
+     }
+ 
+     @Override

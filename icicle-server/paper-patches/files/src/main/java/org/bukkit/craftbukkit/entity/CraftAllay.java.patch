@@ -1,0 +1,20 @@
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftAllay.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftAllay.java
+@@ -4,7 +_,7 @@
+ import net.minecraft.core.BlockPos;
+ import net.minecraft.world.entity.animal.allay.Allay;
+ import org.bukkit.Location;
+-import org.bukkit.Material;
++import org.bukkit.block.BlockType;
+ import org.bukkit.craftbukkit.CraftServer;
+ import org.bukkit.craftbukkit.inventory.CraftInventory;
+ import org.bukkit.craftbukkit.util.CraftLocation;
+@@ -59,7 +_,7 @@
+     @Override
+     public void startDancing(Location location) {
+         Preconditions.checkArgument(location != null, "location cannot be null");
+-        Preconditions.checkArgument(location.getBlock().getType() == Material.JUKEBOX, "The Block at the location needs to be a jukebox");
++        Preconditions.checkArgument(location.getBlock().getType() == BlockType.JUKEBOX, "The Block at the location needs to be a jukebox");
+         this.getHandle().setJukeboxPlaying(CraftLocation.toBlockPos(location), true);
+     }
+ 

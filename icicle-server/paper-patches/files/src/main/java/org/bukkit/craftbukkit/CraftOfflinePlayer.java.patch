@@ -1,0 +1,201 @@
+--- a/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftOfflinePlayer.java
+@@ -21,17 +_,18 @@
+ import org.bukkit.BanList;
+ import org.bukkit.Bukkit;
+ import org.bukkit.Location;
+-import org.bukkit.Material;
+ import org.bukkit.OfflinePlayer;
+ import org.bukkit.Server;
+ import org.bukkit.Statistic;
+ import org.bukkit.World;
+ import org.bukkit.ban.ProfileBanList;
++import org.bukkit.block.BlockType;
+ import org.bukkit.configuration.serialization.ConfigurationSerializable;
+ import org.bukkit.configuration.serialization.SerializableAs;
+ import org.bukkit.craftbukkit.util.CraftLocation;
+ import org.bukkit.entity.EntityType;
+ import org.bukkit.entity.Player;
++import org.bukkit.inventory.ItemType;
+ 
+ @SerializableAs("Player")
+ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializable {
+@@ -453,60 +_,124 @@
+     }
+ 
+     @Override
+-    public void incrementStatistic(Statistic statistic, Material material) {
+-        if (this.isOnline()) {
+-            this.getPlayer().incrementStatistic(statistic, material);
+-        } else {
+-            ServerStatsCounter manager = this.getStatisticManager();
+-            CraftStatistic.incrementStatistic(manager, statistic, material, null);
+-            manager.save();
+-        }
+-    }
+-
+-    @Override
+-    public void decrementStatistic(Statistic statistic, Material material) {
+-        if (this.isOnline()) {
+-            this.getPlayer().decrementStatistic(statistic, material);
+-        } else {
+-            ServerStatsCounter manager = this.getStatisticManager();
+-            CraftStatistic.decrementStatistic(manager, statistic, material, null);
+-            manager.save();
+-        }
+-    }
+-
+-    @Override
+-    public int getStatistic(Statistic statistic, Material material) {
+-        if (this.isOnline()) {
+-            return this.getPlayer().getStatistic(statistic, material);
+-        } else {
+-            return CraftStatistic.getStatistic(this.getStatisticManager(), statistic, material);
+-        }
+-    }
+-
+-    @Override
+-    public void incrementStatistic(Statistic statistic, Material material, int amount) {
+-        if (this.isOnline()) {
+-            this.getPlayer().incrementStatistic(statistic, material, amount);
+-        } else {
+-            ServerStatsCounter manager = this.getStatisticManager();
+-            CraftStatistic.incrementStatistic(manager, statistic, material, amount, null);
+-            manager.save();
+-        }
+-    }
+-
+-    @Override
+-    public void decrementStatistic(Statistic statistic, Material material, int amount) {
+-        if (this.isOnline()) {
+-            this.getPlayer().decrementStatistic(statistic, material, amount);
+-        } else {
+-            ServerStatsCounter manager = this.getStatisticManager();
+-            CraftStatistic.decrementStatistic(manager, statistic, material, amount, null);
+-            manager.save();
+-        }
+-    }
+-
+-    @Override
+-    public void setStatistic(Statistic statistic, Material material, int newValue) {
++    public void incrementStatistic(Statistic statistic, ItemType material) {
++        if (this.isOnline()) {
++            this.getPlayer().incrementStatistic(statistic, material);
++        } else {
++            ServerStatsCounter manager = this.getStatisticManager();
++            CraftStatistic.incrementStatistic(manager, statistic, material, null);
++            manager.save();
++        }
++    }
++
++    @Override
++    public void incrementStatistic(Statistic statistic, BlockType material) {
++        if (this.isOnline()) {
++            this.getPlayer().incrementStatistic(statistic, material);
++        } else {
++            ServerStatsCounter manager = this.getStatisticManager();
++            CraftStatistic.incrementStatistic(manager, statistic, material, null);
++            manager.save();
++        }
++    }
++
++    @Override
++    public void decrementStatistic(Statistic statistic, ItemType material) {
++        if (this.isOnline()) {
++            this.getPlayer().decrementStatistic(statistic, material);
++        } else {
++            ServerStatsCounter manager = this.getStatisticManager();
++            CraftStatistic.decrementStatistic(manager, statistic, material, null);
++            manager.save();
++        }
++    }
++
++    @Override
++    public void decrementStatistic(Statistic statistic, BlockType material) {
++        if (this.isOnline()) {
++            this.getPlayer().decrementStatistic(statistic, material);
++        } else {
++            ServerStatsCounter manager = this.getStatisticManager();
++            CraftStatistic.decrementStatistic(manager, statistic, material, null);
++            manager.save();
++        }
++    }
++
++    @Override
++    public int getStatistic(Statistic statistic, ItemType material) {
++        if (this.isOnline()) {
++            return this.getPlayer().getStatistic(statistic, material);
++        } else {
++            return CraftStatistic.getStatistic(this.getStatisticManager(), statistic, material);
++        }
++    }
++
++    @Override
++    public int getStatistic(Statistic statistic, BlockType material) {
++        if (this.isOnline()) {
++            return this.getPlayer().getStatistic(statistic, material);
++        } else {
++            return CraftStatistic.getStatistic(this.getStatisticManager(), statistic, material);
++        }
++    }
++
++    @Override
++    public void incrementStatistic(Statistic statistic, ItemType material, int amount) {
++        if (this.isOnline()) {
++            this.getPlayer().incrementStatistic(statistic, material, amount);
++        } else {
++            ServerStatsCounter manager = this.getStatisticManager();
++            CraftStatistic.incrementStatistic(manager, statistic, material, amount, null);
++            manager.save();
++        }
++    }
++
++    @Override
++    public void incrementStatistic(Statistic statistic, BlockType material, int amount) {
++        if (this.isOnline()) {
++            this.getPlayer().incrementStatistic(statistic, material, amount);
++        } else {
++            ServerStatsCounter manager = this.getStatisticManager();
++            CraftStatistic.incrementStatistic(manager, statistic, material, amount, null);
++            manager.save();
++        }
++    }
++
++    @Override
++    public void decrementStatistic(Statistic statistic, ItemType material, int amount) {
++        if (this.isOnline()) {
++            this.getPlayer().decrementStatistic(statistic, material, amount);
++        } else {
++            ServerStatsCounter manager = this.getStatisticManager();
++            CraftStatistic.decrementStatistic(manager, statistic, material, amount, null);
++            manager.save();
++        }
++    }
++
++    @Override
++    public void decrementStatistic(Statistic statistic, BlockType material, int amount) {
++        if (this.isOnline()) {
++            this.getPlayer().decrementStatistic(statistic, material, amount);
++        } else {
++            ServerStatsCounter manager = this.getStatisticManager();
++            CraftStatistic.decrementStatistic(manager, statistic, material, amount, null);
++            manager.save();
++        }
++    }
++
++    @Override
++    public void setStatistic(Statistic statistic, ItemType material, int newValue) {
++        if (this.isOnline()) {
++            this.getPlayer().setStatistic(statistic, material, newValue);
++        } else {
++            ServerStatsCounter manager = this.getStatisticManager();
++            CraftStatistic.setStatistic(manager, statistic, material, newValue, null);
++            manager.save();
++        }
++    }
++
++    @Override
++    public void setStatistic(Statistic statistic, BlockType material, int newValue) {
+         if (this.isOnline()) {
+             this.getPlayer().setStatistic(statistic, material, newValue);
+         } else {

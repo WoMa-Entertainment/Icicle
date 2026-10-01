@@ -1,0 +1,17 @@
+--- a/src/main/java/org/bukkit/inventory/meta/BookMeta.java
++++ b/src/main/java/org/bukkit/inventory/meta/BookMeta.java
+@@ -3,13 +_,12 @@
+ import java.util.List;
+ import net.kyori.adventure.text.Component;
+ import net.md_5.bungee.api.chat.BaseComponent;
+-import org.bukkit.Material;
+ import org.jetbrains.annotations.Contract;
+ import org.jetbrains.annotations.NotNull;
+ import org.jetbrains.annotations.Nullable;
+ 
+ /**
+- * Represents a {@link Material#WRITTEN_BOOK} that can have a title, an author,
++ * Represents a {@link org.bukkit.inventory.ItemType#WRITTEN_BOOK} that can have a title, an author,
+  * and pages.
+  * <p>
+  * Before using this type, make sure to check the itemstack's material with

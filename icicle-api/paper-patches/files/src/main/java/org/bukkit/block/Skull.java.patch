@@ -1,0 +1,28 @@
+--- a/src/main/java/org/bukkit/block/Skull.java
++++ b/src/main/java/org/bukkit/block/Skull.java
+@@ -2,7 +_,6 @@
+ 
+ import io.papermc.paper.datacomponent.item.ResolvableProfile;
+ import net.kyori.adventure.text.Component;
+-import org.bukkit.Material;
+ import org.bukkit.NamespacedKey;
+ import org.bukkit.OfflinePlayer;
+ import org.bukkit.SkullType;
+@@ -181,7 +_,7 @@
+      * Gets the type of skull
+      *
+      * @return the type of skull
+-     * @deprecated check {@link Material} instead
++     * @deprecated check {@link BlockType} instead
+      */
+     @Deprecated(since = "1.13", forRemoval = true)
+     @NotNull
+@@ -191,7 +_,7 @@
+      * Sets the type of skull
+      *
+      * @param skullType the type of skull
+-     * @deprecated check {@link Material} instead
++     * @deprecated check {@link BlockType} instead
+      */
+     @Deprecated(since = "1.13", forRemoval = true)
+     @Contract("_ -> fail")

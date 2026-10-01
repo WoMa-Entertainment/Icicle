@@ -1,0 +1,51 @@
+--- a/src/main/java/com/destroystokyo/paper/event/block/AnvilDamagedEvent.java
++++ b/src/main/java/com/destroystokyo/paper/event/block/AnvilDamagedEvent.java
+@@ -1,6 +_,6 @@
+ package com.destroystokyo.paper.event.block;
+ 
+-import org.bukkit.Material;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.data.BlockData;
+ import org.bukkit.event.Cancellable;
+ import org.bukkit.event.HandlerList;
+@@ -96,14 +_,14 @@
+      * Represents the amount of damage on an anvil block
+      */
+     public enum DamageState {
+-        FULL(Material.ANVIL),
+-        CHIPPED(Material.CHIPPED_ANVIL),
+-        DAMAGED(Material.DAMAGED_ANVIL),
+-        BROKEN(Material.AIR);
+-
+-        private final Material material;
+-
+-        DamageState(final Material material) {
++        FULL(BlockType.ANVIL),
++        CHIPPED(BlockType.CHIPPED_ANVIL),
++        DAMAGED(BlockType.DAMAGED_ANVIL),
++        BROKEN(BlockType.AIR);
++
++        private final BlockType material;
++
++        DamageState(final BlockType material) {
+             this.material = material;
+         }
+ 
+@@ -112,7 +_,7 @@
+          *
+          * @return Material
+          */
+-        public Material getMaterial() {
++        public BlockType getMaterial() {
+             return this.material;
+         }
+ 
+@@ -134,7 +_,7 @@
+          * @return DamageState
+          * @throws IllegalArgumentException If non anvil material is given
+          */
+-        public static DamageState getState(final @Nullable Material material) {
++        public static DamageState getState(final @Nullable BlockType material) {
+             if (material == null) {
+                 return BROKEN;
+             }

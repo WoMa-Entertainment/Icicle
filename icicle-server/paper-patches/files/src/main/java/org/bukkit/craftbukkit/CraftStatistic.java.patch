@@ -1,0 +1,166 @@
+--- a/src/main/java/org/bukkit/craftbukkit/CraftStatistic.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftStatistic.java
+@@ -11,7 +_,6 @@
+ import net.minecraft.stats.Stats;
+ import net.minecraft.world.item.Item;
+ import net.minecraft.world.level.block.Block;
+-import org.bukkit.Material;
+ import org.bukkit.Statistic;
+ import org.bukkit.Statistic.Type;
+ import org.bukkit.block.BlockType;
+@@ -209,14 +_,14 @@
+         return CraftEntityType.minecraftToBukkit(statistic.getValue());
+     }
+ 
+-    public static Material getMaterialFromStatistic(net.minecraft.stats.Stat<?> statistic) {
+-        if (statistic.getValue() instanceof Item statisticItemValue) {
+-            return CraftItemType.minecraftToBukkit(statisticItemValue);
+-        }
+-        if (statistic.getValue() instanceof Block statisticBlockValue) {
+-            return CraftBlockType.minecraftToBukkit(statisticBlockValue);
+-        }
+-        return null;
++    public static ItemType getItemTypeFromStatistic(net.minecraft.stats.Stat<net.minecraft.world.item.Item> statistic) {
++        Preconditions.checkArgument(statistic != null, "NMS Statistic cannot be null");
++        return CraftItemType.minecraftToBukkitNew(statistic.getValue());
++    }
++
++    public static BlockType getBlockTypeFromStatistic(net.minecraft.stats.Stat<net.minecraft.world.level.block.Block> statistic) {
++        Preconditions.checkArgument(statistic != null, "NMS Statistic cannot be null");
++        return CraftBlockType.minecraftToBukkitNew(statistic.getValue());
+     }
+ 
+     public static void incrementStatistic(ServerStatsCounter manager, Statistic statistic, ServerPlayer player) {
+@@ -258,59 +_,79 @@
+         }
+     }
+ 
+-    public static void incrementStatistic(ServerStatsCounter manager, Statistic statistic, Material material, ServerPlayer player) {
+-        incrementStatistic(manager, statistic, material, 1, player);
+-    }
+-
+-    public static void decrementStatistic(ServerStatsCounter manager, Statistic statistic, Material material, ServerPlayer player) {
+-        decrementStatistic(manager, statistic, material, 1, player);
+-    }
+-
+-    public static int getStatistic(ServerStatsCounter manager, Statistic statistic, Material material) {
+-        Preconditions.checkArgument(statistic != null, "Statistic cannot be null");
+-        Preconditions.checkArgument(material != null, "Material cannot be null");
+-        net.minecraft.stats.Stat nmsStatistic;
+-        if (statistic.getType() == Type.BLOCK) {
+-            Preconditions.checkArgument(material.isBlock(), "Material %s must be a block", material);
+-            BlockType blockType = material.asBlockType();
+-            nmsStatistic = CraftStatistic.getBlockTypeStatistic(statistic, blockType);
+-        } else if (statistic.getType() == Type.ITEM) {
+-            Preconditions.checkArgument(material.isItem(), "Material %s must be an item", material);
+-            ItemType itemType = material.asItemType();
+-            nmsStatistic = CraftStatistic.getItemTypeStatistic(statistic, itemType);
+-        } else {
+-            throw new IllegalArgumentException("This statistic does not take a Material parameter");
+-        }
+-        Preconditions.checkArgument(nmsStatistic != null, "The supplied Material %s does not have a corresponding statistic", material);
+-        return manager.getValue(nmsStatistic);
+-    }
+-
+-    public static void incrementStatistic(ServerStatsCounter manager, Statistic statistic, Material material, int amount, ServerPlayer player) {
+-        Preconditions.checkArgument(amount > 0, "Amount must be greater than 0");
+-        setStatistic(manager, statistic, material, getStatistic(manager, statistic, material) + amount, player);
+-    }
+-
+-    public static void decrementStatistic(ServerStatsCounter manager, Statistic statistic, Material material, int amount, ServerPlayer player) {
+-        Preconditions.checkArgument(amount > 0, "Amount must be greater than 0");
+-        setStatistic(manager, statistic, material, getStatistic(manager, statistic, material) - amount, player);
+-    }
+-
+-    public static void setStatistic(ServerStatsCounter manager, Statistic statistic, Material material, int newValue, ServerPlayer player) {
+-        Preconditions.checkArgument(statistic != null, "Statistic cannot be null");
+-        Preconditions.checkArgument(material != null, "Material cannot be null");
+-        Preconditions.checkArgument(newValue >= 0, "Value must be greater than or equal to 0");
+-        net.minecraft.stats.Stat nmsStatistic;
+-        if (statistic.getType() == Type.BLOCK) {
+-            Preconditions.checkArgument(material.isBlock(), "Material %s must be a block", material);
+-            BlockType blockType = material.asBlockType();
+-            nmsStatistic = CraftStatistic.getBlockTypeStatistic(statistic, blockType);
+-        } else if (statistic.getType() == Type.ITEM) {
+-            Preconditions.checkArgument(material.isItem(), "Material %s must be an item", material);
+-            ItemType itemType = material.asItemType();
+-            nmsStatistic = CraftStatistic.getItemTypeStatistic(statistic, itemType);
+-        } else {
+-            throw new IllegalArgumentException("This statistic does not take a Material parameter");
+-        }
++    public static void incrementStatistic(ServerStatsCounter manager, Statistic statistic, ItemType material, ServerPlayer player) {
++        incrementStatistic(manager, statistic, material, 1, player);
++    }
++
++    public static void incrementStatistic(ServerStatsCounter manager, Statistic statistic, BlockType material, ServerPlayer player) {
++        incrementStatistic(manager, statistic, material, 1, player);
++    }
++
++    public static void decrementStatistic(ServerStatsCounter manager, Statistic statistic, ItemType material, ServerPlayer player) {
++        decrementStatistic(manager, statistic, material, 1, player);
++    }
++
++    public static void decrementStatistic(ServerStatsCounter manager, Statistic statistic, BlockType material, ServerPlayer player) {
++        decrementStatistic(manager, statistic, material, 1, player);
++    }
++
++    public static int getStatistic(ServerStatsCounter manager, Statistic statistic, ItemType material) {
++        Preconditions.checkArgument(statistic != null, "Statistic cannot be null");
++        Preconditions.checkArgument(material != null, "ItemType cannot be null");
++        net.minecraft.stats.Stat nmsStatistic = CraftStatistic.getItemTypeStatistic(statistic, material);
++        Preconditions.checkArgument(nmsStatistic != null, "The supplied Material %s does not have a corresponding statistic", material);
++        return manager.getValue(nmsStatistic);
++    }
++
++    public static int getStatistic(ServerStatsCounter manager, Statistic statistic, BlockType material) {
++        Preconditions.checkArgument(statistic != null, "Statistic cannot be null");
++        Preconditions.checkArgument(material != null, "Material cannot be null");
++        net.minecraft.stats.Stat nmsStatistic = CraftStatistic.getBlockTypeStatistic(statistic, material);
++        Preconditions.checkArgument(nmsStatistic != null, "The supplied Material %s does not have a corresponding statistic", material);
++        return manager.getValue(nmsStatistic);
++    }
++
++    public static void incrementStatistic(ServerStatsCounter manager, Statistic statistic, ItemType material, int amount, ServerPlayer player) {
++        Preconditions.checkArgument(amount > 0, "Amount must be greater than 0");
++        setStatistic(manager, statistic, material, getStatistic(manager, statistic, material) + amount, player);
++    }
++
++    public static void incrementStatistic(ServerStatsCounter manager, Statistic statistic, BlockType material, int amount, ServerPlayer player) {
++        Preconditions.checkArgument(amount > 0, "Amount must be greater than 0");
++        setStatistic(manager, statistic, material, getStatistic(manager, statistic, material) + amount, player);
++    }
++
++    public static void decrementStatistic(ServerStatsCounter manager, Statistic statistic, ItemType material, int amount, ServerPlayer player) {
++        Preconditions.checkArgument(amount > 0, "Amount must be greater than 0");
++        setStatistic(manager, statistic, material, getStatistic(manager, statistic, material) - amount, player);
++    }
++
++    public static void decrementStatistic(ServerStatsCounter manager, Statistic statistic, BlockType material, int amount, ServerPlayer player) {
++        Preconditions.checkArgument(amount > 0, "Amount must be greater than 0");
++        setStatistic(manager, statistic, material, getStatistic(manager, statistic, material) - amount, player);
++    }
++
++    public static void setStatistic(ServerStatsCounter manager, Statistic statistic, ItemType material, int newValue, ServerPlayer player) {
++        Preconditions.checkArgument(statistic != null, "Statistic cannot be null");
++        Preconditions.checkArgument(material != null, "Material cannot be null");
++        Preconditions.checkArgument(newValue >= 0, "Value must be greater than or equal to 0");
++        net.minecraft.stats.Stat nmsStatistic = CraftStatistic.getItemTypeStatistic(statistic, material);
++        Preconditions.checkArgument(nmsStatistic != null, "The supplied ItemType %s does not have a corresponding statistic", material);
++        manager.setValue(null, nmsStatistic, newValue);
++
++        // Update scoreboards
++        if (player != null) {
++            player.level().getCraftServer().getScoreboardManager().forAllObjectives(nmsStatistic, player, score -> {
++                score.set(newValue);
++            });
++        }
++    }
++
++    public static void setStatistic(ServerStatsCounter manager, Statistic statistic, BlockType material, int newValue, ServerPlayer player) {
++        Preconditions.checkArgument(statistic != null, "Statistic cannot be null");
++        Preconditions.checkArgument(material != null, "Material cannot be null");
++        Preconditions.checkArgument(newValue >= 0, "Value must be greater than or equal to 0");
++        net.minecraft.stats.Stat nmsStatistic = CraftStatistic.getBlockTypeStatistic(statistic, material);
+         Preconditions.checkArgument(nmsStatistic != null, "The supplied Material %s does not have a corresponding statistic", material);
+         manager.setValue(null, nmsStatistic, newValue);
+ 

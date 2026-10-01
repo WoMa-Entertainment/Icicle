@@ -1,0 +1,203 @@
+--- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBlockState.java
++++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBlockState.java
+@@ -7,6 +_,8 @@
+ import java.util.Objects;
+ import java.util.Optional;
+ import java.util.Set;
++
++import net.kyori.adventure.key.Key;
+ import net.minecraft.core.BlockPos;
+ import net.minecraft.core.component.DataComponentMap;
+ import net.minecraft.core.component.DataComponentPatch;
+@@ -23,36 +_,38 @@
+ import net.minecraft.world.level.block.entity.BlockEntityType;
+ import net.minecraft.world.level.storage.TagValueOutput;
+ import org.bukkit.DyeColor;
+-import org.bukkit.Material;
++import org.bukkit.Registry;
+ import org.bukkit.block.BlockState;
++import org.bukkit.block.BlockType;
+ import org.bukkit.configuration.serialization.DelegateDeserialization;
+ import org.bukkit.craftbukkit.CraftRegistry;
+ import org.bukkit.craftbukkit.block.CraftBlockEntityState;
+ import org.bukkit.craftbukkit.block.CraftBlockStates;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.inventory.meta.BlockStateMeta;
+ import org.bukkit.util.BlockVector;
+ 
+ @DelegateDeserialization(SerializableMeta.class)
+ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta {
+ 
+-    private static final Set<Material> SHULKER_BOX_MATERIALS = Sets.newHashSet(
+-            Material.SHULKER_BOX,
+-            Material.WHITE_SHULKER_BOX,
+-            Material.ORANGE_SHULKER_BOX,
+-            Material.MAGENTA_SHULKER_BOX,
+-            Material.LIGHT_BLUE_SHULKER_BOX,
+-            Material.YELLOW_SHULKER_BOX,
+-            Material.LIME_SHULKER_BOX,
+-            Material.PINK_SHULKER_BOX,
+-            Material.GRAY_SHULKER_BOX,
+-            Material.LIGHT_GRAY_SHULKER_BOX,
+-            Material.CYAN_SHULKER_BOX,
+-            Material.PURPLE_SHULKER_BOX,
+-            Material.BLUE_SHULKER_BOX,
+-            Material.BROWN_SHULKER_BOX,
+-            Material.GREEN_SHULKER_BOX,
+-            Material.RED_SHULKER_BOX,
+-            Material.BLACK_SHULKER_BOX
++    private static final Set<ItemType> SHULKER_BOX_MATERIALS = Sets.newHashSet(
++            ItemType.SHULKER_BOX,
++            ItemType.WHITE_SHULKER_BOX,
++            ItemType.ORANGE_SHULKER_BOX,
++            ItemType.MAGENTA_SHULKER_BOX,
++            ItemType.LIGHT_BLUE_SHULKER_BOX,
++            ItemType.YELLOW_SHULKER_BOX,
++            ItemType.LIME_SHULKER_BOX,
++            ItemType.PINK_SHULKER_BOX,
++            ItemType.GRAY_SHULKER_BOX,
++            ItemType.LIGHT_GRAY_SHULKER_BOX,
++            ItemType.CYAN_SHULKER_BOX,
++            ItemType.PURPLE_SHULKER_BOX,
++            ItemType.BLUE_SHULKER_BOX,
++            ItemType.BROWN_SHULKER_BOX,
++            ItemType.GREEN_SHULKER_BOX,
++            ItemType.RED_SHULKER_BOX,
++            ItemType.BLACK_SHULKER_BOX
+     );
+ 
+     @ItemMetaKey.Specific(ItemMetaKey.Specific.To.NBT)
+@@ -61,7 +_,7 @@
+     static final ItemMetaKey BLOCK_ENTITY_COMPONENTS = new ItemMetaKey("block-entity-components");
+     private static final CompoundTag EMPTY_TAG = new CompoundTag();
+ 
+-    final Material material;
++    final ItemType material;
+     // Paper start - store data separately
+     DataComponentMap components;
+     CompoundTag blockEntityTag;
+@@ -72,13 +_,13 @@
+         this.components = this.components != null ? this.components : DataComponentMap.EMPTY;
+         this.blockEntityTag = this.blockEntityTag != null ? this.blockEntityTag : EMPTY_TAG;
+     }
+-    private Material materialForBlockEntityType() {
++    private ItemType materialForBlockEntityType() {
+         return this.material;
+     }
+     // Paper end
+     private CompoundTag internalTag;
+ 
+-    CraftMetaBlockState(CraftMetaItem meta, Material material) {
++    CraftMetaBlockState(CraftMetaItem meta, ItemType material) {
+         super(meta);
+         this.material = material;
+ 
+@@ -93,7 +_,7 @@
+         this.blockEntityTag = metaBlockState.blockEntityTag;
+     }
+ 
+-    CraftMetaBlockState(DataComponentPatch patch, Material material, final Set<DataComponentType<?>> extraHandledComponents) { // Paper
++    CraftMetaBlockState(DataComponentPatch patch, ItemType material, final Set<DataComponentType<?>> extraHandledComponents) { // Paper
+         super(patch, extraHandledComponents); // Paper
+         this.material = material;
+ 
+@@ -111,7 +_,7 @@
+             // Paper start - store data in a DataComponentMap to be used to construct CraftBlockEntityStates
+             final DataComponentMap.Builder map = DataComponentMap.builder();
+             final net.minecraft.world.level.block.entity.BlockEntity dummyBlockEntity = java.util.Objects.requireNonNull(
+-                org.bukkit.craftbukkit.block.CraftBlockStates.createNewBlockEntity(this.materialForBlockEntityType())
++                org.bukkit.craftbukkit.block.CraftBlockStates.createNewBlockEntity(this.materialForBlockEntityType().getBlockType())
+             );
+ 
+             // we don't care about what's in here, all
+@@ -138,8 +_,8 @@
+     CraftMetaBlockState(Map<String, Object> map) {
+         super(map);
+         String blockMaterial = SerializableMeta.getString(map, "blockMaterial", true);
+-        Material material = Material.getMaterial(blockMaterial);
+-        this.material = material != null ? material : Material.AIR;
++        ItemType material = Registry.ITEM.getOrThrow(Key.key(blockMaterial));
++        this.material = material != null ? material : ItemType.AIR;
+         if (this.internalTag != null) {
+             this.setBlockState(CraftMetaBlockState.getBlockState(this.material, this.internalTag)); // Paper - general item meta fixes - pass through setter
+             this.internalTag = null;
+@@ -153,7 +_,7 @@
+             )) {
+                 final TagValueOutput output = TagValueOutput.createWrappingWithContext(problemReporter, CraftRegistry.getMinecraftRegistry(), blockEntityTag);
+                 if (blockEntityTag.isEmpty()) {
+-                    BlockEntity.addEntityType(output, java.util.Objects.requireNonNull(CraftBlockStates.getBlockEntityType(this.materialForBlockEntityType())));
++                    BlockEntity.addEntityType(output, java.util.Objects.requireNonNull(CraftBlockStates.getBlockEntityType(this.materialForBlockEntityType().getBlockType())));
+                 }
+                 output.putInt("x", legacyPosition.getBlockX());
+                 output.putInt("y", legacyPosition.getBlockY());
+@@ -178,7 +_,7 @@
+                 )) {
+                     BlockEntity.addEntityType(
+                         TagValueOutput.createWrappingWithContext(problemReporter, CraftRegistry.getMinecraftRegistry(), nbt),
+-                        java.util.Objects.requireNonNull(CraftBlockStates.getBlockEntityType(this.materialForBlockEntityType()))
++                        java.util.Objects.requireNonNull(CraftBlockStates.getBlockEntityType(this.materialForBlockEntityType().getBlockType()))
+                     );
+                 }
+             }
+@@ -228,7 +_,7 @@
+     @Override
+     ImmutableMap.Builder<String, Object> serialize(ImmutableMap.Builder<String, Object> builder) {
+         super.serialize(builder);
+-        builder.put("blockMaterial", this.material.name());
++        builder.put("blockMaterial", this.material.key().asMinimalString());
+         return builder;
+     }
+ 
+@@ -295,7 +_,7 @@
+     // Paper start - create blockstate on-demand
+     public CraftBlockEntityState<?> getBlockState() {
+         BlockPos pos = BlockPos.ZERO;
+-        final Material stateMaterial = this.materialForBlockEntityType();
++        final BlockType stateMaterial = this.materialForBlockEntityType().getBlockType();
+         if (!this.blockEntityTag.isEmpty()) {
+             // Paper "id" field is always present now
+             pos = BlockEntity.getPosFromTag(null, this.blockEntityTag); // unsafe is fine here, just querying
+@@ -318,13 +_,13 @@
+         // Paper end
+     }
+ 
+-    private static CraftBlockEntityState<?> getBlockState(Material material, CompoundTag blockEntityTag) {
++    private static CraftBlockEntityState<?> getBlockState(ItemType material, CompoundTag blockEntityTag) {
+         BlockPos pos = BlockPos.ZERO;
+-        Material stateMaterial = (material != Material.SHIELD) ? material : CraftMetaBlockState.shieldToBannerHack(blockEntityTag); // Only actually used for jigsaws
++        BlockType stateMaterial = (material != ItemType.SHIELD) ? material.getBlockType() : CraftMetaBlockState.shieldToBannerHack(blockEntityTag); // Only actually used for jigsaws
+         if (blockEntityTag != null) {
+-            if (material == Material.SHIELD) {
++            /* if (material == ItemType.SHIELD) {
+                 blockEntityTag.putString("id", "minecraft:banner");
+-            } else if (material == Material.BEE_NEST || material == Material.BEEHIVE) {
++            } else */ if (material == BlockType.BEE_NEST || material == BlockType.BEEHIVE) {
+                 blockEntityTag.putString("id", "minecraft:beehive");
+             } else if (CraftMetaBlockState.SHULKER_BOX_MATERIALS.contains(material)) {
+                 blockEntityTag.putString("id", "minecraft:shulker_box");
+@@ -341,7 +_,7 @@
+     public void setBlockState(BlockState blockState) {
+         Preconditions.checkArgument(blockState != null, "blockState must not be null");
+ 
+-        Material stateMaterial = (this.material != Material.SHIELD) ? this.material : CraftMetaBlockState.shieldToBannerHack(null);
++        BlockType stateMaterial = (this.material != ItemType.SHIELD) ? this.material.getBlockType() : CraftMetaBlockState.shieldToBannerHack(null);
+         Class<?> blockStateType = CraftBlockStates.getBlockStateType(stateMaterial);
+         Preconditions.checkArgument(blockStateType == blockState.getClass() && blockState instanceof CraftBlockEntityState, "Invalid blockState for %s", this.material);
+ 
+@@ -364,7 +_,7 @@
+         // Paper end
+     }
+ 
+-    private static Material shieldToBannerHack(CompoundTag tag) {
++    private static BlockType shieldToBannerHack(CompoundTag tag) {
+         if (tag != null) {
+             Optional<String> baseColor = tag.getCompound("components").flatMap(components -> components.getString("minecraft:base_color"));
+             if (baseColor.isPresent()) {
+@@ -373,6 +_,6 @@
+             }
+         }
+ 
+-        return Material.WHITE_BANNER;
++        return BlockType.WHITE_BANNER;
+     }
+ }

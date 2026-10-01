@@ -1,0 +1,91 @@
+--- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
++++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
+@@ -17,7 +_,6 @@
+ import net.minecraft.world.item.enchantment.Enchantment;
+ import net.minecraft.world.item.enchantment.EnchantmentHelper;
+ import org.bukkit.Color;
+-import org.bukkit.Material;
+ import org.bukkit.World;
+ import org.bukkit.configuration.serialization.ConfigurationSerialization;
+ import org.bukkit.craftbukkit.CraftRegistry;
+@@ -30,11 +_,11 @@
+ import org.bukkit.craftbukkit.inventory.components.CraftJukeboxComponent;
+ import org.bukkit.craftbukkit.inventory.components.CraftToolComponent;
+ import org.bukkit.craftbukkit.inventory.components.CraftUseCooldownComponent;
+-import org.bukkit.craftbukkit.util.CraftLegacy;
+ import org.bukkit.entity.Entity;
+ import org.bukkit.entity.EntityType;
+ import org.bukkit.inventory.ItemFactory;
+ import org.bukkit.inventory.ItemStack;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.inventory.meta.ItemMeta;
+ 
+ public final class CraftItemFactory implements ItemFactory {
+@@ -66,8 +_,7 @@
+     }
+ 
+     @Override
+-    public boolean isApplicable(ItemMeta meta, Material type) {
+-        type = CraftLegacy.fromLegacy(type); // This may be called from legacy item stacks, try to get the right material
++    public boolean isApplicable(ItemMeta meta, ItemType type) {
+         if (type == null || meta == null) {
+             return false;
+         }
+@@ -78,20 +_,13 @@
+     }
+ 
+     @Override
+-    public ItemMeta getItemMeta(Material material) {
+-        Preconditions.checkArgument(material != null, "Material cannot be null");
++    public ItemMeta getItemMeta(ItemType material) {
++        Preconditions.checkArgument(material != null, "ItemType cannot be null");
+         return this.getItemMeta(material, null);
+     }
+ 
+-    private ItemMeta getItemMeta(Material material, CraftMetaItem meta) {
+-        material = CraftLegacy.fromLegacy(material); // This may be called from legacy item stacks, try to get the right material
+-
+-        if (!material.isItem()) {
+-            // default behavior for none items is a new CraftMetaItem
+-            return new CraftMetaItem(meta);
+-        }
+-
+-        return ((CraftItemType<?>) material.asItemType()).getItemMeta(meta);
++    private ItemMeta getItemMeta(ItemType material, CraftMetaItem meta) {
++        return ((CraftItemType<?>) material).getItemMeta(meta);
+     }
+ 
+     @Override
+@@ -138,7 +_,7 @@
+     }
+ 
+     @Override
+-    public ItemMeta asMetaFor(ItemMeta meta, Material material) {
++    public ItemMeta asMetaFor(ItemMeta meta, ItemType material) {
+         Preconditions.checkArgument(material != null, "Material cannot be null");
+         Preconditions.checkArgument(meta instanceof CraftMetaItem, "ItemMeta of %s not created by %s", (meta != null ? meta.getClass().toString() : "null"), CraftItemFactory.class.getName());
+         return this.getItemMeta(material, (CraftMetaItem) meta);
+@@ -164,12 +_,12 @@
+     }
+ 
+     @Override
+-    public Material getSpawnEgg(EntityType type) {
++    public ItemType getSpawnEgg(EntityType type) {
+         if (type == EntityType.UNKNOWN) {
+             return null;
+         }
+         net.minecraft.world.entity.EntityType<?> nmsType = CraftEntityType.bukkitToMinecraft(type);
+-        return SpawnEggItem.byId(nmsType).map(item -> CraftItemType.minecraftHolderToBukkitNew(item).asMaterial()).orElse(null);
++        return SpawnEggItem.byId(nmsType).map(item -> CraftItemType.minecraftHolderToBukkitNew(item)).orElse(null);
+     }
+ 
+     @Override
+@@ -193,7 +_,7 @@
+ 
+     private static ItemStack enchantItem(RandomSource source, ItemStack itemStack, int level, boolean allowTreasures) {
+         Preconditions.checkArgument(itemStack != null, "ItemStack must not be null");
+-        Preconditions.checkArgument(!itemStack.getType().isAir(), "ItemStack must not be air");
++        Preconditions.checkArgument(itemStack.getType() != ItemType.AIR, "ItemStack must not be air");
+         RegistryAccess registry = CraftRegistry.getMinecraftRegistry();
+         Optional<HolderSet.Named<Enchantment>> tag = allowTreasures ? Optional.empty() : registry.lookupOrThrow(Registries.ENCHANTMENT).get(EnchantmentTags.IN_ENCHANTING_TABLE);
+         return CraftItemStack.asBukkitMirror(EnchantmentHelper.enchantItem(source, CraftItemStack.asNMSCopy(itemStack), level, registry, tag));

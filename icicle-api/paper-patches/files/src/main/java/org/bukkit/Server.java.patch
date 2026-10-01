@@ -1,0 +1,55 @@
+--- a/src/main/java/org/bukkit/Server.java
++++ b/src/main/java/org/bukkit/Server.java
+@@ -21,6 +_,7 @@
+ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+ import org.bukkit.Warning.WarningState;
+ import org.bukkit.advancement.Advancement;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.data.BlockData;
+ import org.bukkit.boss.BarColor;
+ import org.bukkit.boss.BarFlag;
+@@ -1114,7 +_,7 @@
+      * @param world The world the crafting takes place in.
+      * @param player The player to imitate the crafting event on.
+      * @return the {@link ItemStack} resulting from the given crafting matrix, if no recipe is found
+-     * an ItemStack of {@link Material#AIR} is returned.
++     * an ItemStack of {@link org.bukkit.inventory.ItemType#AIR} is returned.
+      */
+     @NotNull
+     default ItemStack craftItem(@NotNull ItemStack @NotNull [] craftingMatrix, @NotNull World world, @NotNull Player player) {
+@@ -1137,7 +_,7 @@
+      *                       Must not contain more than 9 items.
+      * @param world The world the crafting takes place in.
+      * @return the {@link ItemStack} resulting from the given crafting matrix, if no recipe is found
+-     * an ItemStack of {@link Material#AIR} is returned.
++     * an ItemStack of {@link org.bukkit.inventory.ItemType#AIR} is returned.
+      */
+     @NotNull
+     default ItemStack craftItem(@NotNull ItemStack @NotNull [] craftingMatrix, @NotNull World world) {
+@@ -2245,7 +_,7 @@
+      * @return new data instance
+      */
+     @NotNull
+-    BlockData createBlockData(@NotNull Material material);
++    BlockData createBlockData(@NotNull BlockType material);
+ 
+     /**
+      * Creates a new {@link BlockData} instance for the specified Material, with
+@@ -2256,7 +_,7 @@
+      * @return new data instance
+      */
+     @NotNull
+-    public BlockData createBlockData(@NotNull Material material, @Nullable Consumer<? super BlockData> consumer);
++    public BlockData createBlockData(@NotNull BlockType material, @Nullable Consumer<? super BlockData> consumer);
+ 
+     /**
+      * Creates a new {@link BlockData} instance with material and properties
+@@ -2284,7 +_,7 @@
+      */
+     @NotNull
+     @Contract("null, null -> fail")
+-    BlockData createBlockData(@Nullable Material material, @Nullable String data) throws IllegalArgumentException;
++    BlockData createBlockData(@Nullable BlockType material, @Nullable String data) throws IllegalArgumentException;
+ 
+     /**
+      * Gets a tag which has already been defined within the server. Plugins are

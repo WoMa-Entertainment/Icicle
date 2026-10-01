@@ -1,0 +1,21 @@
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftBoat.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftBoat.java
+@@ -5,6 +_,7 @@
+ import net.minecraft.world.entity.vehicle.boat.AbstractBoat;
+ import org.bukkit.TreeSpecies;
+ import org.bukkit.craftbukkit.CraftServer;
++import org.bukkit.craftbukkit.inventory.CraftItemType;
+ import org.bukkit.entity.Boat;
+ 
+ public abstract class CraftBoat extends CraftVehicle implements Boat, io.papermc.paper.entity.PaperLeashable { // Paper - Leashable API
+@@ -83,8 +_,8 @@
+     }
+ 
+     @Override
+-    public org.bukkit.Material getBoatMaterial() {
+-        return org.bukkit.craftbukkit.util.CraftMagicNumbers.getMaterial(this.getHandle().getDropItem());
++    public org.bukkit.inventory.ItemType getBoatMaterial() {
++        return CraftItemType.minecraftToBukkitNew(this.getHandle().getDropItem());
+     }
+ 
+     @Override

@@ -1,0 +1,33 @@
+--- a/src/test/java/org/bukkit/craftbukkit/inventory/YamlSerializationTest.java
++++ b/src/test/java/org/bukkit/craftbukkit/inventory/YamlSerializationTest.java
+@@ -11,11 +_,11 @@
+ import net.kyori.adventure.util.TriState;
+ import net.minecraft.world.level.storage.DataVersion;
+ import org.bukkit.Bukkit;
+-import org.bukkit.Material;
+ import org.bukkit.configuration.InvalidConfigurationException;
+ import org.bukkit.configuration.file.YamlConfiguration;
+ import org.bukkit.enchantments.Enchantment;
+ import org.bukkit.inventory.ItemStack;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.inventory.meta.BookMeta;
+ import org.bukkit.support.environment.AllFeatures;
+ import org.junit.jupiter.api.Assertions;
+@@ -31,7 +_,7 @@
+ 
+     @Test
+     void testDataComponents() {
+-        final ItemStack item = ItemStack.of(Material.WRITTEN_BOOK);
++        final ItemStack item = ItemStack.of(ItemType.WRITTEN_BOOK);
+         item.setData(DataComponentTypes.WRITTEN_BOOK_CONTENT, WrittenBookContent.writtenBookContent("Jon", "The Destroyer").addPage(Component.text("hi")).build());
+         item.setData(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments().add(Enchantment.AQUA_AFFINITY, 1).add(Enchantment.DENSITY, 2).build());
+         item.setData(DataComponentTypes.GLIDER);
+@@ -54,7 +_,7 @@
+ 
+     @Test
+     void testItemMeta() {
+-        final ItemStack item = ItemStack.of(Material.WRITTEN_BOOK);
++        final ItemStack item = ItemStack.of(ItemType.WRITTEN_BOOK);
+         item.editMeta(BookMeta.class, (meta) -> {
+             meta.setAuthor("The Destroyer");
+             meta.setTitle("Jon");

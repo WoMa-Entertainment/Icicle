@@ -1,0 +1,26 @@
+--- a/src/test/java/org/bukkit/StatisticsAndAchievementsTest.java
++++ b/src/test/java/org/bukkit/StatisticsAndAchievementsTest.java
+@@ -5,7 +_,10 @@
+ import static org.junit.jupiter.api.Assertions.*;
+ import com.google.common.collect.HashMultiset;
+ import net.minecraft.core.registries.BuiltInRegistries;
++import net.minecraft.stats.Stat;
+ import net.minecraft.stats.StatType;
++import net.minecraft.world.item.Item;
++import net.minecraft.world.level.block.Block;
+ import org.bukkit.craftbukkit.CraftStatistic;
+ import org.bukkit.entity.EntityType;
+ import org.bukkit.support.environment.AllFeatures;
+@@ -39,8 +_,10 @@
+                 Statistic subject = CraftStatistic.getBukkitStatistic(statistic);
+                 assertThat(subject, is(not(nullValue())), message);
+ 
+-                if (wrapper.getRegistry() == BuiltInRegistries.BLOCK || wrapper.getRegistry() == BuiltInRegistries.ITEM) {
+-                    assertNotNull(CraftStatistic.getMaterialFromStatistic(statistic), "Material type map missing for " + wrapper.getRegistry().getKey(child));
++                if (wrapper.getRegistry() == BuiltInRegistries.ITEM) {
++                    assertNotNull(CraftStatistic.getItemTypeFromStatistic((Stat<Item>) statistic), "Item type map missing for " + wrapper.getRegistry().getKey(child));
++                } else if (wrapper.getRegistry() == BuiltInRegistries.BLOCK) {
++                    assertNotNull(CraftStatistic.getBlockTypeFromStatistic((Stat<Block>) statistic), "Block type map missing for " + wrapper.getRegistry().getKey(child));
+                 } else if (wrapper.getRegistry() == BuiltInRegistries.ENTITY_TYPE) {
+                     assertNotNull(CraftStatistic.getEntityTypeFromStatistic((net.minecraft.stats.Stat<net.minecraft.world.entity.EntityType<?>>) statistic), "Entity type map missing for " + net.minecraft.world.entity.EntityType.getKey((net.minecraft.world.entity.EntityType<?>) child));
+                 }

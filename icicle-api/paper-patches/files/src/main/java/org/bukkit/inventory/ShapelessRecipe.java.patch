@@ -1,0 +1,230 @@
+--- a/src/main/java/org/bukkit/inventory/ShapelessRecipe.java
++++ b/src/main/java/org/bukkit/inventory/ShapelessRecipe.java
+@@ -2,12 +_,9 @@
+ 
+ import com.google.common.base.Preconditions;
+ import java.util.ArrayList;
+-import java.util.Collections;
+ import java.util.Iterator;
+ import java.util.List;
+-import org.bukkit.Material;
+ import org.bukkit.NamespacedKey;
+-import org.bukkit.material.MaterialData;
+ import org.jetbrains.annotations.NotNull;
+ 
+ /**
+@@ -31,8 +_,8 @@
+      * @param key the unique recipe key
+      * @param result The item you want the recipe to create.
+      * @exception IllegalArgumentException if the {@code result} is an empty item (AIR)
+-     * @see ShapelessRecipe#addIngredient(Material)
+-     * @see ShapelessRecipe#addIngredient(int,Material)
++     * @see ShapelessRecipe#addIngredient(ItemType)
++     * @see ShapelessRecipe#addIngredient(int,ItemType)
+      * @see ShapelessRecipe#addIngredient(RecipeChoice)
+      */
+     public ShapelessRecipe(@NotNull NamespacedKey key, @NotNull ItemStack result) {
+@@ -44,83 +_,27 @@
+      *
+      * @param ingredient The ingredient to add.
+      * @return The changed recipe, so you can chain calls.
+-     * @deprecated use {@link #addIngredient(RecipeChoice)}
+-     */
+-    @NotNull
+-    @Deprecated
+-    public ShapelessRecipe addIngredient(@NotNull MaterialData ingredient) {
+-        return addIngredient(1, ingredient);
+-    }
+-
+-    /**
+-     * Adds the specified ingredient.
+-     *
+-     * @param ingredient The ingredient to add.
+-     * @return The changed recipe, so you can chain calls.
+-     */
+-    @NotNull
+-    public ShapelessRecipe addIngredient(@NotNull Material ingredient) {
+-        return addIngredient(1, ingredient);
+-    }
+-
+-    /**
+-     * Adds the specified ingredient.
+-     *
+-     * @param ingredient The ingredient to add.
+-     * @param rawdata The data value, or -1 to allow any data value.
+-     * @return The changed recipe, so you can chain calls.
+-     * @deprecated Magic value
+-     */
+-    @Deprecated(since = "1.6.2")
+-    @NotNull
+-    public ShapelessRecipe addIngredient(@NotNull Material ingredient, int rawdata) {
+-        return addIngredient(1, ingredient, rawdata);
+-    }
+-
+-    /**
+-     * Adds multiples of the specified ingredient.
+-     *
+-     * @param count How many to add (can't be more than 9!)
+-     * @param ingredient The ingredient to add.
+-     * @return The changed recipe, so you can chain calls.
+-     * @deprecated use {@link #addIngredient(int, Material)}
+-     */
+-    @NotNull
+-    @Deprecated // Paper
+-    public ShapelessRecipe addIngredient(int count, @NotNull MaterialData ingredient) {
+-        return addIngredient(count, ingredient.getItemType(), ingredient.getData());
+-    }
+-
+-    /**
+-     * Adds multiples of the specified ingredient.
+-     *
+-     * @param count How many to add (can't be more than 9!)
+-     * @param ingredient The ingredient to add.
+-     * @return The changed recipe, so you can chain calls.
+-     */
+-    @NotNull
+-    public ShapelessRecipe addIngredient(int count, @NotNull Material ingredient) {
++     */
++    @NotNull
++    public ShapelessRecipe addIngredient(@NotNull ItemType ingredient) {
++        return addIngredient(1, ingredient);
++    }
++
++    /**
++     * Adds multiples of the specified ingredient.
++     *
++     * @param count How many to add (can't be more than 9!)
++     * @param ingredient The ingredient to add.
++     * @return The changed recipe, so you can chain calls.
++     */
++    @NotNull
++    public ShapelessRecipe addIngredient(int count, @NotNull ItemType ingredient) {
+         Preconditions.checkArgument(this.ingredients.size() + count <= 9, "Shapeless recipes cannot have more than 9 ingredients");
+ 
+         while (count-- > 0) {
+-            this.ingredients.add(new RecipeChoice.MaterialChoice(Collections.singletonList(ingredient)));
++            this.ingredients.add(RecipeChoice.itemType(ingredient));
+         }
+         return this;
+-    }
+-
+-    /**
+-     * Adds multiples of the specified ingredient.
+-     *
+-     * @param count How many to add (can't be more than 9!)
+-     * @param ingredient The ingredient to add.
+-     * @param rawdata The data value, or -1 to allow any data value.
+-     * @return The changed recipe, so you can chain calls.
+-     * @deprecated Magic value
+-     */
+-    @Deprecated(since = "1.6.2")
+-    @NotNull
+-    public ShapelessRecipe addIngredient(int count, @NotNull Material ingredient, int rawdata) {
+-        return this.addIngredient(count, ingredient);
+     }
+ 
+     @NotNull
+@@ -140,7 +_,7 @@
+     @NotNull
+     public ShapelessRecipe addIngredient(int count, @NotNull ItemStack item) {
+         Preconditions.checkArgument(this.ingredients.size() + count <= 9, "Shapeless recipes cannot have more than 9 ingredients");
+-        Preconditions.checkArgument(!item.getType().isAir(), "Item cannot be air"); // Paper
++        Preconditions.checkArgument(item.getType() != ItemType.AIR, "Item cannot be air"); // Paper
+         item = item.clone(); // Paper
+         while (count-- > 0) {
+             this.ingredients.add(RecipeChoice.exactChoice(item));
+@@ -189,26 +_,11 @@
+      * @return The changed recipe.
+      */
+     @NotNull
+-    public ShapelessRecipe removeIngredient(@NotNull Material ingredient) {
++    public ShapelessRecipe removeIngredient(@NotNull ItemType ingredient) {
+         return removeIngredient(new ItemStack(ingredient)); // Paper - avoid using deprecated methods (magic values; RecipeChoice#getItemStack)
+     }
+ 
+     /**
+-     * Removes an ingredient from the list. If the ingredient occurs multiple
+-     * times, only one instance of it is removed. If the data value is -1,
+-     * only ingredients with a -1 data value will be removed.
+-     *
+-     * @param ingredient The ingredient to remove
+-     * @return The changed recipe.
+-     * @deprecated use {@link #removeIngredient(Material)}
+-     */
+-    @NotNull
+-    @Deprecated // Paper
+-    public ShapelessRecipe removeIngredient(@NotNull MaterialData ingredient) {
+-        return removeIngredient(ingredient.getItemType(), ingredient.getData());
+-    }
+-
+-    /**
+      * Removes multiple instances of an ingredient from the list. If there are
+      * fewer instances than specified, all will be removed. Only removes exact
+      * matches, with a data value of 0.
+@@ -218,65 +_,8 @@
+      * @return The changed recipe.
+      */
+     @NotNull
+-    public ShapelessRecipe removeIngredient(int count, @NotNull Material ingredient) {
++    public ShapelessRecipe removeIngredient(int count, @NotNull ItemType ingredient) {
+         return removeIngredient(count, new ItemStack(ingredient)); // Paper - avoid using deprecated methods (magic values; RecipeChoice#getItemStack)
+-    }
+-
+-    /**
+-     * Removes multiple instances of an ingredient from the list. If there are
+-     * fewer instances then specified, all will be removed. If the data value
+-     * is -1, only ingredients with a -1 data value will be removed.
+-     *
+-     * @param count The number of copies to remove.
+-     * @param ingredient The ingredient to remove.
+-     * @return The changed recipe.
+-     * @deprecated use {@link #removeIngredient(int, Material)}
+-     */
+-    @NotNull
+-    @Deprecated // Paper
+-    public ShapelessRecipe removeIngredient(int count, @NotNull MaterialData ingredient) {
+-        return removeIngredient(count, ingredient.getItemType(), ingredient.getData());
+-    }
+-
+-    /**
+-     * Removes an ingredient from the list. If the ingredient occurs multiple
+-     * times, only one instance of it is removed. If the data value is -1,
+-     * only ingredients with a -1 data value will be removed.
+-     *
+-     * @param ingredient The ingredient to remove
+-     * @param rawdata The data value;
+-     * @return The changed recipe.
+-     * @deprecated Magic value
+-     */
+-    @Deprecated(since = "1.6.2")
+-    @NotNull
+-    public ShapelessRecipe removeIngredient(@NotNull Material ingredient, int rawdata) {
+-        return removeIngredient(1, ingredient, rawdata);
+-    }
+-
+-    /**
+-     * Removes multiple instances of an ingredient from the list. If there are
+-     * fewer instances then specified, all will be removed. If the data value
+-     * is -1, only ingredients with a -1 data value will be removed.
+-     *
+-     * @param count The number of copies to remove.
+-     * @param ingredient The ingredient to remove.
+-     * @param rawdata The data value.
+-     * @return The changed recipe.
+-     * @deprecated Magic value
+-     */
+-    @Deprecated(since = "1.6.2")
+-    @NotNull
+-    public ShapelessRecipe removeIngredient(int count, @NotNull Material ingredient, int rawdata) {
+-        Iterator<RecipeChoice> iterator = this.ingredients.iterator();
+-        while (count > 0 && iterator.hasNext()) {
+-            ItemStack stack = iterator.next().getItemStack();
+-            if (stack.getType() == ingredient && stack.getDurability() == rawdata) {
+-                iterator.remove();
+-                count--;
+-            }
+-        }
+-        return this;
+     }
+ 
+     /**

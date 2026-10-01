@@ -1,0 +1,74 @@
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPiglin.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPiglin.java
+@@ -5,12 +_,12 @@
+ import java.util.Set;
+ import java.util.stream.Collectors;
+ import net.minecraft.world.item.Item;
+-import org.bukkit.Material;
+ import org.bukkit.craftbukkit.CraftServer;
+ import org.bukkit.craftbukkit.inventory.CraftInventory;
+ import org.bukkit.craftbukkit.inventory.CraftItemType;
+ import org.bukkit.entity.Piglin;
+ import org.bukkit.inventory.Inventory;
++import org.bukkit.inventory.ItemType;
+ 
+ public class CraftPiglin extends CraftPiglinAbstract implements Piglin, com.destroystokyo.paper.entity.CraftRangedEntity<net.minecraft.world.entity.monster.piglin.Piglin> { // Paper
+ 
+@@ -34,45 +_,45 @@
+     }
+ 
+     @Override
+-    public boolean addBarterMaterial(Material material) {
++    public boolean addBarterMaterial(ItemType material) {
+         Preconditions.checkArgument(material != null, "material cannot be null");
+ 
+-        Item item = CraftItemType.bukkitToMinecraft(material);
++        Item item = CraftItemType.bukkitToMinecraftNew(material);
+         return this.getHandle().allowedBarterItems.add(item);
+     }
+ 
+     @Override
+-    public boolean removeBarterMaterial(Material material) {
++    public boolean removeBarterMaterial(ItemType material) {
+         Preconditions.checkArgument(material != null, "material cannot be null");
+ 
+-        Item item = CraftItemType.bukkitToMinecraft(material);
++        Item item = CraftItemType.bukkitToMinecraftNew(material);
+         return this.getHandle().allowedBarterItems.remove(item);
+     }
+ 
+     @Override
+-    public boolean addMaterialOfInterest(Material material) {
++    public boolean addMaterialOfInterest(ItemType material) {
+         Preconditions.checkArgument(material != null, "material cannot be null");
+ 
+-        Item item = CraftItemType.bukkitToMinecraft(material);
++        Item item = CraftItemType.bukkitToMinecraftNew(material);
+         return this.getHandle().interestItems.add(item);
+     }
+ 
+     @Override
+-    public boolean removeMaterialOfInterest(Material material) {
++    public boolean removeMaterialOfInterest(ItemType material) {
+         Preconditions.checkArgument(material != null, "material cannot be null");
+ 
+-        Item item = CraftItemType.bukkitToMinecraft(material);
++        Item item = CraftItemType.bukkitToMinecraftNew(material);
+         return this.getHandle().interestItems.remove(item);
+     }
+ 
+     @Override
+-    public Set<Material> getInterestList() {
+-        return Collections.unmodifiableSet(this.getHandle().interestItems.stream().map(CraftItemType::minecraftToBukkit).collect(Collectors.toSet()));
++    public Set<ItemType> getInterestList() {
++        return Collections.unmodifiableSet(this.getHandle().interestItems.stream().map(CraftItemType::minecraftToBukkitNew).collect(Collectors.toSet()));
+     }
+ 
+     @Override
+-    public Set<Material> getBarterList() {
+-        return Collections.unmodifiableSet(this.getHandle().allowedBarterItems.stream().map(CraftItemType::minecraftToBukkit).collect(Collectors.toSet()));
++    public Set<ItemType> getBarterList() {
++        return Collections.unmodifiableSet(this.getHandle().allowedBarterItems.stream().map(CraftItemType::minecraftToBukkitNew).collect(Collectors.toSet()));
+     }
+ 
+     @Override

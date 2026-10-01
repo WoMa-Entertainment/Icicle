@@ -1,0 +1,38 @@
+--- a/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java
+@@ -35,7 +_,6 @@
+ import org.apache.commons.lang3.mutable.MutableDouble;
+ import org.bukkit.Color;
+ import org.bukkit.Location;
+-import org.bukkit.Material;
+ import org.bukkit.SoundGroup;
+ import org.bukkit.block.BlockFace;
+ import org.bukkit.block.BlockSupport;
+@@ -55,6 +_,7 @@
+ import org.bukkit.craftbukkit.util.CraftLocation;
+ import org.bukkit.craftbukkit.util.CraftVoxelShape;
+ import org.bukkit.inventory.ItemStack;
++import org.bukkit.inventory.ItemType;
+ import org.jetbrains.annotations.Unmodifiable;
+ import org.jspecify.annotations.Nullable;
+ 
+@@ -68,7 +_,7 @@
+     }
+ 
+     @Override
+-    public Material getMaterial() {
++    public BlockType getMaterial() {
+         return this.state.getBukkitMaterial();
+     }
+ 
+@@ -585,8 +_,8 @@
+     }
+ 
+     @Override
+-    public Material getPlacementMaterial() {
+-        return CraftItemType.minecraftToBukkit(this.state.getBlock().asItem());
++    public ItemType getPlacementMaterial() {
++        return CraftItemType.minecraftToBukkitNew(this.state.getBlock().asItem());
+     }
+ 
+     @Override

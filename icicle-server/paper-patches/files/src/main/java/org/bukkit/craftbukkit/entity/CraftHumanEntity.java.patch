@@ -1,0 +1,126 @@
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftHumanEntity.java
+@@ -40,9 +_,9 @@
+ import net.minecraft.world.level.block.state.BlockState;
+ import org.bukkit.GameMode;
+ import org.bukkit.Location;
+-import org.bukkit.Material;
+ import org.bukkit.NamespacedKey;
+ import org.bukkit.block.Block;
++import org.bukkit.block.BlockType;
+ import org.bukkit.craftbukkit.CraftEquipmentSlot;
+ import org.bukkit.craftbukkit.CraftServer;
+ import org.bukkit.craftbukkit.event.CraftEventFactory;
+@@ -67,6 +_,7 @@
+ import org.bukkit.inventory.Inventory;
+ import org.bukkit.inventory.InventoryView;
+ import org.bukkit.inventory.ItemStack;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.inventory.MainHand;
+ import org.bukkit.inventory.Merchant;
+ import org.bukkit.inventory.PlayerInventory;
+@@ -398,7 +_,7 @@
+         }
+         if (!force) {
+             Block block = location.getBlock();
+-            if (block.getType() != Material.CRAFTING_TABLE) {
++            if (block.getType() != BlockType.CRAFTING_TABLE) {
+                 return null;
+             }
+         }
+@@ -416,7 +_,7 @@
+         }
+         if (!force) {
+             Block block = location.getBlock();
+-            if (block.getType() != Material.ENCHANTING_TABLE) {
++            if (block.getType() != BlockType.ENCHANTING_TABLE) {
+                 return null;
+             }
+         }
+@@ -536,35 +_,35 @@
+ 
+     @Override
+     public InventoryView openAnvil(Location location, boolean force) {
+-        return this.openInventory(location, force, Material.ANVIL);
++        return this.openInventory(location, force, BlockType.ANVIL);
+     }
+ 
+     @Override
+     public InventoryView openCartographyTable(Location location, boolean force) {
+-        return this.openInventory(location, force, Material.CARTOGRAPHY_TABLE);
++        return this.openInventory(location, force, BlockType.CARTOGRAPHY_TABLE);
+     }
+ 
+     @Override
+     public InventoryView openGrindstone(Location location, boolean force) {
+-        return this.openInventory(location, force, Material.GRINDSTONE);
++        return this.openInventory(location, force, BlockType.GRINDSTONE);
+     }
+ 
+     @Override
+     public InventoryView openLoom(Location location, boolean force) {
+-        return this.openInventory(location, force, Material.LOOM);
++        return this.openInventory(location, force, BlockType.LOOM);
+     }
+ 
+     @Override
+     public InventoryView openSmithingTable(Location location, boolean force) {
+-        return this.openInventory(location, force, Material.SMITHING_TABLE);
++        return this.openInventory(location, force, BlockType.SMITHING_TABLE);
+     }
+ 
+     @Override
+     public InventoryView openStonecutter(Location location, boolean force) {
+-        return this.openInventory(location, force, Material.STONECUTTER);
++        return this.openInventory(location, force, BlockType.STONECUTTER);
+     }
+ 
+-    private InventoryView openInventory(Location location, boolean force, Material material) {
++    private InventoryView openInventory(Location location, boolean force, BlockType material) {
+         org.spigotmc.AsyncCatcher.catchOp("open" + material);
+         if (location == null) {
+             location = this.getLocation();
+@@ -576,17 +_,17 @@
+             }
+         }
+         net.minecraft.world.level.block.Block block;
+-        if (material == Material.ANVIL) {
++        if (material == BlockType.ANVIL) {
+             block = Blocks.ANVIL;
+-        } else if (material == Material.CARTOGRAPHY_TABLE) {
++        } else if (material == BlockType.CARTOGRAPHY_TABLE) {
+             block = Blocks.CARTOGRAPHY_TABLE;
+-        } else if (material == Material.GRINDSTONE) {
++        } else if (material == BlockType.GRINDSTONE) {
+             block = Blocks.GRINDSTONE;
+-        } else if (material == Material.LOOM) {
++        } else if (material == BlockType.LOOM) {
+             block = Blocks.LOOM;
+-        } else if (material == Material.SMITHING_TABLE) {
++        } else if (material == BlockType.SMITHING_TABLE) {
+             block = Blocks.SMITHING_TABLE;
+-        } else if (material == Material.STONECUTTER) {
++        } else if (material == BlockType.STONECUTTER) {
+             block = Blocks.STONECUTTER;
+         } else {
+             throw new IllegalArgumentException("Unsupported inventory type: " + material);
+@@ -637,17 +_,15 @@
+     }
+ 
+     @Override
+-    public boolean hasCooldown(Material material) {
++    public boolean hasCooldown(ItemType material) {
+         Preconditions.checkArgument(material != null, "Material cannot be null");
+-        Preconditions.checkArgument(material.isItem(), "Material %s is not an item", material);
+ 
+         return this.hasCooldown(new ItemStack(material));
+     }
+ 
+     @Override
+-    public int getCooldown(Material material) {
++    public int getCooldown(ItemType material) {
+         Preconditions.checkArgument(material != null, "Material cannot be null");
+-        Preconditions.checkArgument(material.isItem(), "Material %s is not an item", material);
+ 
+         return this.getCooldown(new ItemStack(material));
+     }

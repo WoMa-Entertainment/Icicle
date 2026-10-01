@@ -1,0 +1,87 @@
+--- a/src/main/java/org/bukkit/block/BlockState.java
++++ b/src/main/java/org/bukkit/block/BlockState.java
+@@ -2,12 +_,10 @@
+ 
+ import org.bukkit.Chunk;
+ import org.bukkit.Location;
+-import org.bukkit.Material;
+ import org.bukkit.World;
+ import org.bukkit.block.data.BlockData;
+ import org.bukkit.entity.Entity;
+ import org.bukkit.inventory.ItemStack;
+-import org.bukkit.material.MaterialData;
+ import org.bukkit.metadata.Metadatable;
+ import org.jetbrains.annotations.ApiStatus;
+ import org.jetbrains.annotations.Contract;
+@@ -37,16 +_,6 @@
+     Block getBlock();
+ 
+     /**
+-     * Gets the metadata for this block state.
+-     *
+-     * @return block specific metadata
+-     * @deprecated use {@link #getBlockData()}
+-     */
+-    @NotNull
+-    @Deprecated(forRemoval = true, since = "1.13")
+-    MaterialData getData();
+-
+-    /**
+      * Gets the data for this block state.
+      *
+      * @return block specific data
+@@ -77,7 +_,7 @@
+      * @return block type
+      */
+     @NotNull
+-    Material getType();
++    BlockType getType();
+ 
+     /**
+      * Gets the current light level of the block represented by this block state.
+@@ -152,15 +_,6 @@
+     Chunk getChunk();
+ 
+     /**
+-     * Sets the metadata for this block state.
+-     *
+-     * @param data New block specific metadata
+-     * @deprecated use {@link #setBlockData(BlockData)}
+-     */
+-    @Deprecated(forRemoval = true, since = "1.13")
+-    void setData(@NotNull MaterialData data);
+-
+-    /**
+      * Sets the data for this block state.
+      *
+      * @param data New block specific data
+@@ -172,7 +_,7 @@
+      *
+      * @param type Material to change this block state to
+      */
+-    void setType(@NotNull Material type);
++    void setType(@NotNull BlockType type);
+ 
+     /**
+      * Attempts to update the block represented by this state, setting it to
+@@ -222,20 +_,6 @@
+      * @return true if the update was successful, otherwise false
+      */
+     boolean update(boolean force, boolean applyPhysics);
+-
+-    /**
+-     * @return The data as a raw byte.
+-     * @deprecated Magic value
+-     */
+-    @Deprecated(since = "1.6.2", forRemoval = true)
+-    byte getRawData();
+-
+-    /**
+-     * @param data The new data value for the block.
+-     * @deprecated Magic value
+-     */
+-    @Deprecated(since = "1.6.2", forRemoval = true)
+-    void setRawData(byte data);
+ 
+     /**
+      * Returns whether this state is placed in the world.

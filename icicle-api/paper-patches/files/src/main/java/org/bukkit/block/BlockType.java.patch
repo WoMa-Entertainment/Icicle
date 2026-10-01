@@ -1,0 +1,27 @@
+--- a/src/main/java/org/bukkit/block/BlockType.java
++++ b/src/main/java/org/bukkit/block/BlockType.java
+@@ -5,7 +_,6 @@
+ import net.kyori.adventure.key.Key;
+ import net.kyori.adventure.key.KeyPattern;
+ import org.bukkit.Keyed;
+-import org.bukkit.Material;
+ import org.bukkit.Registry;
+ import org.bukkit.Translatable;
+ import org.bukkit.World;
+@@ -2962,16 +_,6 @@
+      */
+     @Deprecated(forRemoval = true, since = "1.21.1") // Paper
+     boolean isEnabledByFeature(World world);
+-
+-    /**
+-     * Tries to convert this BlockType into a Material
+-     *
+-     * @return the converted Material or null
+-     * @deprecated only for internal use
+-     */
+-    @Nullable
+-    @Deprecated(since = "1.20.6")
+-    Material asMaterial();
+ 
+     /**
+      * @deprecated use {@link #translationKey()} and {@link net.kyori.adventure.text.Component#translatable(net.kyori.adventure.translation.Translatable)}

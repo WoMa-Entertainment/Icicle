@@ -1,0 +1,11 @@
+--- a/src/main/java/org/bukkit/craftbukkit/block/CraftShulkerBox.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/CraftShulkerBox.java
+@@ -37,7 +_,7 @@
+ 
+     @Override
+     public DyeColor getColor() {
+-        net.minecraft.world.item.DyeColor color = ((ShulkerBoxBlock) CraftBlockType.bukkitToMinecraft(this.getType())).getColor();
++        net.minecraft.world.item.DyeColor color = ((ShulkerBoxBlock) CraftBlockType.bukkitToMinecraftNew(this.getType())).getColor();
+ 
+         return (color == null) ? null : DyeColor.getByWoolData((byte) color.getId());
+     }

@@ -1,0 +1,50 @@
+--- a/src/main/java/co/aikar/timings/TimingHistory.java
++++ b/src/main/java/co/aikar/timings/TimingHistory.java
+@@ -28,9 +_,9 @@
+ import com.google.common.collect.Sets;
+ import org.bukkit.Bukkit;
+ import org.bukkit.Chunk;
+-import org.bukkit.Material;
+ import org.bukkit.World;
+ import org.bukkit.block.BlockState;
++import org.bukkit.block.BlockType;
+ import org.bukkit.entity.Entity;
+ import org.bukkit.entity.EntityType;
+ import org.bukkit.entity.Player;
+@@ -40,6 +_,7 @@
+ import java.lang.management.ManagementFactory;
+ import java.util.Collection;
+ import java.util.EnumMap;
++import java.util.HashMap;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Set;
+@@ -78,7 +_,7 @@
+     private final MinuteReport[] minuteReports;
+ 
+     private final TimingHistoryEntry[] entries;
+-    final Set<Material> tileEntityTypeSet = Sets.newHashSet();
++    final Set<BlockType> tileEntityTypeSet = Sets.newHashSet();
+     final Set<EntityType> entityTypeSet = Sets.newHashSet();
+     private final Map<Object, Object> worlds;
+ 
+@@ -160,7 +_,7 @@
+                                     entry -> {
+                                         tileEntityTypeSet.add(entry.getKey());
+                                         return pair(
+-                                            String.valueOf(entry.getKey().ordinal()),
++                                            String.valueOf(entry.getKey().key()),
+                                             entry.getValue().count()
+                                         );
+                                     }
+@@ -211,8 +_,8 @@
+                 new EnumMap<EntityType, Counter>(EntityType.class), k -> new Counter()
+         ));
+         @SuppressWarnings("unchecked")
+-        final Map<Material, Counter> tileEntityCounts = MRUMapCache.of(LoadingMap.of(
+-                new EnumMap<Material, Counter>(Material.class), k -> new Counter()
++        final Map<BlockType, Counter> tileEntityCounts = MRUMapCache.of(LoadingMap.of(
++                new HashMap<BlockType, Counter>(), k -> new Counter()
+         ));
+ 
+         static class RegionId {

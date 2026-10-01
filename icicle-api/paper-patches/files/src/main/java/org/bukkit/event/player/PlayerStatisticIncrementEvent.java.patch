@@ -1,0 +1,120 @@
+--- a/src/main/java/org/bukkit/event/player/PlayerStatisticIncrementEvent.java
++++ b/src/main/java/org/bukkit/event/player/PlayerStatisticIncrementEvent.java
+@@ -1,13 +_,12 @@
+ package org.bukkit.event.player;
+ 
+-import org.bukkit.Bukkit;
+-import org.bukkit.Material;
+ import org.bukkit.Statistic;
++import org.bukkit.block.BlockType;
+ import org.bukkit.entity.EntityType;
+ import org.bukkit.entity.Player;
+ import org.bukkit.event.Cancellable;
+ import org.bukkit.event.HandlerList;
+-import org.bukkit.material.MaterialData;
++import org.bukkit.inventory.ItemType;
+ import org.jetbrains.annotations.ApiStatus;
+ import org.jetbrains.annotations.NotNull;
+ import org.jetbrains.annotations.Nullable;
+@@ -26,7 +_,8 @@
+     private final int initialValue;
+     private final int newValue;
+     private final EntityType entityType;
+-    private final Material material;
++    private final ItemType itemType;
++    private final BlockType blockType;
+ 
+     private boolean cancelled;
+ 
+@@ -37,7 +_,8 @@
+         this.initialValue = initialValue;
+         this.newValue = newValue;
+         this.entityType = null;
+-        this.material = null;
++        this.itemType = null;
++        this.blockType = null;
+     }
+ 
+     @ApiStatus.Internal
+@@ -47,27 +_,30 @@
+         this.initialValue = initialValue;
+         this.newValue = newValue;
+         this.entityType = entityType;
+-        this.material = null;
+-    }
+-
+-    @ApiStatus.Internal
+-    public PlayerStatisticIncrementEvent(@NotNull Player player, @NotNull Statistic statistic, int initialValue, int newValue, @NotNull Material material) {
+-        super(player);
+-        this.statistic = statistic;
+-        this.initialValue = initialValue;
+-        this.newValue = newValue;
+-        this.entityType = null;
+-        if (material != null && material.isLegacy()) {
+-            if (statistic.getType() == Statistic.Type.BLOCK) {
+-                material = Bukkit.getUnsafe().fromLegacy(new MaterialData(material), false);
+-            } else if (statistic.getType() == Statistic.Type.ITEM) {
+-                material = Bukkit.getUnsafe().fromLegacy(new MaterialData(material), true);
+-            } else {
+-                // Theoretically, this should not happen, can probably print a warning, but for now it should be fine.
+-                material = Bukkit.getUnsafe().fromLegacy(new MaterialData(material), false);
+-            }
+-        }
+-        this.material = material;
++        this.itemType = null;
++        this.blockType = null;
++    }
++
++    @ApiStatus.Internal
++    public PlayerStatisticIncrementEvent(@NotNull Player player, @NotNull Statistic statistic, int initialValue, int newValue, @NotNull ItemType material) {
++        super(player);
++        this.statistic = statistic;
++        this.initialValue = initialValue;
++        this.newValue = newValue;
++        this.entityType = null;
++        this.itemType = material;
++        this.blockType = null;
++    }
++
++    @ApiStatus.Internal
++    public PlayerStatisticIncrementEvent(@NotNull Player player, @NotNull Statistic statistic, int initialValue, int newValue, @NotNull BlockType material) {
++        super(player);
++        this.statistic = statistic;
++        this.initialValue = initialValue;
++        this.newValue = newValue;
++        this.entityType = null;
++        this.itemType = null;
++        this.blockType = material;
+     }
+ 
+     /**
+@@ -110,14 +_,25 @@
+     }
+ 
+     /**
+-     * Gets the Material if {@link #getStatistic()} is a block
+-     * or item statistic otherwise returns {@code null}.
++     * Gets the ItemType if {@link #getStatistic()} is an
++     * item statistic otherwise returns {@code null}.
++     *
++     * @return the ItemType of the statistic
++     */
++    @Nullable
++    public ItemType getItemType() {
++        return this.itemType;
++    }
++
++    /**
++     * Gets the BlockType if {@link #getStatistic()} is a block
++     * statistic otherwise returns {@code null}.
+      *
+      * @return the Material of the statistic
+      */
+     @Nullable
+-    public Material getMaterial() {
+-        return this.material;
++    public BlockType getBlockType() {
++        return this.blockType;
+     }
+ 
+     @Override

@@ -1,0 +1,20 @@
+--- a/src/main/java/org/bukkit/event/entity/EntityChangeBlockEvent.java
++++ b/src/main/java/org/bukkit/event/entity/EntityChangeBlockEvent.java
+@@ -1,7 +_,7 @@
+ package org.bukkit.event.entity;
+ 
+-import org.bukkit.Material;
+ import org.bukkit.block.Block;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.data.BlockData;
+ import org.bukkit.entity.Entity;
+ import org.bukkit.event.Cancellable;
+@@ -44,7 +_,7 @@
+      * @return the material that the block is changing into
+      */
+     @NotNull
+-    public Material getTo() {
++    public BlockType getTo() {
+         return this.to.getMaterial();
+     }
+ 

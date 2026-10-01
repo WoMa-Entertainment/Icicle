@@ -1,0 +1,40 @@
+--- a/src/main/java/io/papermc/paper/configuration/transformation/world/LegacyPaperWorldConfig.java
++++ b/src/main/java/io/papermc/paper/configuration/transformation/world/LegacyPaperWorldConfig.java
+@@ -14,7 +_,7 @@
+ import net.minecraft.resources.Identifier;
+ import net.minecraft.world.entity.MobCategory;
+ import net.minecraft.world.item.Item;
+-import org.bukkit.Material;
++import org.bukkit.inventory.ItemType;
+ import org.spongepowered.configurate.transformation.ConfigurationTransformation;
+ import org.spongepowered.configurate.transformation.TransformAction;
+ 
+@@ -104,12 +_,13 @@
+             .addVersion(26, ConfigurationTransformation.builder().addAction(path("alt-item-despawn-rate", "items", ConfigurationTransformation.WILDCARD_OBJECT), (path, value) -> {
+                 String itemName = path.get(path.size() - 1).toString();
+                 final Optional<Holder.Reference<Item>> item = BuiltInRegistries.ITEM.get(ResourceKey.create(Registries.ITEM, Identifier.parse(itemName.toLowerCase(Locale.ROOT))));
+-                if (item.isEmpty()) {
+-                    itemName = Material.valueOf(itemName).getKey().getKey();
++                if (!item.isEmpty()) {
++                    final Object[] newPath = path.array();
++                    newPath[newPath.length - 1] = itemName;
++                    return newPath;
++                } else {
++                    return null;
+                 }
+-                final Object[] newPath = path.array();
+-                newPath[newPath.length - 1] = itemName;
+-                return newPath;
+             }).build())
+             .addVersion(27, ConfigurationTransformation.builder().addAction(path("use-faster-eigencraft-redstone"), (path, value) -> {
+                 final WorldConfiguration.Misc.RedstoneImplementation redstoneImplementation = value.getBoolean(false) ? WorldConfiguration.Misc.RedstoneImplementation.EIGENCRAFT : WorldConfiguration.Misc.RedstoneImplementation.VANILLA;
+@@ -138,8 +_,7 @@
+                         final Optional<Holder.Reference<Item>> itemHolder = BuiltInRegistries.ITEM.get(ResourceKey.create(Registries.ITEM, Identifier.parse(itemName.toLowerCase(Locale.ROOT))));
+                         final String item;
+                         if (itemHolder.isEmpty()) {
+-                            final Material bukkitMat = Material.matchMaterial(itemName);
+-                            item = bukkitMat != null ? bukkitMat.getKey().getKey() : null;
++                            item = null;
+                         } else {
+                             item = itemHolder.get().unwrapKey().orElseThrow().identifier().getPath();
+                         }

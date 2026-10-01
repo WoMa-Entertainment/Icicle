@@ -1,0 +1,24 @@
+--- a/src/main/java/org/bukkit/craftbukkit/generator/CraftLimitedRegion.java
++++ b/src/main/java/org/bukkit/craftbukkit/generator/CraftLimitedRegion.java
+@@ -27,11 +_,11 @@
+ import net.minecraft.world.level.storage.TagValueInput;
+ import org.bukkit.HeightMap;
+ import org.bukkit.Location;
+-import org.bukkit.Material;
+ import org.bukkit.TreeType;
+ import org.bukkit.World;
+ import org.bukkit.block.Biome;
+ import org.bukkit.block.BlockState;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.data.BlockData;
+ import org.bukkit.craftbukkit.CraftRegionAccessor;
+ import org.bukkit.craftbukkit.block.CraftBlockEntityState;
+@@ -205,7 +_,7 @@
+     }
+ 
+     @Override
+-    public Material getType(int x, int y, int z) {
++    public BlockType getType(int x, int y, int z) {
+         Preconditions.checkArgument(this.isInRegion(x, y, z), "Coordinates %s, %s, %s are not in the region", x, y, z);
+         return super.getType(x, y, z);
+     }

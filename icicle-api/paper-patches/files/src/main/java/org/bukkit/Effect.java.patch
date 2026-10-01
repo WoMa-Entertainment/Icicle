@@ -1,0 +1,30 @@
+--- a/src/main/java/org/bukkit/Effect.java
++++ b/src/main/java/org/bukkit/Effect.java
+@@ -5,7 +_,9 @@
+ import java.util.List;
+ import java.util.Map;
+ import org.bukkit.block.BlockFace;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.data.BlockData;
++import org.bukkit.inventory.ItemType;
+ import org.jetbrains.annotations.ApiStatus;
+ import org.jetbrains.annotations.NotNull;
+ import org.jetbrains.annotations.Nullable;
+@@ -126,7 +_,7 @@
+      * Play a song from a jukebox.
+      * {@link JukeboxSong} param is the song to play.
+      */
+-    RECORD_PLAY(1010, Type.SOUND, JukeboxSong.class, Material.class), // jukebox song is more correct, but the impl of the methods will still work with Material
++    RECORD_PLAY(1010, Type.SOUND, JukeboxSong.class, ItemType.class), // jukebox song is more correct, but the impl of the methods will still work with ItemType
+     /**
+      * Stop the song currently played.
+      */
+@@ -312,7 +_,7 @@
+      * @deprecated use {@link #DESTROY_BLOCK}
+      */
+     @Deprecated(since = "26.2", forRemoval = true)
+-    STEP_SOUND(2001, Type.SOUND, BlockData.class, Material.class), // block data is more correct, but the impl of the methods will still work with Material
++    STEP_SOUND(2001, Type.SOUND, BlockData.class, BlockType.class), // block data is more correct, but the impl of the methods will still work with BlockType
+     /**
+      * Block breaking with sound.
+      * {@link BlockData} param is the block being broken.

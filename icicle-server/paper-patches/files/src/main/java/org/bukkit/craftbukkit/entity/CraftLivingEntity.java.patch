@@ -1,0 +1,70 @@
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftLivingEntity.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftLivingEntity.java
+@@ -48,11 +_,11 @@
+ import org.bukkit.Color;
+ import org.bukkit.FluidCollisionMode;
+ import org.bukkit.Location;
+-import org.bukkit.Material;
+ import org.bukkit.Sound;
+ import org.bukkit.attribute.Attribute;
+ import org.bukkit.attribute.AttributeInstance;
+ import org.bukkit.block.Block;
++import org.bukkit.block.BlockType;
+ import org.bukkit.craftbukkit.CraftEquipmentSlot;
+ import org.bukkit.craftbukkit.CraftServer;
+ import org.bukkit.craftbukkit.CraftSound;
+@@ -94,6 +_,7 @@
+ import org.bukkit.event.entity.EntityRegainHealthEvent;
+ import org.bukkit.inventory.EntityEquipment;
+ import org.bukkit.inventory.ItemStack;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.potion.PotionEffect;
+ import org.bukkit.potion.PotionEffectType;
+ import org.bukkit.potion.PotionType;
+@@ -195,11 +_,11 @@
+         return this.getEyeHeight();
+     }
+ 
+-    private List<Block> getLineOfSight(Set<Material> transparent, int maxDistance, int maxLength) {
++    private List<Block> getLineOfSight(Set<BlockType> transparent, int maxDistance, int maxLength) {
+         Preconditions.checkState(!this.getHandle().generation, "Cannot get line of sight during world generation");
+ 
+         if (transparent == null) {
+-            transparent = Sets.newHashSet(Material.AIR, Material.CAVE_AIR, Material.VOID_AIR);
++            transparent = Sets.newHashSet(BlockType.AIR, BlockType.CAVE_AIR, BlockType.VOID_AIR);
+         }
+         if (maxDistance > 120) {
+             maxDistance = 120;
+@@ -212,7 +_,7 @@
+             if (maxLength != 0 && blocks.size() > maxLength) {
+                 blocks.remove(0);
+             }
+-            Material material = block.getType();
++            BlockType material = block.getType();
+             if (!transparent.contains(material)) {
+                 break;
+             }
+@@ -221,12 +_,12 @@
+     }
+ 
+     @Override
+-    public List<Block> getLineOfSight(Set<Material> transparent, int maxDistance) {
++    public List<Block> getLineOfSight(Set<BlockType> transparent, int maxDistance) {
+         return this.getLineOfSight(transparent, maxDistance, 0);
+     }
+ 
+     @Override
+-    public Block getTargetBlock(Set<Material> transparent, int maxDistance) {
++    public Block getTargetBlock(Set<BlockType> transparent, int maxDistance) {
+         List<Block> blocks = this.getLineOfSight(transparent, maxDistance, 1);
+         return blocks.get(0);
+     }
+@@ -292,7 +_,7 @@
+     // Paper end
+ 
+     @Override
+-    public List<Block> getLastTwoTargetBlocks(Set<Material> transparent, int maxDistance) {
++    public List<Block> getLastTwoTargetBlocks(Set<BlockType> transparent, int maxDistance) {
+         return this.getLineOfSight(transparent, maxDistance, 2);
+     }
+ 

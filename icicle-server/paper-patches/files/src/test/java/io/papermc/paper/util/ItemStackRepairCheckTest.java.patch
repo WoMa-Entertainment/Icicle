@@ -1,0 +1,49 @@
+--- a/src/test/java/io/papermc/paper/util/ItemStackRepairCheckTest.java
++++ b/src/test/java/io/papermc/paper/util/ItemStackRepairCheckTest.java
+@@ -1,7 +_,7 @@
+ package io.papermc.paper.util;
+ 
+-import org.bukkit.Material;
+ import org.bukkit.inventory.ItemStack;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.support.environment.VanillaFeature;
+ import org.junit.jupiter.api.Test;
+ 
+@@ -13,29 +_,29 @@
+ 
+     @Test
+     public void testIsRepariableBy() {
+-        ItemStack diamondPick = new ItemStack(Material.DIAMOND_PICKAXE);
++        ItemStack diamondPick = new ItemStack(ItemType.DIAMOND_PICKAXE);
+ 
+-        assertTrue(diamondPick.isRepairableBy(new ItemStack(Material.DIAMOND)), "diamond pick isn't repairable by a diamond");
++        assertTrue(diamondPick.isRepairableBy(new ItemStack(ItemType.DIAMOND)), "diamond pick isn't repairable by a diamond");
+     }
+ 
+     @Test
+     public void testCanRepair() {
+-        ItemStack diamond = new ItemStack(Material.DIAMOND);
++        ItemStack diamond = new ItemStack(ItemType.DIAMOND);
+ 
+-        assertTrue(diamond.canRepair(new ItemStack(Material.DIAMOND_AXE)), "diamond can't repair a diamond axe");
++        assertTrue(diamond.canRepair(new ItemStack(ItemType.DIAMOND_AXE)), "diamond can't repair a diamond axe");
+     }
+ 
+     @Test
+     public void testIsNotRepairableBy() {
+-        ItemStack notDiamondPick = new ItemStack(Material.ACACIA_SAPLING);
++        ItemStack notDiamondPick = new ItemStack(ItemType.ACACIA_SAPLING);
+ 
+-        assertFalse(notDiamondPick.isRepairableBy(new ItemStack(Material.DIAMOND)), "acacia sapling is repairable by a diamond");
++        assertFalse(notDiamondPick.isRepairableBy(new ItemStack(ItemType.DIAMOND)), "acacia sapling is repairable by a diamond");
+     }
+ 
+     @Test
+     public void testCanNotRepair() {
+-        ItemStack diamond = new ItemStack(Material.DIAMOND);
++        ItemStack diamond = new ItemStack(ItemType.DIAMOND);
+ 
+-        assertFalse(diamond.canRepair(new ItemStack(Material.OAK_BUTTON)), "diamond can repair oak button");
++        assertFalse(diamond.canRepair(new ItemStack(ItemType.OAK_BUTTON)), "diamond can repair oak button");
+     }
+ }

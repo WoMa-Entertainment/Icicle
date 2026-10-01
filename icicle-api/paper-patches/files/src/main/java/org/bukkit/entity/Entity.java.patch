@@ -1,0 +1,26 @@
+--- a/src/main/java/org/bukkit/entity/Entity.java
++++ b/src/main/java/org/bukkit/entity/Entity.java
+@@ -13,13 +_,13 @@
+ import org.bukkit.Chunk; // Paper
+ import org.bukkit.EntityEffect;
+ import org.bukkit.Location;
+-import org.bukkit.Material;
+ import org.bukkit.Nameable;
+ import org.bukkit.Server;
+ import org.bukkit.Sound;
+ import org.bukkit.SoundCategory;
+ import org.bukkit.World;
+ import org.bukkit.block.BlockFace;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.PistonMoveReaction;
+ import org.bukkit.command.CommandSender;
+ import org.bukkit.event.entity.CreatureSpawnEvent;
+@@ -1177,7 +_,7 @@
+      */
+     @Deprecated(since = "1.21.5")
+     default boolean isInBubbleColumn() {
+-        return this.getWorld().getBlockAt(this.getLocation()).getType() == Material.BUBBLE_COLUMN;
++        return this.getWorld().getBlockAt(this.getLocation()).getType() == BlockType.BUBBLE_COLUMN;
+     }
+ 
+     /**

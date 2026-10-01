@@ -1,0 +1,33 @@
+--- a/src/main/java/org/bukkit/craftbukkit/CraftParticle.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftParticle.java
+@@ -40,7 +_,6 @@
+ import org.bukkit.craftbukkit.util.CraftMagicNumbers;
+ import org.bukkit.craftbukkit.util.CraftNamespacedKey;
+ import org.bukkit.inventory.ItemStack;
+-import org.bukkit.material.MaterialData;
+ 
+ public abstract class CraftParticle<D> implements Keyed {
+ 
+@@ -67,7 +_,6 @@
+     public static <D> ParticleOptions createParticleParam(Particle particle, D data) {
+         Preconditions.checkArgument(particle != null, "particle cannot be null");
+ 
+-        data = CraftParticle.convertLegacy(data);
+         if (particle.getDataType() != Void.class) {
+             Preconditions.checkArgument(data != null, "missing required data %s", particle.getDataType());
+         }
+@@ -80,14 +_,6 @@
+         Preconditions.checkArgument(craftParticle != null);
+ 
+         return craftParticle.createParticleParam(data);
+-    }
+-
+-    public static <T> T convertLegacy(T object) {
+-        if (object instanceof MaterialData mat) {
+-            return (T) CraftMagicNumbers.getBlock(mat).asBlockData();
+-        }
+-
+-        return object;
+     }
+ 
+     private final NamespacedKey key;

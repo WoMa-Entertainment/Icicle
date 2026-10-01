@@ -1,0 +1,11 @@
+--- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftRecipe.java
++++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftRecipe.java
+@@ -37,8 +_,6 @@
+         } else if (bukkit instanceof final RecipeChoice.PredicateChoice predicateChoice) {
+             stack = Ingredient.ofStacks(Collections.singletonList(CraftItemStack.asNMSCopy(predicateChoice.getItemStack())));
+             stack.stackPredicate = nmsStack -> predicateChoice.test(CraftItemStack.asBukkitCopy(nmsStack));
+-        } else if (bukkit instanceof RecipeChoice.MaterialChoice) {
+-            stack = Ingredient.of(((RecipeChoice.MaterialChoice) bukkit).getChoices().stream().map(CraftItemType::bukkitToMinecraft));
+         } else if (bukkit instanceof RecipeChoice.ExactChoice) {
+             stack = Ingredient.ofStacks(((RecipeChoice.ExactChoice) bukkit).getChoices().stream().map(CraftItemStack::asNMSCopy).toList());
+             // Paper start - support "empty" choices - legacy method that spigot might incorrectly call

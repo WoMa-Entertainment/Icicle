@@ -1,0 +1,35 @@
+--- a/src/main/java/org/bukkit/craftbukkit/tag/CraftItemTag.java
++++ b/src/main/java/org/bukkit/craftbukkit/tag/CraftItemTag.java
+@@ -5,18 +_,18 @@
+ import net.minecraft.core.Registry;
+ import net.minecraft.tags.TagKey;
+ import net.minecraft.world.item.Item;
+-import org.bukkit.Material;
+ import org.bukkit.craftbukkit.inventory.CraftItemType;
++import org.bukkit.inventory.ItemType;
+ 
+-public class CraftItemTag extends CraftTag<Item, Material> {
++public class CraftItemTag extends CraftTag<Item, ItemType> {
+ 
+     public CraftItemTag(Registry<Item> registry, TagKey<Item> tag) {
+         super(registry, tag);
+     }
+ 
+     @Override
+-    public boolean isTagged(Material item) {
+-        Item minecraft = CraftItemType.bukkitToMinecraft(item);
++    public boolean isTagged(ItemType item) {
++        Item minecraft = CraftItemType.bukkitToMinecraftNew(item);
+ 
+         // SPIGOT-6952: A Material is not necessary an item, in this case return false
+         if (minecraft == null) {
+@@ -27,7 +_,7 @@
+     }
+ 
+     @Override
+-    public Set<Material> getValues() {
+-        return this.getHandle().stream().map((item) -> CraftItemType.minecraftToBukkit(item.value())).collect(Collectors.toUnmodifiableSet());
++    public Set<ItemType> getValues() {
++        return this.getHandle().stream().map((item) -> CraftItemType.minecraftToBukkitNew(item.value())).collect(Collectors.toUnmodifiableSet());
+     }
+ }

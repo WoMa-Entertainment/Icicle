@@ -1,0 +1,12 @@
+--- a/src/test/java/org/bukkit/craftbukkit/inventory/NMSCraftItemStackTest.java
++++ b/src/test/java/org/bukkit/craftbukkit/inventory/NMSCraftItemStackTest.java
+@@ -19,9 +_,7 @@
+         ItemStack clone = itemStack.clone();
+         assertThat(clone.getType(), is(itemStack.getType()));
+         assertThat(clone.getAmount(), is(itemStack.getAmount()));
+-        assertThat(clone.getDurability(), is(itemStack.getDurability()));
+         assertThat(clone.getEnchantments(), is(itemStack.getEnchantments()));
+-        assertThat(clone.getData(), is(itemStack.getData()));
+         assertThat(clone, is(itemStack));
+     }
+ 

@@ -1,0 +1,33 @@
+--- a/src/main/java/org/bukkit/inventory/meta/LeatherArmorMeta.java
++++ b/src/main/java/org/bukkit/inventory/meta/LeatherArmorMeta.java
+@@ -1,16 +_,16 @@
+ package org.bukkit.inventory.meta;
+ 
+ import org.bukkit.Color;
+-import org.bukkit.Material;
+ import org.bukkit.inventory.ItemFactory;
++import org.bukkit.inventory.ItemType;
+ import org.jetbrains.annotations.NotNull;
+ import org.jetbrains.annotations.Nullable;
+ 
+ /**
+- * Represents leather armor ({@link Material#LEATHER_BOOTS}, {@link
+- * Material#LEATHER_LEGGINGS}, {@link Material#LEATHER_CHESTPLATE}, {@link
+- * Material#LEATHER_HELMET}, {@link Material#LEATHER_HORSE_ARMOR} or {@link
+- * Material#WOLF_ARMOR}) that can be colored.
++ * Represents leather armor ({@link ItemType#LEATHER_BOOTS}, {@link
++ * ItemType#LEATHER_LEGGINGS}, {@link ItemType#LEATHER_CHESTPLATE}, {@link
++ * ItemType#LEATHER_HELMET}, {@link ItemType#LEATHER_HORSE_ARMOR} or {@link
++ * ItemType#WOLF_ARMOR}) that can be colored.
+  */
+ public interface LeatherArmorMeta extends ItemMeta {
+ 
+@@ -20,7 +_,7 @@
+      *
+      * @return the color of the armor, never null
+      * @apiNote The method yielding {@link ItemFactory#getDefaultLeatherColor()} is incorrect
+-     * for {@link Material#WOLF_ARMOR} as its default color differs. Generally, it is recommended to check
++     * for {@link ItemType#WOLF_ARMOR} as its default color differs. Generally, it is recommended to check
+      * {@link #isDyed()} to determine if this leather armor is dyed than to compare this color to the default.
+      */
+     @NotNull

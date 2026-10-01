@@ -1,0 +1,21 @@
+--- a/src/main/java/org/bukkit/craftbukkit/block/CapturedBlockState.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/CapturedBlockState.java
+@@ -7,8 +_,8 @@
+ import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
+ import net.minecraft.world.level.block.entity.BlockEntityTypes;
+ import org.bukkit.Location;
+-import org.bukkit.Material;
+ import org.bukkit.block.Block;
++import org.bukkit.block.BlockType;
+ 
+ @Deprecated(forRemoval = true)
+ public final class CapturedBlockState extends CraftBlockState {
+@@ -47,7 +_,7 @@
+ 
+     private void addBees() {
+         // SPIGOT-5537: Horrible hack to manually add bees given Level#captureTreeGeneration does not support block entities
+-        if (this.treeBlock && this.getType() == Material.BEE_NEST) {
++        if (this.treeBlock && this.getType() == BlockType.BEE_NEST) {
+             WorldGenLevel level = this.world.getHandle();
+             BlockPos pos = this.getPosition();
+             RandomSource random = level.getRandom();

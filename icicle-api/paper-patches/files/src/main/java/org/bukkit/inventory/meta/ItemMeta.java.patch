@@ -1,0 +1,38 @@
+--- a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
++++ b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
+@@ -1109,7 +_,7 @@
+      * Please use {@link ItemStack#getData(DataComponentType.Valued)} with {@link DataComponentTypes#CAN_BREAK} instead of this.
+      */
+     @Deprecated(forRemoval = true, since = "1.14")
+-    Set<org.bukkit.Material> getCanDestroy();
++    Set<org.bukkit.block.BlockType> getCanDestroy();
+ 
+     /**
+      * Sets set of materials what given item can destroy in {@link org.bukkit.GameMode#ADVENTURE}
+@@ -1119,7 +_,7 @@
+      * Please use {@link ItemStack#setData(DataComponentType.Valued, Object)} with {@link DataComponentTypes#CAN_BREAK} instead of this.
+      */
+     @Deprecated(forRemoval = true, since = "1.14")
+-    void setCanDestroy(Set<org.bukkit.Material> canDestroy);
++    void setCanDestroy(Set<org.bukkit.block.BlockType> canDestroy);
+ 
+     /**
+      * Gets set of materials where given item can be placed on in {@link org.bukkit.GameMode#ADVENTURE}
+@@ -1129,7 +_,7 @@
+      * Please use {@link ItemStack#getData(DataComponentType.Valued)} with {@link DataComponentTypes#CAN_PLACE_ON} instead of this.
+      */
+     @Deprecated(forRemoval = true, since = "1.14")
+-    Set<org.bukkit.Material> getCanPlaceOn();
++    Set<org.bukkit.block.BlockType> getCanPlaceOn();
+ 
+     /**
+      * Sets set of materials where given item can be placed on in {@link org.bukkit.GameMode#ADVENTURE}
+@@ -1139,7 +_,7 @@
+      * Please use {@link ItemStack#setData(DataComponentType.Valued, Object)} with {@link DataComponentTypes#CAN_PLACE_ON} instead of this.
+      */
+     @Deprecated(forRemoval = true, since = "1.14")
+-    void setCanPlaceOn(Set<org.bukkit.Material> canPlaceOn);
++    void setCanPlaceOn(Set<org.bukkit.block.BlockType> canPlaceOn);
+ 
+     /**
+      * Gets the collection of namespaced keys that the item can destroy in {@link org.bukkit.GameMode#ADVENTURE}

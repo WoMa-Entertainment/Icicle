@@ -1,0 +1,78 @@
+--- a/src/main/java/org/bukkit/craftbukkit/generator/OldCraftChunkData.java
++++ b/src/main/java/org/bukkit/craftbukkit/generator/OldCraftChunkData.java
+@@ -9,14 +_,12 @@
+ import net.minecraft.world.level.chunk.LevelChunkSection;
+ import net.minecraft.world.level.chunk.PalettedContainerFactory;
+ import org.bukkit.HeightMap;
+-import org.bukkit.Material;
+ import org.bukkit.block.Biome;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.data.BlockData;
+ import org.bukkit.craftbukkit.block.CraftBlockType;
+ import org.bukkit.craftbukkit.block.data.CraftBlockData;
+-import org.bukkit.craftbukkit.util.CraftMagicNumbers;
+ import org.bukkit.generator.ChunkGenerator;
+-import org.bukkit.material.MaterialData;
+ 
+ /**
+  * Data to be used for the block types and data in a newly generated chunk.
+@@ -59,43 +_,28 @@
+     }
+ 
+     @Override
+-    public void setBlock(int x, int y, int z, Material material) {
++    public void setBlock(int x, int y, int z, BlockType material) {
+         this.setBlock(x, y, z, material.createBlockData());
+     }
+ 
+     @Override
+-    public void setBlock(int x, int y, int z, MaterialData material) {
+-        this.setBlock(x, y, z, CraftMagicNumbers.getBlock(material));
+-    }
+-
+-    @Override
+     public void setBlock(int x, int y, int z, BlockData blockData) {
+         this.setBlock(x, y, z, ((CraftBlockData) blockData).getState());
+     }
+ 
+     @Override
+-    public void setRegion(int xMin, int yMin, int zMin, int xMax, int yMax, int zMax, Material material) {
++    public void setRegion(int xMin, int yMin, int zMin, int xMax, int yMax, int zMax, BlockType material) {
+         this.setRegion(xMin, yMin, zMin, xMax, yMax, zMax, material.createBlockData());
+     }
+ 
+     @Override
+-    public void setRegion(int xMin, int yMin, int zMin, int xMax, int yMax, int zMax, MaterialData material) {
+-        this.setRegion(xMin, yMin, zMin, xMax, yMax, zMax, CraftMagicNumbers.getBlock(material));
+-    }
+-
+-    @Override
+     public void setRegion(int xMin, int yMin, int zMin, int xMax, int yMax, int zMax, BlockData blockData) {
+         this.setRegion(xMin, yMin, zMin, xMax, yMax, zMax, ((CraftBlockData) blockData).getState());
+     }
+ 
+     @Override
+-    public Material getType(int x, int y, int z) {
+-        return CraftBlockType.minecraftToBukkit(this.getBlockState(x, y, z).getBlock());
+-    }
+-
+-    @Override
+-    public MaterialData getTypeAndData(int x, int y, int z) {
+-        return CraftMagicNumbers.getMaterial(this.getBlockState(x, y, z));
++    public BlockType getType(int x, int y, int z) {
++        return CraftBlockType.minecraftToBukkitNew(this.getBlockState(x, y, z).getBlock());
+     }
+ 
+     @Override
+@@ -150,11 +_,6 @@
+         } else {
+             return section.getBlockState(x, y & 0xf, z);
+         }
+-    }
+-
+-    @Override
+-    public byte getData(int x, int y, int z) {
+-        return CraftMagicNumbers.toLegacyData(this.getBlockState(x, y, z));
+     }
+ 
+     private void setBlock(int x, int y, int z, BlockState type) {

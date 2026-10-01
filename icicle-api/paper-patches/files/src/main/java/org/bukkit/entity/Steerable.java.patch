@@ -1,0 +1,17 @@
+--- a/src/main/java/org/bukkit/entity/Steerable.java
++++ b/src/main/java/org/bukkit/entity/Steerable.java
+@@ -1,6 +_,6 @@
+ package org.bukkit.entity;
+ 
+-import org.bukkit.Material;
++import org.bukkit.inventory.ItemType;
+ import org.jetbrains.annotations.NotNull;
+ 
+ /**
+@@ -67,5 +_,5 @@
+      * @return the lure material
+      */
+     @NotNull
+-    public Material getSteerMaterial();
++    public ItemType getSteerMaterial();
+ }

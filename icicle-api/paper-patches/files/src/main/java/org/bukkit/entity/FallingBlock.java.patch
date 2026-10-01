@@ -1,0 +1,19 @@
+--- a/src/main/java/org/bukkit/entity/FallingBlock.java
++++ b/src/main/java/org/bukkit/entity/FallingBlock.java
+@@ -1,6 +_,6 @@
+ package org.bukkit.entity;
+ 
+-import org.bukkit.Material;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.data.BlockData;
+ import org.jetbrains.annotations.NotNull;
+ 
+@@ -17,7 +_,7 @@
+      */
+     @Deprecated(since = "1.6.2")
+     @NotNull
+-    Material getMaterial();
++    BlockType getMaterial();
+ 
+     /**
+      * Get the data for the falling block

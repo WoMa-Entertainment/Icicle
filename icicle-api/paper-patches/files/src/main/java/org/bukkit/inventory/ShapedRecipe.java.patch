@@ -1,0 +1,100 @@
+--- a/src/main/java/org/bukkit/inventory/ShapedRecipe.java
++++ b/src/main/java/org/bukkit/inventory/ShapedRecipe.java
+@@ -1,12 +_,9 @@
+ package org.bukkit.inventory;
+ 
+ import com.google.common.base.Preconditions;
+-import java.util.Collections;
+ import java.util.HashMap;
+ import java.util.Map;
+-import org.bukkit.Material;
+ import org.bukkit.NamespacedKey;
+-import org.bukkit.material.MaterialData;
+ import org.jetbrains.annotations.NotNull;
+ 
+ /**
+@@ -23,7 +_,7 @@
+      *
+      * @param result The item you want the recipe to create.
+      * @see ShapedRecipe#shape(String...)
+-     * @see ShapedRecipe#setIngredient(char, Material)
++     * @see ShapedRecipe#setIngredient(char, ItemType)
+      * @see ShapedRecipe#setIngredient(char, RecipeChoice)
+      * @deprecated Recipes must have keys. Use {@link #ShapedRecipe(NamespacedKey, ItemStack)}
+      * instead.
+@@ -43,7 +_,7 @@
+      * @param result The item you want the recipe to create.
+      * @exception IllegalArgumentException if the {@code result} is an empty item (AIR)
+      * @see ShapedRecipe#shape(String...)
+-     * @see ShapedRecipe#setIngredient(char, Material)
++     * @see ShapedRecipe#setIngredient(char, ItemType)
+      * @see ShapedRecipe#setIngredient(char, RecipeChoice)
+      */
+     public ShapedRecipe(@NotNull NamespacedKey key, @NotNull ItemStack result) {
+@@ -107,53 +_,14 @@
+      * @return The changed recipe, so you can chain calls.
+      * @throws IllegalArgumentException if the {@code key} is a space character
+      * @throws IllegalArgumentException if the {@code key} does not appear in the shape.
+-     * @deprecated use {@link #setIngredient(char, RecipeChoice)}
+-     */
+-    @NotNull
+-    @Deprecated // Paper
+-    public ShapedRecipe setIngredient(char key, @NotNull MaterialData ingredient) {
+-        return setIngredient(key, ingredient.getItemType(), ingredient.getData());
+-    }
+-
+-    /**
+-     * Sets the material that a character in the recipe shape refers to.
+-     * <p>
+-     * Note that before an ingredient can be set, the recipe's shape must be defined
+-     * with {@link #shape(String...)}.
+-     *
+-     * @param key The character that represents the ingredient in the shape.
+-     * @param ingredient The ingredient.
+-     * @return The changed recipe, so you can chain calls.
+-     * @throws IllegalArgumentException if the {@code key} is a space character
+-     * @throws IllegalArgumentException if the {@code key} does not appear in the shape.
+-     */
+-    @NotNull
+-    public ShapedRecipe setIngredient(char key, @NotNull Material ingredient) {
++     */
++    @NotNull
++    public ShapedRecipe setIngredient(char key, @NotNull ItemType ingredient) {
+         Preconditions.checkArgument(key != ' ', "Space in recipe shape must represent no ingredient");
+         Preconditions.checkArgument(this.ingredients.containsKey(key), "Symbol does not appear in the shape:", key);
+ 
+-        this.ingredients.put(key, new RecipeChoice.MaterialChoice(Collections.singletonList(ingredient)));
++        this.ingredients.put(key, RecipeChoice.itemType(ingredient));
+         return this;
+-    }
+-
+-    /**
+-     * Sets the material that a character in the recipe shape refers to.
+-     * <p>
+-     * Note that before an ingredient can be set, the recipe's shape must be defined
+-     * with {@link #shape(String...)}.
+-     *
+-     * @param key The character that represents the ingredient in the shape.
+-     * @param ingredient The ingredient.
+-     * @param raw The raw material data as an integer.
+-     * @return The changed recipe, so you can chain calls.
+-     * @throws IllegalArgumentException if the {@code key} is a space character
+-     * @throws IllegalArgumentException if the {@code key} does not appear in the shape.
+-     * @deprecated Magic value
+-     */
+-    @Deprecated(since = "1.6.2")
+-    @NotNull
+-    public ShapedRecipe setIngredient(char key, @NotNull Material ingredient, int raw) {
+-        return setIngredient(key, ingredient);
+     }
+ 
+     /**
+@@ -179,7 +_,7 @@
+ 
+     @NotNull
+     public ShapedRecipe setIngredient(char key, @NotNull ItemStack item) {
+-        Preconditions.checkArgument(!item.getType().isAir(), "Item cannot be air"); // Paper
++        Preconditions.checkArgument(item.getType() != ItemType.AIR, "Item cannot be air"); // Paper
+         return setIngredient(key, RecipeChoice.exactChoice(item.clone())); // Paper
+     }
+ 

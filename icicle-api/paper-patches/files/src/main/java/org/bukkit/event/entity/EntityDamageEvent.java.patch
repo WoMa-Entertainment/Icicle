@@ -1,0 +1,28 @@
+--- a/src/main/java/org/bukkit/event/entity/EntityDamageEvent.java
++++ b/src/main/java/org/bukkit/event/entity/EntityDamageEvent.java
+@@ -7,7 +_,6 @@
+ import java.util.EnumMap;
+ import java.util.Map;
+ import java.util.Objects;
+-import org.bukkit.Material;
+ import org.bukkit.WorldBorder;
+ import org.bukkit.damage.DamageSource;
+ import org.bukkit.damage.DamageType;
+@@ -464,7 +_,7 @@
+          */
+         FLY_INTO_WALL,
+         /**
+-         * Damage caused when an entity steps on {@link Material#MAGMA_BLOCK}.
++         * Damage caused when an entity steps on {@link org.bukkit.block.BlockType#MAGMA_BLOCK}.
+          * <p>
+          * Damage: 1
+          *
+@@ -473,7 +_,7 @@
+         @Deprecated(since = "26.2")
+         HOT_FLOOR,
+         /**
+-         * Damage caused when an entity steps on {@link Material#CAMPFIRE} or {@link Material#SOUL_CAMPFIRE}.
++         * Damage caused when an entity steps on {@link org.bukkit.block.BlockType#CAMPFIRE} or {@link org.bukkit.block.BlockType#SOUL_CAMPFIRE}.
+          * <p>
+          * Damage: 1 or 2 (for soul fire)
+          *

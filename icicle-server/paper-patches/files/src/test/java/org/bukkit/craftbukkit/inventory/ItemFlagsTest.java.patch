@@ -1,0 +1,21 @@
+--- a/src/test/java/org/bukkit/craftbukkit/inventory/ItemFlagsTest.java
++++ b/src/test/java/org/bukkit/craftbukkit/inventory/ItemFlagsTest.java
+@@ -1,8 +_,8 @@
+ package org.bukkit.craftbukkit.inventory;
+ 
+-import org.bukkit.Material;
+ import org.bukkit.inventory.ItemFlag;
+ import org.bukkit.inventory.ItemStack;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.support.environment.AllFeatures;
+ import org.junit.jupiter.api.Test;
+ 
+@@ -14,7 +_,7 @@
+ 
+     @Test
+     void testItemFlags() {
+-        final ItemStack item = ItemStack.of(Material.DIAMOND_HOE);
++        final ItemStack item = ItemStack.of(ItemType.DIAMOND_HOE);
+ 
+         for (final ItemFlag value : ItemFlag.values()) {
+             assertFalse(item.hasItemFlag(value));

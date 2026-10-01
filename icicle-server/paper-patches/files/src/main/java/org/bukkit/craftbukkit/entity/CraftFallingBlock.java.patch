@@ -1,0 +1,20 @@
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftFallingBlock.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftFallingBlock.java
+@@ -2,7 +_,7 @@
+ 
+ import com.google.common.base.Preconditions;
+ import net.minecraft.world.entity.item.FallingBlockEntity;
+-import org.bukkit.Material;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.data.BlockData;
+ import org.bukkit.craftbukkit.CraftServer;
+ import org.bukkit.craftbukkit.block.data.CraftBlockData;
+@@ -20,7 +_,7 @@
+     }
+ 
+     @Override
+-    public Material getMaterial() {
++    public BlockType getMaterial() {
+         return this.getBlockData().getMaterial();
+     }
+ 

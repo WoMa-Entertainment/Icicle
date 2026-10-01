@@ -1,0 +1,18 @@
+--- a/src/main/java/org/bukkit/inventory/CampfireRecipe.java
++++ b/src/main/java/org/bukkit/inventory/CampfireRecipe.java
+@@ -1,6 +_,5 @@
+ package org.bukkit.inventory;
+ 
+-import org.bukkit.Material;
+ import org.bukkit.NamespacedKey;
+ import org.jetbrains.annotations.NotNull;
+ 
+@@ -9,7 +_,7 @@
+  */
+ public class CampfireRecipe extends CookingRecipe<CampfireRecipe> {
+ 
+-    public CampfireRecipe(@NotNull NamespacedKey key, @NotNull ItemStack result, @NotNull Material source, float experience, int cookingTime) {
++    public CampfireRecipe(@NotNull NamespacedKey key, @NotNull ItemStack result, @NotNull ItemType source, float experience, int cookingTime) {
+         super(key, result, source, experience, cookingTime);
+     }
+ 

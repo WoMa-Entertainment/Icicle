@@ -1,0 +1,24 @@
+--- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBookSigned.java
++++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBookSigned.java
+@@ -19,9 +_,9 @@
+ import net.minecraft.server.network.FilteredText;
+ import net.minecraft.world.item.component.WritableBookContent;
+ import net.minecraft.world.item.component.WrittenBookContent;
+-import org.bukkit.Material;
+ import org.bukkit.configuration.serialization.DelegateDeserialization;
+ import org.bukkit.craftbukkit.util.CraftChatMessage;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.inventory.meta.BookMeta;
+ import org.jetbrains.annotations.NotNull;
+ 
+@@ -138,8 +_,8 @@
+     }
+ 
+     @Override
+-    boolean applicableTo(Material type) {
+-        return type == Material.WRITTEN_BOOK;
++    boolean applicableTo(ItemType type) {
++        return type == ItemType.WRITTEN_BOOK;
+     }
+ 
+     @Override

@@ -1,0 +1,21 @@
+--- a/src/main/java/org/bukkit/craftbukkit/block/CraftLectern.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/CraftLectern.java
+@@ -3,8 +_,8 @@
+ import net.minecraft.world.level.block.LecternBlock;
+ import net.minecraft.world.level.block.entity.LecternBlockEntity;
+ import org.bukkit.Location;
+-import org.bukkit.Material;
+ import org.bukkit.World;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.Lectern;
+ import org.bukkit.craftbukkit.inventory.CraftInventoryLectern;
+ import org.bukkit.inventory.Inventory;
+@@ -47,7 +_,7 @@
+     public boolean update(boolean force, boolean applyPhysics) {
+         boolean result = super.update(force, applyPhysics);
+ 
+-        if (result && this.getType() == Material.LECTERN && this.getWorldHandle() instanceof net.minecraft.world.level.Level) {
++        if (result && this.getType() == BlockType.LECTERN && this.getWorldHandle() instanceof net.minecraft.world.level.Level) {
+             LecternBlock.signalPageChange(this.world.getHandle(), this.getPosition(), this.getHandle());
+         }
+ 

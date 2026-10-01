@@ -1,0 +1,57 @@
+--- a/src/test/java/org/bukkit/craftbukkit/inventory/PersistentDataContainerTest.java
++++ b/src/test/java/org/bukkit/craftbukkit/inventory/PersistentDataContainerTest.java
+@@ -14,11 +_,11 @@
+ import java.util.stream.Stream;
+ import net.minecraft.core.component.DataComponentPatch;
+ import org.bukkit.Bukkit;
+-import org.bukkit.Material;
+ import org.bukkit.NamespacedKey;
+ import org.bukkit.configuration.InvalidConfigurationException;
+ import org.bukkit.configuration.file.YamlConfiguration;
+ import org.bukkit.inventory.ItemStack;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.inventory.meta.ItemMeta;
+ import org.bukkit.persistence.ListPersistentDataType;
+ import org.bukkit.persistence.PersistentDataAdapterContext;
+@@ -94,7 +_,7 @@
+     }
+ 
+     private static ItemMeta createNewItemMeta() {
+-        return Bukkit.getItemFactory().getItemMeta(Material.DIAMOND_PICKAXE);
++        return Bukkit.getItemFactory().getItemMeta(ItemType.DIAMOND_PICKAXE);
+     }
+ 
+     private static NamespacedKey requestKey(String keyName) {
+@@ -144,7 +_,7 @@
+ 
+     @Test
+     public void testYAMLStoring() {
+-        ItemStack stack = new ItemStack(Material.DIAMOND);
++        ItemStack stack = new ItemStack(ItemType.DIAMOND);
+         CraftMetaItem meta = this.createComplexItemMeta();
+         stack.setItemMeta(meta);
+ 
+@@ -155,12 +_,12 @@
+         YamlConfiguration loadedConfig = YamlConfiguration.loadConfiguration(new StringReader(configValue));
+ 
+         assertEquals(stack, loadedConfig.getSerializable("testpath", ItemStack.class));
+-        assertNotEquals(new ItemStack(Material.DIAMOND), loadedConfig.getSerializable("testpath", ItemStack.class));
++        assertNotEquals(new ItemStack(ItemType.DIAMOND), loadedConfig.getSerializable("testpath", ItemStack.class));
+     }
+ 
+     @Test
+     public void testCorrectType() {
+-        ItemStack stack = new ItemStack(Material.DIAMOND);
++        ItemStack stack = new ItemStack(ItemType.DIAMOND);
+         CraftMetaItem meta = this.createComplexItemMeta();
+ 
+         meta.getPersistentDataContainer().set(PersistentDataContainerTest.requestKey("int"), PersistentDataType.STRING, "1");
+@@ -208,7 +_,7 @@
+     // Test edge cases with strings
+     @Test
+     public void testStringEdgeCases() throws IOException, InvalidConfigurationException {
+-        final ItemStack stack = new ItemStack(Material.DIAMOND);
++        final ItemStack stack = new ItemStack(ItemType.DIAMOND);
+         final ItemMeta meta = stack.getItemMeta();
+         assertNotNull(meta);
+ 

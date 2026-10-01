@@ -1,0 +1,66 @@
+--- a/src/main/java/org/bukkit/entity/Boat.java
++++ b/src/main/java/org/bukkit/entity/Boat.java
+@@ -1,7 +_,7 @@
+ package org.bukkit.entity;
+ 
+-import org.bukkit.Material;
+ import org.bukkit.TreeSpecies;
++import org.bukkit.inventory.ItemType;
+ import org.jetbrains.annotations.NotNull;
+ 
+ /**
+@@ -142,20 +_,20 @@
+      */
+     @Deprecated(since = "1.21.2")
+     public enum Type {
+-        OAK(Material.OAK_PLANKS),
+-        SPRUCE(Material.SPRUCE_PLANKS),
+-        BIRCH(Material.BIRCH_PLANKS),
+-        JUNGLE(Material.JUNGLE_PLANKS),
+-        ACACIA(Material.ACACIA_PLANKS),
+-        CHERRY(Material.CHERRY_PLANKS),
+-        DARK_OAK(Material.DARK_OAK_PLANKS),
+-        MANGROVE(Material.MANGROVE_PLANKS),
+-        BAMBOO(Material.BAMBOO_PLANKS),
++        OAK(ItemType.OAK_PLANKS),
++        SPRUCE(ItemType.SPRUCE_PLANKS),
++        BIRCH(ItemType.BIRCH_PLANKS),
++        JUNGLE(ItemType.JUNGLE_PLANKS),
++        ACACIA(ItemType.ACACIA_PLANKS),
++        CHERRY(ItemType.CHERRY_PLANKS),
++        DARK_OAK(ItemType.DARK_OAK_PLANKS),
++        MANGROVE(ItemType.MANGROVE_PLANKS),
++        BAMBOO(ItemType.BAMBOO_PLANKS),
+         ;
+ 
+-        private final Material materialBlock;
++        private final ItemType materialBlock;
+ 
+-        private Type(Material materialBlock) {
++        private Type(ItemType materialBlock) {
+             this.materialBlock = materialBlock;
+         }
+ 
+@@ -165,7 +_,7 @@
+          * @return a material
+          */
+         @NotNull
+-        public Material getMaterial() {
++        public ItemType getMaterial() {
+             return this.materialBlock;
+         }
+     }
+@@ -187,11 +_,11 @@
+ 
+     // Paper start
+     /**
+-     * Gets the {@link Material} that represents this Boat type.
++     * Gets the {@link ItemType} that represents this Boat type.
+      *
+      * @return the boat material.
+      */
+     @NotNull
+-    public Material getBoatMaterial();
++    public ItemType getBoatMaterial();
+     // Paper end
+ }

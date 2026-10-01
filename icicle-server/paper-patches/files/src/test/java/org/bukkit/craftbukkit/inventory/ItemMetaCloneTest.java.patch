@@ -1,0 +1,20 @@
+--- a/src/test/java/org/bukkit/craftbukkit/inventory/ItemMetaCloneTest.java
++++ b/src/test/java/org/bukkit/craftbukkit/inventory/ItemMetaCloneTest.java
+@@ -4,7 +_,7 @@
+ import static org.hamcrest.Matchers.*;
+ import static org.junit.jupiter.api.Assertions.*;
+ import java.lang.reflect.Method;
+-import org.bukkit.Material;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.support.environment.AllFeatures;
+ import org.junit.jupiter.api.Test;
+ 
+@@ -13,7 +_,7 @@
+ 
+     @Test
+     public void testClone() throws Throwable {
+-        for (Material material : ItemStackTest.COMPOUND_MATERIALS) {
++        for (ItemType material : ItemStackTest.COMPOUND_MATERIALS) {
+             Class<?> clazz = CraftItemFactory.instance().getItemMeta(material).getClass();
+ 
+             Method clone = clazz.getDeclaredMethod("clone");

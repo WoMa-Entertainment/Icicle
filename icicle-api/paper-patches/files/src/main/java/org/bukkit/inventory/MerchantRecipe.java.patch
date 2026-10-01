@@ -1,0 +1,19 @@
+--- a/src/main/java/org/bukkit/inventory/MerchantRecipe.java
++++ b/src/main/java/org/bukkit/inventory/MerchantRecipe.java
+@@ -3,7 +_,6 @@
+ import com.google.common.base.Preconditions;
+ import java.util.ArrayList;
+ import java.util.List;
+-import org.bukkit.Material;
+ import org.bukkit.entity.Villager;
+ import org.bukkit.potion.PotionEffectType;
+ import org.bukkit.util.NumberConversions;
+@@ -167,7 +_,7 @@
+      * @param itemStack the item to adjust
+      */
+     public void adjust(@Nullable ItemStack itemStack) {
+-        if (itemStack == null || itemStack.getType() == Material.AIR || itemStack.getAmount() <= 0) {
++        if (itemStack == null || itemStack.getType() == ItemType.AIR || itemStack.getAmount() <= 0) {
+             return;
+         }
+ 

@@ -1,0 +1,21 @@
+--- a/src/main/java/io/papermc/paper/event/block/BeaconDeactivatedEvent.java
++++ b/src/main/java/io/papermc/paper/event/block/BeaconDeactivatedEvent.java
+@@ -1,8 +_,8 @@
+ package io.papermc.paper.event.block;
+ 
+-import org.bukkit.Material;
+ import org.bukkit.block.Beacon;
+ import org.bukkit.block.Block;
++import org.bukkit.block.BlockType;
+ import org.bukkit.event.HandlerList;
+ import org.bukkit.event.block.BlockEvent;
+ import org.jetbrains.annotations.ApiStatus;
+@@ -30,7 +_,7 @@
+      * @return The beacon that got deactivated, or {@code null} if it does not exist.
+      */
+     public @Nullable Beacon getBeacon() {
+-        return this.block.getType() == Material.BEACON ? (Beacon) this.block.getState() : null;
++        return this.block.getType() == BlockType.BEACON ? (Beacon) this.block.getState() : null;
+     }
+ 
+     @Override

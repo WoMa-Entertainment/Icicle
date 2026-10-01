@@ -1,0 +1,11 @@
+--- a/net/minecraft/world/entity/Entity.java
++++ b/net/minecraft/world/entity/Entity.java
+@@ -3020,7 +_,7 @@
+         }
+ 
+         public void runConsumer(final java.util.function.Consumer<org.bukkit.inventory.ItemStack> fallback) {
+-            if (this.dropConsumer == null || org.bukkit.craftbukkit.inventory.CraftItemType.bukkitToMinecraft(this.stack.getType()) != this.item) {
++            if (this.dropConsumer == null || org.bukkit.craftbukkit.inventory.CraftItemType.bukkitToMinecraftNew(this.stack.getType()) != this.item) {
+                 fallback.accept(this.stack);
+             } else {
+                 this.dropConsumer.accept(org.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(this.stack));

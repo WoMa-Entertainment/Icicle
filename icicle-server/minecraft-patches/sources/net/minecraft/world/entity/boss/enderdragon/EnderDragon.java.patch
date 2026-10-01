@@ -1,0 +1,11 @@
+--- a/net/minecraft/world/entity/boss/enderdragon/EnderDragon.java
++++ b/net/minecraft/world/entity/boss/enderdragon/EnderDragon.java
+@@ -488,7 +_,7 @@
+             }
+         } else {
+             for (org.bukkit.block.Block b : event.blockList()) {
+-                org.bukkit.Material blockType = b.getType();
++                org.bukkit.block.BlockType blockType = b.getType();
+                 if (blockType.isAir()) {
+                     continue;
+                 }

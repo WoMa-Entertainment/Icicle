@@ -1,0 +1,228 @@
+--- a/src/test/java/io/papermc/paper/item/ItemStackDataComponentTest.java
++++ b/src/test/java/io/papermc/paper/item/ItemStackDataComponentTest.java
+@@ -33,7 +_,6 @@
+ import org.bukkit.Color;
+ import org.bukkit.FireworkEffect;
+ import org.bukkit.JukeboxSong;
+-import org.bukkit.Material;
+ import org.bukkit.NamespacedKey;
+ import org.bukkit.Registry;
+ import org.bukkit.attribute.Attribute;
+@@ -74,22 +_,22 @@
+ 
+     @Test
+     void testMaxStackSize() {
+-        testWithMeta(ItemStack.of(Material.STONE), DataComponentTypes.MAX_STACK_SIZE, 32, ItemMeta.class, ItemMeta::getMaxStackSize, ItemMeta::setMaxStackSize);
++        testWithMeta(ItemStack.of(ItemType.STONE), DataComponentTypes.MAX_STACK_SIZE, 32, ItemMeta.class, ItemMeta::getMaxStackSize, ItemMeta::setMaxStackSize);
+     }
+ 
+     @Test
+     void testMaxDamage() {
+-        testWithMeta(ItemStack.of(Material.STONE), DataComponentTypes.MAX_DAMAGE, 120, Damageable.class, Damageable::getMaxDamage, Damageable::setMaxDamage);
++        testWithMeta(ItemStack.of(ItemType.STONE), DataComponentTypes.MAX_DAMAGE, 120, Damageable.class, Damageable::getMaxDamage, Damageable::setMaxDamage);
+     }
+ 
+     @Test
+     void testDamage() {
+-        testWithMeta(ItemStack.of(Material.STONE), DataComponentTypes.DAMAGE, 120, Damageable.class, Damageable::getDamage, Damageable::setDamage);
++        testWithMeta(ItemStack.of(ItemType.STONE), DataComponentTypes.DAMAGE, 120, Damageable.class, Damageable::getDamage, Damageable::setDamage);
+     }
+ 
+     @Test
+     void testUnbreakable() {
+-        final ItemStack stack = ItemStack.of(Material.STONE);
++        final ItemStack stack = ItemStack.of(ItemType.STONE);
+         stack.setData(DataComponentTypes.UNBREAKABLE);
+         stack.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay().addHiddenComponents(DataComponentTypes.UNBREAKABLE));
+ 
+@@ -101,14 +_,14 @@
+ 
+     @Test
+     void testHideTooltip() {
+-        ItemStack stack = ItemStack.of(Material.STONE);
++        ItemStack stack = ItemStack.of(ItemType.STONE);
+         stack.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay().hideTooltip(true));
+ 
+         Assertions.assertEquals(stack.getItemMeta().isHideTooltip(), stack.hasData(DataComponentTypes.TOOLTIP_DISPLAY) && stack.getData(DataComponentTypes.TOOLTIP_DISPLAY).hideTooltip());
+         Assertions.assertTrue(stack.getItemMeta().isHideTooltip());
+         stack.unsetData(DataComponentTypes.TOOLTIP_DISPLAY);
+         Assertions.assertFalse(stack.getItemMeta().isHideTooltip());
+-        stack = ItemStack.of(Material.STONE);
++        stack = ItemStack.of(ItemType.STONE);
+ 
+         stack.unsetData(DataComponentTypes.TOOLTIP_DISPLAY);
+         Assertions.assertFalse(stack.getItemMeta().isHideTooltip());
+@@ -117,34 +_,34 @@
+ 
+     @Test
+     void testRepairCost() {
+-        final ItemStack stack = ItemStack.of(Material.STONE);
++        final ItemStack stack = ItemStack.of(ItemType.STONE);
+         testWithMeta(stack, DataComponentTypes.REPAIR_COST, 120, Repairable.class, Repairable::getRepairCost, Repairable::setRepairCost);
+     }
+ 
+     @Test
+     void testCustomName() {
+-        testWithMeta(ItemStack.of(Material.STONE), DataComponentTypes.CUSTOM_NAME, Component.text("HELLO!!!!!!"), ItemMeta.class, ItemMeta::displayName, ItemMeta::displayName);
++        testWithMeta(ItemStack.of(ItemType.STONE), DataComponentTypes.CUSTOM_NAME, Component.text("HELLO!!!!!!"), ItemMeta.class, ItemMeta::displayName, ItemMeta::displayName);
+     }
+ 
+     @Test
+     void testItemName() {
+-        testWithMeta(ItemStack.of(Material.STONE), DataComponentTypes.ITEM_NAME, Component.text("HELLO!!!!!! ITEM NAME"), ItemMeta.class, ItemMeta::itemName, ItemMeta::itemName);
++        testWithMeta(ItemStack.of(ItemType.STONE), DataComponentTypes.ITEM_NAME, Component.text("HELLO!!!!!! ITEM NAME"), ItemMeta.class, ItemMeta::itemName, ItemMeta::itemName);
+     }
+ 
+     @Test
+     void testItemLore() {
+         List<Component> lines = List.of(Component.text("1"), Component.text("2"));
+-        testWithMeta(ItemStack.of(Material.STONE), DataComponentTypes.LORE, ItemLore.lore().lines(lines).build(), ItemLore::lines, ItemMeta.class, ItemMeta::lore, ItemMeta::lore);
++        testWithMeta(ItemStack.of(ItemType.STONE), DataComponentTypes.LORE, ItemLore.lore().lines(lines).build(), ItemLore::lines, ItemMeta.class, ItemMeta::lore, ItemMeta::lore);
+     }
+ 
+     @Test
+     void testItemRarity() {
+-        testWithMeta(ItemStack.of(Material.STONE), DataComponentTypes.RARITY, ItemRarity.RARE, ItemMeta.class, ItemMeta::getRarity, ItemMeta::setRarity);
++        testWithMeta(ItemStack.of(ItemType.STONE), DataComponentTypes.RARITY, ItemRarity.RARE, ItemMeta.class, ItemMeta::getRarity, ItemMeta::setRarity);
+     }
+ 
+     @Test
+     void testItemEnchantments() {
+-        final ItemStack stack = ItemStack.of(Material.STONE);
++        final ItemStack stack = ItemStack.of(ItemType.STONE);
+         Map<Enchantment, Integer> enchantments = Map.of(Enchantment.SOUL_SPEED, 1);
+         stack.setData(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments(enchantments));
+         stack.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay().addHiddenComponents(DataComponentTypes.ENCHANTMENTS));
+@@ -158,7 +_,7 @@
+ 
+     @Test
+     void testItemAttributes() {
+-        final ItemStack stack = ItemStack.of(Material.STONE);
++        final ItemStack stack = ItemStack.of(ItemType.STONE);
+         AttributeModifier modifier = new AttributeModifier(NamespacedKey.minecraft("test"), 5, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlotGroup.ANY);
+         stack.setData(DataComponentTypes.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.itemAttributes().addModifier(Attribute.ATTACK_DAMAGE, modifier));
+         stack.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay().addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS));
+@@ -171,12 +_,12 @@
+ 
+     @Test
+     void testLegacyCustomModelData() {
+-        testWithMeta(ItemStack.of(Material.STONE), DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().addFloat(1).build(), customModelData -> customModelData.floats().get(0).intValue(), ItemMeta.class, ItemMeta::getCustomModelData, ItemMeta::setCustomModelData);
++        testWithMeta(ItemStack.of(ItemType.STONE), DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().addFloat(1).build(), customModelData -> customModelData.floats().get(0).intValue(), ItemMeta.class, ItemMeta::getCustomModelData, ItemMeta::setCustomModelData);
+     }
+ 
+     @Test
+     void testEnchantmentGlintOverride() {
+-        testWithMeta(ItemStack.of(Material.STONE), DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true, ItemMeta.class, ItemMeta::getEnchantmentGlintOverride, ItemMeta::setEnchantmentGlintOverride);
++        testWithMeta(ItemStack.of(ItemType.STONE), DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true, ItemMeta.class, ItemMeta::getEnchantmentGlintOverride, ItemMeta::setEnchantmentGlintOverride);
+     }
+ 
+     @Test
+@@ -187,7 +_,7 @@
+             .nutrition(1)
+             .build();
+ 
+-        final ItemStack stack = ItemStack.of(Material.CROSSBOW);
++        final ItemStack stack = ItemStack.of(ItemType.CROSSBOW);
+         stack.setData(DataComponentTypes.FOOD, properties);
+ 
+         ItemMeta meta = stack.getItemMeta();
+@@ -220,7 +_,7 @@
+             ))
+             .build();
+ 
+-        final ItemStack stack = ItemStack.of(Material.CROSSBOW);
++        final ItemStack stack = ItemStack.of(ItemType.CROSSBOW);
+         stack.setData(DataComponentTypes.TOOL, properties);
+ 
+         ItemMeta meta = stack.getItemMeta();
+@@ -232,7 +_,7 @@
+         for (ToolComponent.ToolRule effect : component.getRules()) {
+             Assertions.assertEquals(properties.rules().get(idx).speed(), effect.getSpeed());
+             Assertions.assertEquals(properties.rules().get(idx).correctForDrops().toBoolean(), effect.isCorrectForDrops());
+-            Assertions.assertEquals(properties.rules().get(idx).blocks().resolve(Registry.BLOCK), effect.getBlocks().stream().map(Material::asBlockType).toList());
++            Assertions.assertEquals(properties.rules().get(idx).blocks().resolve(Registry.BLOCK), effect.getBlocks().stream().toList());
+             idx++;
+         }
+ 
+@@ -245,7 +_,7 @@
+     void testJukeboxPlayable() {
+         JukeboxPlayable properties = JukeboxPlayable.jukeboxPlayable(JukeboxSong.MALL).build();
+ 
+-        final ItemStack stack = ItemStack.of(Material.BEEF);
++        final ItemStack stack = ItemStack.of(ItemType.BEEF);
+         stack.setData(DataComponentTypes.JUKEBOX_PLAYABLE, properties);
+ 
+         ItemMeta meta = stack.getItemMeta();
+@@ -259,7 +_,7 @@
+ 
+     @Test
+     void testDyedColor() {
+-        final ItemStack stack = ItemStack.of(Material.LEATHER_CHESTPLATE);
++        final ItemStack stack = ItemStack.of(ItemType.LEATHER_CHESTPLATE);
+         Color color = Color.BLUE;
+         stack.setData(DataComponentTypes.DYED_COLOR, DyedItemColor.dyedItemColor(color));
+         stack.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay().addHiddenComponents(DataComponentTypes.DYED_COLOR));
+@@ -272,22 +_,22 @@
+ 
+     @Test
+     void testMapId() {
+-        testWithMeta(ItemStack.of(Material.FILLED_MAP), DataComponentTypes.MAP_ID, MapId.mapId(1), MapId::id, MapMeta.class, MapMeta::getMapId, MapMeta::setMapId);
++        testWithMeta(ItemStack.of(ItemType.FILLED_MAP), DataComponentTypes.MAP_ID, MapId.mapId(1), MapId::id, MapMeta.class, MapMeta::getMapId, MapMeta::setMapId);
+     }
+ 
+     @Test
+     void testFireworks() {
+-        testWithMeta(ItemStack.of(Material.FIREWORK_ROCKET), DataComponentTypes.FIREWORKS, Fireworks.fireworks(List.of(FireworkEffect.builder().build()), 1), Fireworks::effects, FireworkMeta.class, FireworkMeta::getEffects, (fireworkMeta, effects) -> {
++        testWithMeta(ItemStack.of(ItemType.FIREWORK_ROCKET), DataComponentTypes.FIREWORKS, Fireworks.fireworks(List.of(FireworkEffect.builder().build()), 1), Fireworks::effects, FireworkMeta.class, FireworkMeta::getEffects, (fireworkMeta, effects) -> {
+             fireworkMeta.clearEffects();
+             fireworkMeta.addEffects(effects);
+         });
+ 
+-        testWithMeta(ItemStack.of(Material.FIREWORK_ROCKET), DataComponentTypes.FIREWORKS, Fireworks.fireworks(List.of(FireworkEffect.builder().build()), 1), Fireworks::flightDuration, FireworkMeta.class, FireworkMeta::getPower, FireworkMeta::setPower);
++        testWithMeta(ItemStack.of(ItemType.FIREWORK_ROCKET), DataComponentTypes.FIREWORKS, Fireworks.fireworks(List.of(FireworkEffect.builder().build()), 1), Fireworks::flightDuration, FireworkMeta.class, FireworkMeta::getPower, FireworkMeta::setPower);
+     }
+ 
+     @Test
+     void testTrim() {
+-        final ItemStack stack = ItemStack.of(Material.LEATHER_CHESTPLATE);
++        final ItemStack stack = ItemStack.of(ItemType.LEATHER_CHESTPLATE);
+         ItemArmorTrim armorTrim = ItemArmorTrim.itemArmorTrim(new ArmorTrim(TrimMaterial.AMETHYST, TrimPattern.BOLT)).build();
+         stack.setData(DataComponentTypes.TRIM, armorTrim);
+         stack.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay().addHiddenComponents(DataComponentTypes.TRIM));
+@@ -300,8 +_,8 @@
+ 
+     @Test
+     void testChargedProjectiles() {
+-        final ItemStack stack = ItemStack.of(Material.CROSSBOW);
+-        ItemStack projectile = ItemStack.of(Material.FIREWORK_ROCKET);
++        final ItemStack stack = ItemStack.of(ItemType.CROSSBOW);
++        ItemStack projectile = ItemStack.of(ItemType.FIREWORK_ROCKET);
+         stack.setData(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectiles.chargedProjectiles().add(projectile));
+ 
+         CrossbowMeta meta = (CrossbowMeta) stack.getItemMeta();
+@@ -314,21 +_,21 @@
+ 
+     @Test
+     void testPot() {
+-        final ItemStack stack = ItemStack.of(Material.DECORATED_POT);
++        final ItemStack stack = ItemStack.of(ItemType.DECORATED_POT);
+         stack.setData(DataComponentTypes.POT_DECORATIONS, PotDecorations.potDecorations().back(ItemType.DANGER_POTTERY_SHERD));
+ 
+         BlockState state = ((BlockStateMeta) stack.getItemMeta()).getBlockState();
+         DecoratedPot decoratedPot = (DecoratedPot) state;
+ 
+-        Assertions.assertEquals(decoratedPot.getSherd(DecoratedPot.Side.BACK), Material.DANGER_POTTERY_SHERD);
++        Assertions.assertEquals(decoratedPot.getSherd(DecoratedPot.Side.BACK), ItemType.DANGER_POTTERY_SHERD);
+         stack.unsetData(DataComponentTypes.POT_DECORATIONS);
+         decoratedPot = (DecoratedPot) ((BlockStateMeta) stack.getItemMeta()).getBlockState();
+-        Assertions.assertTrue(decoratedPot.getSherds().values().stream().allMatch((m) -> m == Material.BRICK));
++        Assertions.assertTrue(decoratedPot.getSherds().values().stream().allMatch((m) -> m == ItemType.BRICK));
+     }
+ 
+     @Test
+     void testRecipes() {
+-        final ItemStack stack = ItemStack.of(Material.KNOWLEDGE_BOOK);
++        final ItemStack stack = ItemStack.of(ItemType.KNOWLEDGE_BOOK);
+         stack.setData(DataComponentTypes.RECIPES, List.of(Key.key("paper:fun_recipe")));
+ 
+         final ItemMeta itemMeta = stack.getItemMeta();

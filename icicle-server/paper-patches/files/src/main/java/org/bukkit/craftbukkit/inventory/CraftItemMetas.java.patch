@@ -1,0 +1,13 @@
+--- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemMetas.java
++++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemMetas.java
+@@ -112,8 +_,8 @@
+             (type, meta) -> meta instanceof CraftMetaKnowledgeBook knowledgeBook ? knowledgeBook : new CraftMetaKnowledgeBook(meta));
+ 
+     private static final ItemMetaData<BlockStateMeta> BLOCK_STATE_META_DATA = new ItemMetaData<>(BlockStateMeta.class,
+-            (item, extras) -> new CraftMetaBlockState(item.getComponentsPatch(), CraftItemType.minecraftToBukkit(item.getItem()), extras),
+-            (type, meta) -> new CraftMetaBlockState(meta, type.asMaterial()));
++            (item, extras) -> new CraftMetaBlockState(item.getComponentsPatch(), CraftItemType.minecraftToBukkitNew(item.getItem()), extras),
++            (type, meta) -> new CraftMetaBlockState(meta, type));
+ 
+     private static final ItemMetaData<ShieldMeta> SHIELD_META_DATA = new ItemMetaData<>(ShieldMeta.class,
+             (item, extras) -> new CraftMetaShield(item.getComponentsPatch(), extras),

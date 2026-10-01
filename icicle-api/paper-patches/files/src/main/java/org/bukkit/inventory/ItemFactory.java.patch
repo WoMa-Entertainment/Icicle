@@ -1,0 +1,64 @@
+--- a/src/main/java/org/bukkit/inventory/ItemFactory.java
++++ b/src/main/java/org/bukkit/inventory/ItemFactory.java
+@@ -1,7 +_,6 @@
+ package org.bukkit.inventory;
+ 
+ import org.bukkit.Color;
+-import org.bukkit.Material;
+ import org.bukkit.Server;
+ import org.bukkit.World;
+ import org.bukkit.enchantments.Enchantment;
+@@ -30,7 +_,7 @@
+      *     specified material
+      */
+     @org.bukkit.UndefinedNullability // Paper
+-    ItemMeta getItemMeta(@NotNull final Material material);
++    ItemMeta getItemMeta(@NotNull final ItemType material);
+ 
+     /**
+      * This method checks the item meta to confirm that it is applicable (no
+@@ -62,7 +_,7 @@
+      * @throws IllegalArgumentException if the meta was not created by this
+      *     factory
+      */
+-    boolean isApplicable(@Nullable final ItemMeta meta, @Nullable final Material material) throws IllegalArgumentException;
++    boolean isApplicable(@Nullable final ItemMeta meta, @Nullable final ItemType material) throws IllegalArgumentException;
+ 
+     /**
+      * This method is used to compare two item meta data objects.
+@@ -122,7 +_,7 @@
+      *     by this factory
+      */
+     @Nullable
+-    ItemMeta asMetaFor(@NotNull final ItemMeta meta, @NotNull final Material material) throws IllegalArgumentException;
++    ItemMeta asMetaFor(@NotNull final ItemMeta meta, @NotNull final ItemType material) throws IllegalArgumentException;
+ 
+     /**
+      * Returns the default color for all leather armor.
+@@ -138,7 +_,7 @@
+      * The input should match the same input as expected by Minecraft's {@code /give}
+      * command. For example,
+      * <pre>"minecraft:diamond_sword[minecraft:enchantments={levels:{"minecraft:sharpness": 3}}]"</pre>
+-     * would yield an ItemStack of {@link Material#DIAMOND_SWORD} with an {@link ItemMeta}
++     * would yield an ItemStack of {@link ItemType#DIAMOND_SWORD} with an {@link ItemMeta}
+      * containing a level 3 {@link Enchantment#SHARPNESS} enchantment.
+      *
+      * @param input the item input string
+@@ -150,7 +_,7 @@
+     ItemStack createItemStack(@NotNull String input) throws IllegalArgumentException;
+ 
+     /**
+-     * Gets a {@link Material} representing the spawn egg for the provided
++     * Gets a {@link ItemType} representing the spawn egg for the provided
+      * {@link EntityType}. <br>
+      * Will return null for EntityTypes that do not have a corresponding spawn egg.
+      *
+@@ -158,7 +_,7 @@
+      * @return the Material of this EntityTypes spawn egg or null
+      */
+     @Nullable
+-    Material getSpawnEgg(@NotNull EntityType type);
++    ItemType getSpawnEgg(@NotNull EntityType type);
+ 
+     /**
+      * Enchants the given item at the provided level.

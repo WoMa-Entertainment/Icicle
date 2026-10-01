@@ -1,0 +1,95 @@
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -473,7 +_,6 @@
+         this.minimumAPI = ApiVersion.getOrCreateVersion(this.configuration.getString("settings.minimum-api"));
+         this.loadIcon();
+         this.loadCompatibilities();
+-        CraftMagicNumbers.INSTANCE.getCommodore().updateReroute(activeCompatibilities::contains);
+ 
+         // Set map color cache
+         if (this.configuration.getBoolean("settings.use-map-color-cache")) {
+@@ -973,7 +_,6 @@
+         this.console.autosavePeriod = this.configuration.getInt("ticks-per.autosave");
+         this.loadIcon();
+         this.loadCompatibilities();
+-        CraftMagicNumbers.INSTANCE.getCommodore().updateReroute(activeCompatibilities::contains);
+ 
+         try {
+             this.playerList.getIpBans().load();
+@@ -1484,9 +_,6 @@
+             if (stack.getType() != result.getType()) {
+                 continue;
+             }
+-            if (result.getDurability() == -1 || result.getDurability() == stack.getDurability()) {
+-                results.add(recipe);
+-            }
+         }
+         return results;
+     }
+@@ -2503,14 +_,14 @@
+     }
+ 
+     @Override
+-    public BlockData createBlockData(org.bukkit.Material material) {
++    public BlockData createBlockData(org.bukkit.block.BlockType material) {
+         Preconditions.checkArgument(material != null, "Material cannot be null");
+ 
+         return this.createBlockData(material, (String) null);
+     }
+ 
+     @Override
+-    public BlockData createBlockData(org.bukkit.Material material, Consumer<? super BlockData> consumer) {
++    public BlockData createBlockData(org.bukkit.block.BlockType material, Consumer<? super BlockData> consumer) {
+         BlockData data = this.createBlockData(material);
+ 
+         if (consumer != null) {
+@@ -2528,15 +_,9 @@
+     }
+ 
+     @Override
+-    public BlockData createBlockData(org.bukkit.Material material, String data) {
++    public BlockData createBlockData(org.bukkit.block.BlockType material, String data) {
+         Preconditions.checkArgument(material != null || data != null, "Must provide one of material or data");
+-        BlockType type = null;
+-        if (material != null) {
+-            type = material.asBlockType();
+-            Preconditions.checkArgument(type != null, "Provided material must be a block");
+-        }
+-
+-        return CraftBlockData.fromString(type, data);
++        return CraftBlockData.fromString(material, data);
+     }
+ 
+     @Override
+@@ -2549,14 +_,14 @@
+ 
+         switch (registry) {
+             case org.bukkit.Tag.REGISTRY_BLOCKS -> {
+-                Preconditions.checkArgument(clazz == org.bukkit.Material.class, "Block namespace (%s) must have material type", clazz.getName());
++                Preconditions.checkArgument(clazz == org.bukkit.block.BlockType.class, "Block namespace (%s) must have block type", clazz.getName());
+                 TagKey<Block> blockTagKey = TagKey.create(Registries.BLOCK, key);
+                 if (BuiltInRegistries.BLOCK.get(blockTagKey).isPresent()) {
+                     return (org.bukkit.Tag<T>) new CraftBlockTag(BuiltInRegistries.BLOCK, blockTagKey);
+                 }
+             }
+             case org.bukkit.Tag.REGISTRY_ITEMS -> {
+-                Preconditions.checkArgument(clazz == org.bukkit.Material.class, "Item namespace (%s) must have material type", clazz.getName());
++                Preconditions.checkArgument(clazz == org.bukkit.inventory.ItemType.class, "Item namespace (%s) must have item type", clazz.getName());
+                 TagKey<Item> itemTagKey = TagKey.create(Registries.ITEM, key);
+                 if (BuiltInRegistries.ITEM.get(itemTagKey).isPresent()) {
+                     return (org.bukkit.Tag<T>) new CraftItemTag(BuiltInRegistries.ITEM, itemTagKey);
+@@ -2604,12 +_,12 @@
+         Preconditions.checkArgument(clazz != null, "Class clazz cannot be null");
+         switch (registry) {
+             case org.bukkit.Tag.REGISTRY_BLOCKS -> {
+-                Preconditions.checkArgument(clazz == org.bukkit.Material.class, "Block namespace (%s) must have material type", clazz.getName());
++                Preconditions.checkArgument(clazz == org.bukkit.block.BlockType.class, "Block namespace (%s) must have block type", clazz.getName());
+                 net.minecraft.core.Registry<Block> blockTags = BuiltInRegistries.BLOCK;
+                 return blockTags.getTags().map(pair -> (org.bukkit.Tag<T>) new CraftBlockTag(blockTags, pair.key())).collect(ImmutableList.toImmutableList());
+             }
+             case org.bukkit.Tag.REGISTRY_ITEMS -> {
+-                Preconditions.checkArgument(clazz == org.bukkit.Material.class, "Item namespace (%s) must have material type", clazz.getName());
++                Preconditions.checkArgument(clazz == org.bukkit.inventory.ItemType.class, "Item namespace (%s) must have item type", clazz.getName());
+                 net.minecraft.core.Registry<Item> itemTags = BuiltInRegistries.ITEM;
+                 return itemTags.getTags().map(pair -> (org.bukkit.Tag<T>) new CraftItemTag(itemTags, pair.key())).collect(ImmutableList.toImmutableList());
+             }

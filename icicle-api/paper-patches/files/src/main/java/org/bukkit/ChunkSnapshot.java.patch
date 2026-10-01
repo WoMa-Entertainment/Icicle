@@ -1,0 +1,38 @@
+--- a/src/main/java/org/bukkit/ChunkSnapshot.java
++++ b/src/main/java/org/bukkit/ChunkSnapshot.java
+@@ -2,6 +_,7 @@
+ 
+ import net.kyori.adventure.key.Key;
+ import org.bukkit.block.Biome;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.data.BlockData;
+ import org.jetbrains.annotations.ApiStatus;
+ import org.jetbrains.annotations.NotNull;
+@@ -57,7 +_,7 @@
+      * @return block material type
+      */
+     @NotNull
+-    Material getBlockType(int x, int y, int z);
++    BlockType getBlockType(int x, int y, int z);
+ 
+     /**
+      * Get block data for block at corresponding coordinate in the chunk
+@@ -69,18 +_,6 @@
+      */
+     @NotNull
+     BlockData getBlockData(int x, int y, int z);
+-
+-    /**
+-     * Get block data for block at corresponding coordinate in the chunk
+-     *
+-     * @param x 0-15
+-     * @param y world minHeight (inclusive) - world maxHeight (exclusive)
+-     * @param z 0-15
+-     * @return 0-15
+-     * @deprecated Magic value
+-     */
+-    @Deprecated(since = "1.6.2", forRemoval = true)
+-    int getData(int x, int y, int z);
+ 
+     /**
+      * Get sky light level for block at corresponding coordinate in the chunk

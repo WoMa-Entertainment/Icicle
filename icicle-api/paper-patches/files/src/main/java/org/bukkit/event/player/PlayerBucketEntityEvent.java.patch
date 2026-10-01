@@ -1,0 +1,27 @@
+--- a/src/main/java/org/bukkit/event/player/PlayerBucketEntityEvent.java
++++ b/src/main/java/org/bukkit/event/player/PlayerBucketEntityEvent.java
+@@ -1,6 +_,5 @@
+ package org.bukkit.event.player;
+ 
+-import org.bukkit.Material;
+ import org.bukkit.entity.Entity;
+ import org.bukkit.entity.Player;
+ import org.bukkit.event.Cancellable;
+@@ -46,7 +_,7 @@
+     /**
+      * Gets the bucket used to capture the {@link Entity}.
+      * <br>
+-     * This refers to the bucket clicked with, eg {@link Material#WATER_BUCKET}.
++     * This refers to the bucket clicked with, eg {@link org.bukkit.inventory.ItemType#WATER_BUCKET}.
+      *
+      * @return The used bucket
+      */
+@@ -59,7 +_,7 @@
+      * Gets the bucket that the {@link Entity} will be put into.
+      * <br>
+      * This refers to the bucket with the entity, eg
+-     * {@link Material#PUFFERFISH_BUCKET}.
++     * {@link org.bukkit.inventory.ItemType#PUFFERFISH_BUCKET}.
+      *
+      * @return The bucket that the {@link Entity} will be put into
+      */

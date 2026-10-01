@@ -1,0 +1,120 @@
+--- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
++++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
+@@ -85,11 +_,11 @@
+ import net.minecraft.world.item.enchantment.ItemEnchantments;
+ import net.minecraft.world.item.equipment.Equippable;
+ import net.minecraft.world.level.block.state.BlockState;
+-import org.bukkit.Material;
+ import org.bukkit.NamespacedKey;
+ import org.bukkit.Tag;
+ import org.bukkit.attribute.Attribute;
+ import org.bukkit.attribute.AttributeModifier;
++import org.bukkit.block.BlockType;
+ import org.bukkit.block.data.BlockData;
+ import org.bukkit.configuration.serialization.DelegateDeserialization;
+ import org.bukkit.craftbukkit.CraftEquipmentSlot;
+@@ -123,6 +_,7 @@
+ import org.bukkit.inventory.ItemFlag;
+ import org.bukkit.inventory.ItemRarity;
+ import org.bukkit.inventory.ItemStack;
++import org.bukkit.inventory.ItemType;
+ import org.bukkit.inventory.meta.BlockDataMeta;
+ import org.bukkit.inventory.meta.Damageable;
+ import org.bukkit.inventory.meta.ItemMeta;
+@@ -1120,8 +_,8 @@
+         tag.put(CraftMetaItem.ATTRIBUTES, list.build());
+     }
+ 
+-    boolean applicableTo(Material type) {
+-        if (type == Material.AIR || !type.isItem()) {
++    boolean applicableTo(ItemType type) {
++        if (type == ItemType.AIR) {
+             return false;
+         }
+ 
+@@ -1130,7 +_,7 @@
+         }
+ 
+         // We assume that the corresponding bukkit interface is always the first one
+-        return type.asItemType().getItemMetaClass() == this.getClass().getInterfaces()[0];
++        return type.getItemMetaClass() == this.getClass().getInterfaces()[0];
+     }
+ 
+     @Overridden
+@@ -1456,8 +_,8 @@
+     }
+ 
+     @Override
+-    public BlockData getBlockData(Material material) {
+-        BlockState defaultData = CraftBlockType.bukkitToMinecraft(material).defaultBlockState();
++    public BlockData getBlockData(BlockType material) {
++        BlockState defaultData = CraftBlockType.bukkitToMinecraftNew(material).defaultBlockState();
+         if (this.blockData == null) {
+             return defaultData.asBlockData();
+         }
+@@ -2534,38 +_,38 @@
+     }
+ 
+     @Override
+-    public Set<Material> getCanDestroy() {
+-        return !this.hasDestroyableKeys() ? Collections.emptySet() : convertToLegacyMaterial(this.canBreakPredicates);
++    public Set<BlockType> getCanDestroy() {
++        return !this.hasDestroyableKeys() ? Collections.emptySet() : convertToBlockType(this.canBreakPredicates);
+     }
+ 
+     @Override
+-    public void setCanDestroy(final Set<Material> canDestroy) {
++    public void setCanDestroy(final Set<BlockType> canDestroy) {
+         Preconditions.checkArgument(canDestroy != null, "Cannot replace with null set!");
+-        this.canBreakPredicates = convertFromLegacyMaterial(canDestroy);
+-    }
+-
+-    @Override
+-    public Set<Material> getCanPlaceOn() {
+-        return !this.hasPlaceableKeys() ? Collections.emptySet() : convertToLegacyMaterial(this.canPlaceOnPredicates);
+-    }
+-
+-    @Override
+-    public void setCanPlaceOn(final Set<Material> canPlaceOn) {
++        this.canBreakPredicates = convertFromBlockType(canDestroy);
++    }
++
++    @Override
++    public Set<BlockType> getCanPlaceOn() {
++        return !this.hasPlaceableKeys() ? Collections.emptySet() : convertToBlockType(this.canPlaceOnPredicates);
++    }
++
++    @Override
++    public void setCanPlaceOn(final Set<BlockType> canPlaceOn) {
+         Preconditions.checkArgument(canPlaceOn != null, "Cannot replace with null set!");
+-        this.canPlaceOnPredicates = convertFromLegacyMaterial(canPlaceOn);
++        this.canPlaceOnPredicates = convertFromBlockType(canPlaceOn);
+     }
+ 
+-    private static List<net.minecraft.advancements.predicates.BlockPredicate> convertFromLegacyMaterial(final Collection<Material> materials) {
++    private static List<net.minecraft.advancements.predicates.BlockPredicate> convertFromBlockType(final Collection<BlockType> materials) {
+         final net.minecraft.core.Registry<net.minecraft.world.level.block.Block> blockRegistry = CraftRegistry.getMinecraftRegistry().lookupOrThrow(net.minecraft.core.registries.Registries.BLOCK);
+         return materials.stream().map(m -> {
+-            return net.minecraft.advancements.predicates.BlockPredicate.Builder.block().of(blockRegistry, CraftBlockType.bukkitToMinecraft(m)).build();
++            return net.minecraft.advancements.predicates.BlockPredicate.Builder.block().of(blockRegistry, CraftBlockType.bukkitToMinecraftNew(m)).build();
+         }).toList();
+     }
+ 
+-    private static Set<Material> convertToLegacyMaterial(final List<net.minecraft.advancements.predicates.BlockPredicate> predicates) {
++    private static Set<BlockType> convertToBlockType(final List<net.minecraft.advancements.predicates.BlockPredicate> predicates) {
+         return predicates.stream()
+             .flatMap(p -> p.blocks().map(net.minecraft.core.HolderSet::stream).orElse(java.util.stream.Stream.empty()))
+-            .map(holder -> CraftBlockType.minecraftToBukkit(holder.value()))
++            .map(holder -> CraftBlockType.minecraftToBukkitNew(holder.value()))
+             .collect(java.util.stream.Collectors.toSet());
+     }
+ 
+@@ -2598,7 +_,7 @@
+         final net.minecraft.core.Registry<net.minecraft.world.level.block.Block> blockRegistry = CraftRegistry.getMinecraftRegistry().lookupOrThrow(net.minecraft.core.registries.Registries.BLOCK);
+         for (final com.destroystokyo.paper.Namespaced namespaced : namespaceds) {
+             if (namespaced instanceof final org.bukkit.NamespacedKey key) {
+-                predicates.add(net.minecraft.advancements.predicates.BlockPredicate.Builder.block().of(blockRegistry, CraftBlockType.bukkitToMinecraft(requireNonNull(org.bukkit.Registry.MATERIAL.get(key)))).build());
++                predicates.add(net.minecraft.advancements.predicates.BlockPredicate.Builder.block().of(blockRegistry, CraftBlockType.bukkitToMinecraftNew(requireNonNull(org.bukkit.Registry.BLOCK.get(key)))).build());
+             } else if (namespaced instanceof final com.destroystokyo.paper.NamespacedTag tag) {
+                 predicates.add(net.minecraft.advancements.predicates.BlockPredicate.Builder.block().of(blockRegistry, net.minecraft.tags.TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(tag.getNamespace(), tag.getKey()))).build());
+             }

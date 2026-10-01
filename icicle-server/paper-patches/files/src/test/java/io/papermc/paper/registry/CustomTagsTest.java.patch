@@ -1,0 +1,31 @@
+--- a/src/test/java/io/papermc/paper/registry/CustomTagsTest.java
++++ b/src/test/java/io/papermc/paper/registry/CustomTagsTest.java
+@@ -1,6 +_,7 @@
+ package io.papermc.paper.registry;
+ 
+-import com.destroystokyo.paper.MaterialTags;
++import com.destroystokyo.paper.BlockTags;
++import com.destroystokyo.paper.ItemTags;
+ import io.papermc.paper.tag.BaseTag;
+ import io.papermc.paper.tag.EntityTags;
+ import java.lang.reflect.Field;
+@@ -20,7 +_,8 @@
+ 
+     @BeforeAll
+     public static void testInitialize() {
+-        assertDoesNotThrow(() -> Class.forName(MaterialTags.class.getName()));
++        assertDoesNotThrow(() -> Class.forName(ItemTags.class.getName()));
++        assertDoesNotThrow(() -> Class.forName(BlockTags.class.getName()));
+         assertDoesNotThrow(() -> Class.forName(EntityTags.class.getName()));
+     }
+ 
+@@ -32,7 +_,8 @@
+ 
+     public static Set<BaseTag<?, ?>> tags() {
+         Set<BaseTag<?, ?>> tags = new HashSet<>();
+-        collectTags(tags, MaterialTags.class);
++        collectTags(tags, ItemTags.class);
++        collectTags(tags, BlockTags.class);
+         collectTags(tags, EntityTags.class);
+         return tags;
+     }

@@ -1,0 +1,34 @@
+--- a/src/main/java/org/bukkit/craftbukkit/CraftEffect.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftEffect.java
+@@ -9,8 +_,8 @@
+ import org.bukkit.Color;
+ import org.bukkit.Effect;
+ import org.bukkit.JukeboxSong;
+-import org.bukkit.Material;
+ import org.bukkit.block.BlockFace;
++import org.bukkit.block.BlockType;
+ import org.bukkit.craftbukkit.block.CraftBlockType;
+ import org.bukkit.inventory.ItemType;
+ 
+@@ -40,8 +_,7 @@
+                 break;
+             case RECORD_PLAY:
+                 JukeboxSong song;
+-                if (data instanceof Material material) {
+-                    ItemType item = material.asItemType();
++                if (data instanceof ItemType item) {
+                     Preconditions.checkArgument(item != null && item.hasDefaultData(DataComponentTypes.JUKEBOX_PLAYABLE), "Material %s is not a music disc", data);
+                     song = item.getDefaultData(DataComponentTypes.JUKEBOX_PLAYABLE).jukeboxSong();
+                 } else {
+@@ -87,9 +_,8 @@
+                 }
+                 break;
+             case STEP_SOUND:
+-                if (data instanceof Material) {
+-                    Preconditions.checkArgument(((Material) data).isBlock(), "Material %s is not a block!", data);
+-                    dataValue = Block.getId(CraftBlockType.bukkitToMinecraft((Material) data).defaultBlockState());
++                if (data instanceof BlockType blockType) {
++                    dataValue = Block.getId(CraftBlockType.bukkitToMinecraftNew(blockType).defaultBlockState());
+                     break;
+                 }
+                 // use the blockdata otherwise

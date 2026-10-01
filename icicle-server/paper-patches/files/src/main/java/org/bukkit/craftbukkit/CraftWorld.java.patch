@@ -1,0 +1,57 @@
+--- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
+@@ -149,7 +_,6 @@
+ import org.bukkit.generator.structure.Structure;
+ import org.bukkit.generator.structure.StructureType;
+ import org.bukkit.inventory.ItemStack;
+-import org.bukkit.material.MaterialData;
+ import org.bukkit.metadata.MetadataValue;
+ import org.bukkit.persistence.PersistentDataContainer;
+ import org.bukkit.plugin.Plugin;
+@@ -1291,27 +_,6 @@
+     }
+ 
+     @Override
+-    public FallingBlock spawnFallingBlock(Location location, MaterialData data) throws IllegalArgumentException {
+-        Preconditions.checkArgument(data != null, "MaterialData cannot be null");
+-        return this.spawnFallingBlock(location, data.getItemType(), data.getData());
+-    }
+-
+-    @Override
+-    public FallingBlock spawnFallingBlock(Location location, org.bukkit.Material material, byte data) throws IllegalArgumentException {
+-        Preconditions.checkArgument(location != null, "Location cannot be null");
+-        Preconditions.checkArgument(material != null, "Material cannot be null");
+-        Preconditions.checkArgument(material.isBlock(), "Material.%s must be a block", material);
+-
+-        // Paper start - restore API behavior for spawning falling blocks
+-        FallingBlockEntity entity = new FallingBlockEntity(this.world, location.getX(), location.getY(), location.getZ(), CraftBlockType.bukkitToMinecraft(material).defaultBlockState()); // Paper
+-        entity.time = 1;
+-
+-        this.world.addFreshEntity(entity, SpawnReason.CUSTOM);
+-        // Paper end - restore API behavior for spawning falling blocks
+-        return (FallingBlock) entity.getBukkitEntity();
+-    }
+-
+-    @Override
+     public FallingBlock spawnFallingBlock(Location location, BlockData data) throws IllegalArgumentException {
+         Preconditions.checkArgument(location != null, "Location cannot be null");
+         Preconditions.checkArgument(data != null, "BlockData cannot be null");
+@@ -1747,7 +_,6 @@
+ 
+     @Override
+     public <T> void spawnParticle(Particle particle, List<Player> receivers, Player sender, double x, double y, double z, int count, double offsetX, double offsetY, double offsetZ, double speedX, double speedY, double speedZ, T data, boolean force, Particle.RandomizationType randomizationType) {
+-        data = CraftParticle.convertLegacy(data);
+         if (data != null) {
+             Preconditions.checkArgument(particle.getDataType().isInstance(data), "data (%s) should be %s", data.getClass(), particle.getDataType());
+         }
+@@ -1857,8 +_,8 @@
+     }
+ 
+     @Override
+-    public Collection<org.bukkit.Material> getInfiniburn() {
+-        return com.google.common.collect.Sets.newHashSet(com.google.common.collect.Iterators.transform(this.getHandle().dimensionType().infiniburn().iterator(), blockHolder -> CraftBlockType.minecraftToBukkit(blockHolder.value())));
++    public Collection<org.bukkit.block.BlockType> getInfiniburn() {
++        return com.google.common.collect.Sets.newHashSet(com.google.common.collect.Iterators.transform(this.getHandle().dimensionType().infiniburn().iterator(), blockHolder -> CraftBlockType.minecraftToBukkitNew(blockHolder.value())));
+     }
+ 
+     @Override
