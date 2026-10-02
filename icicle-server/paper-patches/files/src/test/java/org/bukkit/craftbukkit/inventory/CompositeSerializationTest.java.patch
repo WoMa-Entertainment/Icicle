@@ -50,3 +50,8 @@
          ItemMeta meta9 = item9.getItemMeta();
          meta9.setDisplayName(ChatColor.RED + "DisplayName");
          meta9.setLocalizedName(ChatColor.AQUA + "LocalizedName");
+@@ -70,4 +_,3 @@
+         }
+     }
+ }
+-

@@ -1,9 +1,0 @@
---- a/src/main/java/org/bukkit/material/PressureSensor.java
-+++ /dev/null
-@@ -1,6 +_,0 @@
--package org.bukkit.material;
--
--@Deprecated(forRemoval = true)
--public interface PressureSensor {
--    public boolean isPressed();
--}
