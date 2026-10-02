@@ -1,0 +1,22 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: WinPlay02 <25015295+WinPlay02@users.noreply.github.com>
+Date: Fri, 2 Oct 2026 01:54:25 +0200
+Subject: [PATCH] Change branding
+
+
+diff --git a/src/main/java/io/papermc/paper/ServerBuildInfo.java b/src/main/java/io/papermc/paper/ServerBuildInfo.java
+index 4e099b584c3435ba1ebce492011d35ae1ac0cdf8..b4f982bac30faa05e2a5013cb6e9a94cacf5580a 100644
+--- a/src/main/java/io/papermc/paper/ServerBuildInfo.java
++++ b/src/main/java/io/papermc/paper/ServerBuildInfo.java
+@@ -17,6 +17,11 @@ public interface ServerBuildInfo {
+      */
+     Key BRAND_PAPER_ID = Key.key("papermc", "paper");
+ 
++    /**
++     * The brand id for Icicle.
++     */
++    Key BRAND_ICICLE_ID = Key.key("iciclemc", "icicle");
++
+     /**
+      * Gets the {@code ServerBuildInfo}.
+      *
