@@ -17,10 +17,10 @@
  import org.bukkit.block.structure.StructureRotation;
  import org.bukkit.inventory.ItemStack;
 +import org.bukkit.inventory.ItemType;
- import org.jetbrains.annotations.ApiStatus;
  import org.jetbrains.annotations.NotNull;
  import org.jetbrains.annotations.Nullable;
-@@ -25,7 +_,7 @@
+ 
+@@ -24,7 +_,7 @@
       * @return the material
       */
      @NotNull
@@ -29,7 +29,7 @@
  
      /**
       * Gets a string, which when passed into a method such as
-@@ -234,13 +_,13 @@
+@@ -233,13 +_,13 @@
       *
       * For example:
       * <pre>

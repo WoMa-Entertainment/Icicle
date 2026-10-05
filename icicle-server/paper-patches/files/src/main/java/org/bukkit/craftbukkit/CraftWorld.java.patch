@@ -8,7 +8,7 @@
  import org.bukkit.metadata.MetadataValue;
  import org.bukkit.persistence.PersistentDataContainer;
  import org.bukkit.plugin.Plugin;
-@@ -1291,27 +_,6 @@
+@@ -1290,27 +_,6 @@
      }
  
      @Override
@@ -36,7 +36,7 @@
      public FallingBlock spawnFallingBlock(Location location, BlockData data) throws IllegalArgumentException {
          Preconditions.checkArgument(location != null, "Location cannot be null");
          Preconditions.checkArgument(data != null, "BlockData cannot be null");
-@@ -1747,7 +_,6 @@
+@@ -1746,7 +_,6 @@
  
      @Override
      public <T> void spawnParticle(Particle particle, List<Player> receivers, Player sender, double x, double y, double z, int count, double offsetX, double offsetY, double offsetZ, double speedX, double speedY, double speedZ, T data, boolean force, Particle.RandomizationType randomizationType) {
@@ -44,7 +44,7 @@
          if (data != null) {
              Preconditions.checkArgument(particle.getDataType().isInstance(data), "data (%s) should be %s", data.getClass(), particle.getDataType());
          }
-@@ -1857,8 +_,8 @@
+@@ -1856,8 +_,8 @@
      }
  
      @Override
