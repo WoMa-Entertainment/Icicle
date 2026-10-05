@@ -1,0 +1,10 @@
+--- a/src/test/java/org/bukkit/configuration/ConfigurationSectionTest.java
++++ b/src/test/java/org/bukkit/configuration/ConfigurationSectionTest.java
+@@ -7,7 +_,6 @@
+ import java.util.LinkedHashMap;
+ import java.util.List;
+ import java.util.Map;
+-import org.bukkit.Material;
+ import org.bukkit.configuration.serialization.ConfigurationSerializable;
+ import org.bukkit.inventory.ItemStack;
+ import org.bukkit.util.Vector;
