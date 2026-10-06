@@ -68,7 +68,7 @@
 +     * Covers both cobblestone wall variants.
 +     */
 +    public static final BlockSetTag COBBLESTONE_WALLS = new BlockSetTag(keyFor("cobblestone_walls"))
-+        .endsWith("COBBLESTONE_WALL")
++        .endsWith("cobblestone_wall")
 +        .ensureSize("COBBLESTONE_WALLS", 2).lock();
 +
 +    /**
@@ -121,7 +121,7 @@
 +     * Covers the non-colored glass and 16 stained glasses (not panes).
 +     */
 +    public static final BlockSetTag GLASS = new BlockSetTag(keyFor("glass"))
-+        .endsWith("_GLASS")
++        .endsWith("_glass")
 +        .add(BlockType.GLASS)
 +        .ensureSize("GLASS", 18).lock();
 +
@@ -129,7 +129,7 @@
 +     * Covers the non-colored glass panes and stained glass panes (panes only).
 +     */
 +    public static final BlockSetTag GLASS_PANES = new BlockSetTag(keyFor("glass_panes"))
-+        .endsWith("GLASS_PANE")
++        .endsWith("glass_pane")
 +        .ensureSize("GLASS_PANES", 17).lock();
 +
 +    /**
@@ -144,30 +144,30 @@
 +     * Covers the colors of stained terracotta.
 +     */
 +    public static final BlockSetTag STAINED_TERRACOTTA = new BlockSetTag(keyFor("stained_terracotta"))
-+        .endsWith("TERRACOTTA")
++        .endsWith("terracotta")
 +        .not(BlockType.TERRACOTTA)
-+        .notEndsWith("GLAZED_TERRACOTTA")
++        .notEndsWith("glazed_terracotta")
 +        .ensureSize("STAINED_TERRACOTTA", 16).lock();
 +
 +    /**
 +     * Covers terracotta along with the stained variants.
 +     */
 +    public static final BlockSetTag TERRACOTTA = new BlockSetTag(keyFor("terracotta"))
-+        .endsWith("TERRACOTTA")
++        .endsWith("terracotta")
 +        .ensureSize("TERRACOTTA", 33).lock();
 +
 +    /**
 +     * Covers the variants of infested blocks.
 +     */
 +    public static final BlockSetTag INFESTED_BLOCKS = new BlockSetTag(keyFor("infested_blocks"))
-+        .startsWith("INFESTED_")
++        .startsWith("infested_")
 +        .ensureSize("INFESTED_BLOCKS", 7).lock();
 +
 +    /**
 +     * Covers the variants of mushroom blocks.
 +     */
 +    public static final BlockSetTag MUSHROOM_BLOCKS = new BlockSetTag(keyFor("mushroom_blocks"))
-+        .endsWith("MUSHROOM_BLOCK")
++        .endsWith("mushroom_block")
 +        .add(BlockType.MUSHROOM_STEM)
 +        .ensureSize("MUSHROOM_BLOCKS", 3).lock();
 +
@@ -186,7 +186,7 @@
 +     * Covers all piston typed items and blocks including the piston head and moving piston.
 +     */
 +    public static final BlockSetTag PISTONS = new BlockSetTag(keyFor("pistons"))
-+        .contains("PISTON")
++        .contains("piston")
 +        .ensureSize("PISTONS", 4).lock();
 +
 +    /**
@@ -231,7 +231,7 @@
 +     * Covers the variants of red sandstone blocks.
 +     */
 +    public static final BlockSetTag RED_SANDSTONES = new BlockSetTag(keyFor("red_sandstones"))
-+        .endsWith("RED_SANDSTONE")
++        .endsWith("red_sandstone")
 +        .ensureSize("RED_SANDSTONES", 4).lock();
 +
 +    /**
@@ -244,7 +244,7 @@
 +     * Covers sponge and wet sponge.
 +     */
 +    public static final BlockSetTag SPONGES = new BlockSetTag(keyFor("sponges"))
-+        .endsWith("SPONGE")
++        .endsWith("sponge")
 +        .ensureSize("SPONGES", 2).lock();
 +
 +    /**
@@ -259,8 +259,8 @@
 +     * Covers zombie, creeper, skeleton, dragon, and player heads.
 +     */
 +    public static final BlockSetTag SKULLS = new BlockSetTag(keyFor("skulls"))
-+        .endsWith("_HEAD")
-+        .endsWith("_SKULL")
++        .endsWith("_head")
++        .endsWith("_skull")
 +        .not(BlockType.PISTON_HEAD)
 +        .ensureSize("SKULLS", 14).lock();
 +
@@ -268,14 +268,14 @@
 +     * Covers all colors of stained glass.
 +     */
 +    public static final BlockSetTag STAINED_GLASS = new BlockSetTag(keyFor("stained_glass"))
-+        .endsWith("_STAINED_GLASS")
++        .endsWith("_stained_glass")
 +        .ensureSize("STAINED_GLASS", 16).lock();
 +
 +    /**
 +     * Covers all colors of stained glass panes.
 +     */
 +    public static final BlockSetTag STAINED_GLASS_PANES = new BlockSetTag(keyFor("stained_glass_panes"))
-+        .endsWith("STAINED_GLASS_PANE")
++        .endsWith("stained_glass_pane")
 +        .ensureSize("STAINED_GLASS_PANES", 16).lock();
 +
 +    /**
@@ -322,7 +322,7 @@
 +     * Covers the variants of purpur.
 +     */
 +    public static final BlockSetTag PURPUR = new BlockSetTag(keyFor("purpur"))
-+        .startsWith("PURPUR_")
++        .startsWith("purpur_")
 +        .ensureSize("PURPUR", 4).lock();
 +
 +    /**
@@ -399,29 +399,29 @@
 +     * Covers the variants of coral.
 +     */
 +    public static final BlockSetTag CORAL = new BlockSetTag(keyFor("coral"))
-+        .endsWith("_CORAL")
++        .endsWith("_coral")
 +        .ensureSize("CORAL", 10).lock();
 +
 +    /**
 +     * Covers the variants of coral fans.
 +     */
 +    public static final BlockSetTag CORAL_FANS = new BlockSetTag(keyFor("coral_fans"))
-+        .endsWith("_CORAL_FAN")
-+        .endsWith("_CORAL_WALL_FAN")
++        .endsWith("_coral_fan")
++        .endsWith("_coral_wall_fan")
 +        .ensureSize("CORAL_FANS", 20).lock();
 +
 +    /**
 +     * Covers the variants of coral blocks.
 +     */
 +    public static final BlockSetTag CORAL_BLOCKS = new BlockSetTag(keyFor("coral_blocks"))
-+        .endsWith("_CORAL_BLOCK")
++        .endsWith("_coral_block")
 +        .ensureSize("CORAL_BLOCKS", 10).lock();
 +
 +    /**
 +     * Covers all command block types.
 +     */
 +    public static final BlockSetTag COMMAND_BLOCKS = new BlockSetTag(keyFor("command_blocks"))
-+        .endsWith("COMMAND_BLOCK")
++        .endsWith("command_block")
 +        .ensureSize("COMMAND_BLOCKS", 3).lock();
 +
 +    /**
@@ -441,26 +441,26 @@
 +     * Covers all oxidized copper blocks.
 +     */
 +    public static final BlockSetTag OXIDIZED_COPPER_BLOCKS = new BlockSetTag(keyFor("oxidized_copper_blocks"))
-+        .startsWith("OXIDIZED_").startsWith("WAXED_OXIDIZED_").ensureSize("OXIDIZED_COPPER_BLOCKS", 30).lock();
++        .startsWith("oxidized_").startsWith("waxed_oxidized_").ensureSize("OXIDIZED_COPPER_BLOCKS", 30).lock();
 +
 +    /**
 +     * Covers all weathered copper blocks.
 +     */
 +    public static final BlockSetTag WEATHERED_COPPER_BLOCKS = new BlockSetTag(keyFor("weathered_copper_blocks"))
-+        .startsWith("WEATHERED_").startsWith("WAXED_WEATHERED_").ensureSize("WEATHERED_COPPER_BLOCKS", 30).lock();
++        .startsWith("weathered_").startsWith("waxed_weathered_").ensureSize("WEATHERED_COPPER_BLOCKS", 30).lock();
 +
 +    /**
 +     * Covers all exposed copper blocks.
 +     */
 +    public static final BlockSetTag EXPOSED_COPPER_BLOCKS = new BlockSetTag(keyFor("exposed_copper_blocks"))
-+        .startsWith("EXPOSED_").startsWith("WAXED_EXPOSED_").ensureSize("EXPOSED_COPPER_BLOCKS", 30).lock();
++        .startsWith("exposed_").startsWith("waxed_exposed_").ensureSize("EXPOSED_COPPER_BLOCKS", 30).lock();
 +
 +    /**
 +     * Covers all un-weathered copper blocks.
 +     */
 +    public static final BlockSetTag UNAFFECTED_COPPER_BLOCKS = new BlockSetTag(keyFor("unaffected_copper_blocks"))
-+        .startsWith("CUT_COPPER").startsWith("WAXED_CUT_COPPER")
-+        .startsWith("WAXED_COPPER_").startsWith("COPPER_")
++        .startsWith("cut_copper").startsWith("waxed_cut_copper")
++        .startsWith("waxed_copper_").startsWith("copper_")
 +        .add(BlockType.CHISELED_COPPER, BlockType.WAXED_CHISELED_COPPER)
 +        .not(BlockType.COPPER_ORE)
 +        .ensureSize("UNAFFECTED_COPPER_BLOCKS", 30).lock();
@@ -471,7 +471,7 @@
 +     * Combine with other copper-related tags to filter is-waxed or not.
 +     */
 +    public static final BlockSetTag WAXED_COPPER_BLOCKS = new BlockSetTag(keyFor("waxed_copper_blocks"))
-+        .add(m -> m.key().value().startsWith("WAXED_") && m.key().value().contains("COPPER")).ensureSize("WAXED_COPPER_BLOCKS", 56).lock();
++        .add(m -> m.key().value().startsWith("waxed_") && m.key().value().contains("copper")).ensureSize("WAXED_COPPER_BLOCKS", 56).lock();
 +
 +    /**
 +     * Covers all un-waxed copper blocks.
@@ -479,8 +479,8 @@
 +     * Combine with other copper-related tags to filter is-un-waxed or not.
 +     */
 +    public static final BlockSetTag UNWAXED_COPPER_BLOCKS = new BlockSetTag(keyFor("unwaxed_copper_blocks"))
-+        .startsWith("EXPOSED_").startsWith("WEATHERED_").startsWith("OXIDIZED_")
-+        .startsWith("CUT_COPPER")
++        .startsWith("exposed_").startsWith("weathered_").startsWith("oxidized_")
++        .startsWith("cut_copper")
 +        .add(BlockType.COPPER_BLOCK, BlockType.CHISELED_COPPER, BlockType.COPPER_DOOR, BlockType.COPPER_TRAPDOOR, BlockType.COPPER_GRATE, BlockType.COPPER_BULB)
 +        .add(BlockType.COPPER_BARS, BlockType.COPPER_TORCH, BlockType.COPPER_CHEST, BlockType.COPPER_CHAIN, BlockType.COPPER_WALL_TORCH, BlockType.COPPER_LANTERN, BlockType.COPPER_GOLEM_STATUE)
 +        .ensureSize("UNWAXED_COPPER_BLOCKS", 61).lock();
@@ -495,10 +495,10 @@
 +     * Covers all weathering/waxed states of the plain copper block.
 +     */
 +    public static final BlockSetTag FULL_COPPER_BLOCKS = new BlockSetTag(keyFor("full_copper_blocks"))
-+        .endsWith("OXIDIZED_COPPER")
-+        .endsWith("WEATHERED_COPPER")
-+        .endsWith("EXPOSED_COPPER")
-+        .endsWith("COPPER_BLOCK")
++        .endsWith("oxidized_copper")
++        .endsWith("weathered_copper")
++        .endsWith("exposed_copper")
++        .endsWith("copper_block")
 +        .not(BlockType.RAW_COPPER_BLOCK)
 +        .ensureSize("FULL_COPPER_BLOCKS", 8).lock();
 +
@@ -506,17 +506,17 @@
 +     * Covers all weathering/waxed states of the cut copper block.
 +     */
 +    public static final BlockSetTag CUT_COPPER_BLOCKS = new BlockSetTag(keyFor("cut_copper_blocks"))
-+        .endsWith("CUT_COPPER").ensureSize("CUT_COPPER_BLOCKS", 8).lock();
++        .endsWith("cut_copper").ensureSize("CUT_COPPER_BLOCKS", 8).lock();
 +
 +    /**
 +     * Covers all weathering/waxed states of the cut copper stairs.
 +     */
 +    public static final BlockSetTag CUT_COPPER_STAIRS = new BlockSetTag(keyFor("cut_copper_stairs"))
-+        .endsWith("CUT_COPPER_STAIRS").ensureSize("CUT_COPPER_STAIRS", 8).lock();
++        .endsWith("cut_copper_stairs").ensureSize("CUT_COPPER_STAIRS", 8).lock();
 +
 +    /**
 +     * Covers all weathering/waxed states of the cut copper slab.
 +     */
 +    public static final BlockSetTag CUT_COPPER_SLABS = new BlockSetTag(keyFor("cut_copper_slabs"))
-+        .endsWith("CUT_COPPER_SLAB").ensureSize("CUT_COPPER_SLABS", 8).lock();
++        .endsWith("cut_copper_slab").ensureSize("CUT_COPPER_SLABS", 8).lock();
 +}

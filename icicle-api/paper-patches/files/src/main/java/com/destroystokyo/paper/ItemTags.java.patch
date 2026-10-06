@@ -1,6 +1,6 @@
 --- /dev/null
 +++ b/src/main/java/com/destroystokyo/paper/ItemTags.java
-@@ -1,0 +_,746 @@
+@@ -1,0 +_,745 @@
 +/*
 + * Copyright (c) 2018 Daniel Ennis (Aikar) MIT License
 + *
@@ -74,7 +74,7 @@
 +     * Covers all bucket items.
 +     */
 +    public static final ItemSetTag BUCKETS = new ItemSetTag(keyFor("buckets"))
-+        .endsWith("BUCKET")
++        .endsWith("bucket")
 +        .ensureSize("BUCKETS", 12).lock();
 +
 +    /**
@@ -89,7 +89,7 @@
 +     * Covers both cobblestone wall variants.
 +     */
 +    public static final ItemSetTag COBBLESTONE_WALLS = new ItemSetTag(keyFor("cobblestone_walls"))
-+        .endsWith("COBBLESTONE_WALL")
++        .endsWith("cobblestone_wall")
 +        .ensureSize("COBBLESTONE_WALLS", 2).lock();
 +
 +    /**
@@ -162,7 +162,7 @@
 +     * Covers the non-colored glass and 16 stained glasses (not panes).
 +     */
 +    public static final ItemSetTag GLASS = new ItemSetTag(keyFor("glass"))
-+        .endsWith("_GLASS")
++        .endsWith("_glass")
 +        .add(ItemType.GLASS)
 +        .ensureSize("GLASS", 18).lock();
 +
@@ -170,7 +170,7 @@
 +     * Covers the non-colored glass panes and stained glass panes (panes only).
 +     */
 +    public static final ItemSetTag GLASS_PANES = new ItemSetTag(keyFor("glass_panes"))
-+        .endsWith("GLASS_PANE")
++        .endsWith("glass_pane")
 +        .ensureSize("GLASS_PANES", 17).lock();
 +
 +    /**
@@ -185,44 +185,44 @@
 +     * Covers the colors of stained terracotta.
 +     */
 +    public static final ItemSetTag STAINED_TERRACOTTA = new ItemSetTag(keyFor("stained_terracotta"))
-+        .endsWith("TERRACOTTA")
++        .endsWith("terracotta")
 +        .not(ItemType.TERRACOTTA)
-+        .notEndsWith("GLAZED_TERRACOTTA")
++        .notEndsWith("glazed_terracotta")
 +        .ensureSize("STAINED_TERRACOTTA", 16).lock();
 +
 +    /**
 +     * Covers terracotta along with the stained variants.
 +     */
 +    public static final ItemSetTag TERRACOTTA = new ItemSetTag(keyFor("terracotta"))
-+        .endsWith("TERRACOTTA")
++        .endsWith("terracotta")
 +        .ensureSize("TERRACOTTA", 33).lock();
 +
 +    /**
 +     * Covers both golden apples.
 +     */
 +    public static final ItemSetTag GOLDEN_APPLES = new ItemSetTag(keyFor("golden_apples"))
-+        .endsWith("GOLDEN_APPLE")
++        .endsWith("golden_apple")
 +        .ensureSize("GOLDEN_APPLES", 2).lock();
 +
 +    /**
 +     * Covers the variants of horse armor.
 +     */
 +    public static final ItemSetTag HORSE_ARMORS = new ItemSetTag(keyFor("horse_armors"))
-+        .endsWith("_HORSE_ARMOR")
++        .endsWith("_horse_armor")
 +        .ensureSize("HORSE_ARMORS", 6).lock();
 +
 +    /**
 +     * Covers the variants of infested blocks.
 +     */
 +    public static final ItemSetTag INFESTED_BLOCKS = new ItemSetTag(keyFor("infested_blocks"))
-+        .startsWith("INFESTED_")
++        .startsWith("infested_")
 +        .ensureSize("INFESTED_BLOCKS", 7).lock();
 +
 +    /**
 +     * Covers the variants of mushroom blocks.
 +     */
 +    public static final ItemSetTag MUSHROOM_BLOCKS = new ItemSetTag(keyFor("mushroom_blocks"))
-+        .endsWith("MUSHROOM_BLOCK")
++        .endsWith("mushroom_block")
 +        .add(ItemType.MUSHROOM_STEM)
 +        .ensureSize("MUSHROOM_BLOCKS", 3).lock();
 +
@@ -238,7 +238,7 @@
 +     * Covers all music disc items.
 +     */
 +    public static final ItemSetTag MUSIC_DISCS = new ItemSetTag(keyFor("music_discs"))
-+        .startsWith("MUSIC_DISC_").lock();
++        .startsWith("music_disc_").lock();
 +
 +    /**
 +     * Covers all ores.
@@ -255,7 +255,7 @@
 +     * Covers all potato items.
 +     */
 +    public static final ItemSetTag POTATOES = new ItemSetTag(keyFor("potatoes"))
-+        .endsWith("POTATO")
++        .endsWith("potato")
 +        .ensureSize("POTATOES", 3).lock();
 +
 +    /**
@@ -298,7 +298,7 @@
 +     * Covers the variants of red sandstone blocks.
 +     */
 +    public static final ItemSetTag RED_SANDSTONES = new ItemSetTag(keyFor("red_sandstones"))
-+        .endsWith("RED_SANDSTONE")
++        .endsWith("red_sandstone")
 +        .ensureSize("RED_SANDSTONES", 4).lock();
 +
 +    /**
@@ -311,7 +311,7 @@
 +     * Covers sponge and wet sponge.
 +     */
 +    public static final ItemSetTag SPONGES = new ItemSetTag(keyFor("sponges"))
-+        .endsWith("SPONGE")
++        .endsWith("sponge")
 +        .ensureSize("SPONGES", 2).lock();
 +
 +    /**
@@ -326,29 +326,29 @@
 +     * Covers zombie, creeper, skeleton, dragon, and player heads.
 +     */
 +    public static final ItemSetTag SKULLS = new ItemSetTag(keyFor("skulls"))
-+        .endsWith("_HEAD")
-+        .endsWith("_SKULL")
-+        .ensureSize("SKULLS", 14).lock();
++        .endsWith("_head")
++        .endsWith("_skull")
++        .ensureSize("SKULLS", 7).lock();
 +
 +    /**
 +     * Covers all spawn egg items.
 +     */
 +    public static final ItemSetTag SPAWN_EGGS = new ItemSetTag(keyFor("spawn_eggs"))
-+        .endsWith("_SPAWN_EGG")
++        .endsWith("_spawn_egg")
 +        .ensureSize("SPAWN_EGGS", 88).lock();
 +
 +    /**
 +     * Covers all colors of stained glass.
 +     */
 +    public static final ItemSetTag STAINED_GLASS = new ItemSetTag(keyFor("stained_glass"))
-+        .endsWith("_STAINED_GLASS")
++        .endsWith("_stained_glass")
 +        .ensureSize("STAINED_GLASS", 16).lock();
 +
 +    /**
 +     * Covers all colors of stained glass panes.
 +     */
 +    public static final ItemSetTag STAINED_GLASS_PANES = new ItemSetTag(keyFor("stained_glass_panes"))
-+        .endsWith("STAINED_GLASS_PANE")
++        .endsWith("stained_glass_pane")
 +        .ensureSize("STAINED_GLASS_PANES", 16).lock();
 +
 +    /**
@@ -395,7 +395,7 @@
 +     * Covers the variants of purpur.
 +     */
 +    public static final ItemSetTag PURPUR = new ItemSetTag(keyFor("purpur"))
-+        .startsWith("PURPUR_")
++        .startsWith("purpur_")
 +        .ensureSize("PURPUR", 4).lock();
 +
 +    /**
@@ -558,22 +558,21 @@
 +     * Covers the variants of coral.
 +     */
 +    public static final ItemSetTag CORAL = new ItemSetTag(keyFor("coral"))
-+        .endsWith("_CORAL")
++        .endsWith("_coral")
 +        .ensureSize("CORAL", 10).lock();
 +
 +    /**
 +     * Covers the variants of coral fans.
 +     */
 +    public static final ItemSetTag CORAL_FANS = new ItemSetTag(keyFor("coral_fans"))
-+        .endsWith("_CORAL_FAN")
-+        .endsWith("_CORAL_WALL_FAN")
-+        .ensureSize("CORAL_FANS", 20).lock();
++        .endsWith("_coral_fan")
++        .ensureSize("CORAL_FANS", 10).lock();
 +
 +    /**
 +     * Covers the variants of coral blocks.
 +     */
 +    public static final ItemSetTag CORAL_BLOCKS = new ItemSetTag(keyFor("coral_blocks"))
-+        .endsWith("_CORAL_BLOCK")
++        .endsWith("_coral_block")
 +        .ensureSize("CORAL_BLOCKS", 10).lock();
 +
 +    /**
@@ -594,14 +593,14 @@
 +     * Covers all command block types.
 +     */
 +    public static final ItemSetTag COMMAND_BLOCKS = new ItemSetTag(keyFor("command_blocks"))
-+        .endsWith("COMMAND_BLOCK")
++        .endsWith("command_block")
 +        .ensureSize("COMMAND_BLOCKS", 3).lock();
 +
 +    /**
 +     * Covers the variants of deepslate ores.
 +     */
 +    public static final ItemSetTag DEEPSLATE_ORES = new ItemSetTag(keyFor("deepslate_ores"))
-+        .add(material -> material.key().value().startsWith("DEEPSLATE_") && material.key().value().endsWith("_ORE"))
++        .add(material -> material.key().value().startsWith("deepslate_") && material.key().value().endsWith("_ore"))
 +        .ensureSize("DEEPSLATE_ORES", 8).lock();
 +
 +    /**
@@ -614,33 +613,33 @@
 +     * Covers all oxidized copper blocks.
 +     */
 +    public static final ItemSetTag OXIDIZED_COPPER_BLOCKS = new ItemSetTag(keyFor("oxidized_copper_blocks"))
-+        .startsWith("OXIDIZED_").startsWith("WAXED_OXIDIZED_").ensureSize("OXIDIZED_COPPER_BLOCKS", 30).lock();
++        .startsWith("oxidized_").startsWith("waxed_oxidized_").ensureSize("OXIDIZED_COPPER_BLOCKS", 30).lock();
 +
 +    /**
 +     * Covers all weathered copper blocks.
 +     */
 +    public static final ItemSetTag WEATHERED_COPPER_BLOCKS = new ItemSetTag(keyFor("weathered_copper_blocks"))
-+        .startsWith("WEATHERED_").startsWith("WAXED_WEATHERED_").ensureSize("WEATHERED_COPPER_BLOCKS", 30).lock();
++        .startsWith("weathered_").startsWith("waxed_weathered_").ensureSize("WEATHERED_COPPER_BLOCKS", 30).lock();
 +
 +    /**
 +     * Covers all exposed copper blocks.
 +     */
 +    public static final ItemSetTag EXPOSED_COPPER_BLOCKS = new ItemSetTag(keyFor("exposed_copper_blocks"))
-+        .startsWith("EXPOSED_").startsWith("WAXED_EXPOSED_").ensureSize("EXPOSED_COPPER_BLOCKS", 30).lock();
++        .startsWith("exposed_").startsWith("waxed_exposed_").ensureSize("EXPOSED_COPPER_BLOCKS", 30).lock();
 +
 +    /**
 +     * Covers all un-weathered copper blocks.
 +     */
 +    public static final ItemSetTag UNAFFECTED_COPPER_BLOCKS = new ItemSetTag(keyFor("unaffected_copper_blocks"))
-+        .startsWith("CUT_COPPER").startsWith("WAXED_CUT_COPPER")
-+        .startsWith("WAXED_COPPER_").startsWith("COPPER_")
++        .startsWith("cut_copper").startsWith("waxed_cut_copper")
++        .startsWith("waxed_copper_").startsWith("copper_")
 +        .add(ItemType.CHISELED_COPPER, ItemType.WAXED_CHISELED_COPPER)
 +        .not(ItemType.COPPER_INGOT, ItemType.COPPER_ORE, ItemType.COPPER_NUGGET)
 +        .not(ItemType.COPPER_HORSE_ARMOR, ItemType.COPPER_GOLEM_SPAWN_EGG)
 +        .not(ItemType.COPPER_HELMET, ItemType.COPPER_CHESTPLATE, ItemType.COPPER_LEGGINGS, ItemType.COPPER_BOOTS)
 +        .not(ItemType.COPPER_AXE, ItemType.COPPER_HOE, ItemType.COPPER_PICKAXE, ItemType.COPPER_SHOVEL, ItemType.COPPER_SWORD)
 +        .not(ItemType.COPPER_NAUTILUS_ARMOR, ItemType.COPPER_SPEAR)
-+        .ensureSize("UNAFFECTED_COPPER_BLOCKS", 30).lock();
++        .ensureSize("UNAFFECTED_COPPER_BLOCKS", 29).lock();
 +
 +    /**
 +     * Covers all waxed copper blocks.
@@ -648,7 +647,7 @@
 +     * Combine with other copper-related tags to filter is-waxed or not.
 +     */
 +    public static final ItemSetTag WAXED_COPPER_BLOCKS = new ItemSetTag(keyFor("waxed_copper_blocks"))
-+        .add(m -> m.key().value().startsWith("WAXED_") && m.key().value().contains("COPPER")).ensureSize("WAXED_COPPER_BLOCKS", 56).lock();
++        .add(m -> m.key().value().startsWith("waxed_") && m.key().value().contains("copper")).ensureSize("WAXED_COPPER_BLOCKS", 56).lock();
 +
 +    /**
 +     * Covers all un-waxed copper blocks.
@@ -656,8 +655,8 @@
 +     * Combine with other copper-related tags to filter is-un-waxed or not.
 +     */
 +    public static final ItemSetTag UNWAXED_COPPER_BLOCKS = new ItemSetTag(keyFor("unwaxed_copper_blocks"))
-+        .startsWith("EXPOSED_").startsWith("WEATHERED_").startsWith("OXIDIZED_")
-+        .startsWith("CUT_COPPER")
++        .startsWith("exposed_").startsWith("weathered_").startsWith("oxidized_")
++        .startsWith("cut_copper")
 +        .add(ItemType.COPPER_BLOCK, ItemType.CHISELED_COPPER, ItemType.COPPER_DOOR, ItemType.COPPER_TRAPDOOR, ItemType.COPPER_GRATE, ItemType.COPPER_BULB)
 +        .add(ItemType.COPPER_BARS, ItemType.COPPER_TORCH, ItemType.COPPER_CHEST, ItemType.COPPER_CHAIN, ItemType.COPPER_LANTERN, ItemType.COPPER_GOLEM_STATUE)
 +        .ensureSize("UNWAXED_COPPER_BLOCKS", 60).lock();
@@ -666,16 +665,16 @@
 +     * Covers all copper block variants.
 +     */
 +    public static final ItemSetTag COPPER_BLOCKS = new ItemSetTag(keyFor("copper_blocks"))
-+        .add(WAXED_COPPER_BLOCKS).add(UNWAXED_COPPER_BLOCKS).ensureSize("COPPER_BLOCKS", 117).lock();
++        .add(WAXED_COPPER_BLOCKS).add(UNWAXED_COPPER_BLOCKS).ensureSize("COPPER_BLOCKS", 116).lock();
 +
 +    /**
 +     * Covers all weathering/waxed states of the plain copper block.
 +     */
 +    public static final ItemSetTag FULL_COPPER_BLOCKS = new ItemSetTag(keyFor("full_copper_blocks"))
-+        .endsWith("OXIDIZED_COPPER")
-+        .endsWith("WEATHERED_COPPER")
-+        .endsWith("EXPOSED_COPPER")
-+        .endsWith("COPPER_BLOCK")
++        .endsWith("oxidized_copper")
++        .endsWith("weathered_copper")
++        .endsWith("exposed_copper")
++        .endsWith("copper_block")
 +        .not(ItemType.RAW_COPPER_BLOCK)
 +        .ensureSize("FULL_COPPER_BLOCKS", 8).lock();
 +
@@ -683,19 +682,19 @@
 +     * Covers all weathering/waxed states of the cut copper block.
 +     */
 +    public static final ItemSetTag CUT_COPPER_BLOCKS = new ItemSetTag(keyFor("cut_copper_blocks"))
-+        .endsWith("CUT_COPPER").ensureSize("CUT_COPPER_BLOCKS", 8).lock();
++        .endsWith("cut_copper").ensureSize("CUT_COPPER_BLOCKS", 8).lock();
 +
 +    /**
 +     * Covers all weathering/waxed states of the cut copper stairs.
 +     */
 +    public static final ItemSetTag CUT_COPPER_STAIRS = new ItemSetTag(keyFor("cut_copper_stairs"))
-+        .endsWith("CUT_COPPER_STAIRS").ensureSize("CUT_COPPER_STAIRS", 8).lock();
++        .endsWith("cut_copper_stairs").ensureSize("CUT_COPPER_STAIRS", 8).lock();
 +
 +    /**
 +     * Covers all weathering/waxed states of the cut copper slab.
 +     */
 +    public static final ItemSetTag CUT_COPPER_SLABS = new ItemSetTag(keyFor("cut_copper_slabs"))
-+        .endsWith("CUT_COPPER_SLAB").ensureSize("CUT_COPPER_SLABS", 8).lock();
++        .endsWith("cut_copper_slab").ensureSize("CUT_COPPER_SLABS", 8).lock();
 +
 +    /**
 +     * Covers all Wooden Tools.
