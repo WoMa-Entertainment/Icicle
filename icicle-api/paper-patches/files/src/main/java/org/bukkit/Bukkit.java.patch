@@ -8,7 +8,7 @@
  import org.bukkit.block.data.BlockData;
  import org.bukkit.boss.BarColor;
  import org.bukkit.boss.BarFlag;
-@@ -1262,7 +_,7 @@
+@@ -1278,7 +_,7 @@
       * @param world The world the crafting takes place in.
       * @param player The player to imitate the crafting event on.
       * @return the {@link ItemStack} resulting from the given crafting matrix, if no recipe is found
@@ -17,7 +17,7 @@
       */
      @NotNull
      public static ItemStack craftItem(@NotNull ItemStack @NotNull [] craftingMatrix, @NotNull World world, @NotNull Player player) {
-@@ -1285,7 +_,7 @@
+@@ -1301,7 +_,7 @@
       *                       Must not contain more than 9 items.
       * @param world The world the crafting takes place in.
       * @return the {@link ItemStack} resulting from the given crafting matrix, if no recipe is found
@@ -26,7 +26,7 @@
       */
      @NotNull
      public static ItemStack craftItem(@NotNull ItemStack @NotNull [] craftingMatrix, @NotNull World world) {
-@@ -2482,19 +_,19 @@
+@@ -2519,19 +_,19 @@
      }
  
      /**
@@ -49,7 +49,7 @@
       * all properties initialized to unspecified defaults.
       *
       * @param material the material
-@@ -2502,7 +_,7 @@
+@@ -2539,7 +_,7 @@
       * @return new data instance
       */
      @NotNull
@@ -58,7 +58,7 @@
          return server.createBlockData(material, consumer);
      }
  
-@@ -2520,7 +_,7 @@
+@@ -2557,7 +_,7 @@
      }
  
      /**
@@ -67,7 +67,7 @@
       * all properties initialized to unspecified defaults, except for those
       * provided in data.
       *
-@@ -2531,7 +_,7 @@
+@@ -2568,7 +_,7 @@
       */
      @NotNull
      @Contract("null, null -> fail")

@@ -1,6 +1,6 @@
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -16,6 +_,7 @@
+@@ -18,6 +_,7 @@
  import java.util.function.Predicate;
  import org.bukkit.block.Biome;
  import org.bukkit.block.Block;
@@ -8,7 +8,7 @@
  import org.bukkit.block.data.BlockData;
  import org.bukkit.boss.DragonBattle;
  import org.bukkit.entity.AbstractArrow;
-@@ -36,7 +_,6 @@
+@@ -38,7 +_,6 @@
  import org.bukkit.generator.structure.Structure;
  import org.bukkit.generator.structure.StructureType;
  import org.bukkit.inventory.ItemStack;
@@ -16,7 +16,7 @@
  import org.bukkit.metadata.Metadatable;
  import org.bukkit.persistence.PersistentDataHolder;
  import org.bukkit.plugin.Plugin;
-@@ -2528,25 +_,6 @@
+@@ -2582,25 +_,6 @@
  
      /**
       * Spawn a {@link FallingBlock} entity at the given {@link Location} of
@@ -42,7 +42,7 @@
       * the specified {@link BlockData}. The BlockData dictates what is falling.
       * When the FallingBlock hits the ground, it will place that block.
       *
-@@ -2562,26 +_,6 @@
+@@ -2616,26 +_,6 @@
      public FallingBlock spawnFallingBlock(@NotNull Location location, @NotNull BlockData data) throws IllegalArgumentException;
  
      /**
@@ -69,7 +69,7 @@
       * Plays an effect to all players within a default radius around a given
       * location.
       *
-@@ -4437,7 +_,7 @@
+@@ -4491,7 +_,7 @@
       * @return the materials that will forever stay lit by fire
       */
      @NotNull

@@ -1,6 +1,6 @@
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -85,12 +_,12 @@
+@@ -87,12 +_,12 @@
  import net.minecraft.world.phys.Vec3;
  import org.bukkit.Bukkit;
  import org.bukkit.Location;
@@ -14,7 +14,7 @@
  import org.bukkit.block.Sign;
  import org.bukkit.block.sign.Side;
  import org.bukkit.command.CommandSender;
-@@ -277,6 +_,7 @@
+@@ -280,6 +_,7 @@
  import org.bukkit.inventory.CraftingRecipe;
  import org.bukkit.inventory.EquipmentSlot;
  import org.bukkit.inventory.InventoryView;
@@ -22,7 +22,7 @@
  import org.bukkit.inventory.Recipe;
  import org.bukkit.inventory.meta.BookMeta;
  import org.bukkit.inventory.view.AnvilView;
-@@ -585,8 +_,8 @@
+@@ -588,8 +_,8 @@
  
      private static PlayerEvent getPlayerBucketEvent(boolean isFilling, Level level, net.minecraft.world.entity.player.Player player, BlockPos changed, BlockPos clicked, Direction clickedFace, ItemStack bucket, net.minecraft.world.item.Item item, InteractionHand hand) {
          Player cplayer = (Player) player.getBukkitEntity();
@@ -33,7 +33,7 @@
  
          Block block = CraftBlock.at(level, changed);
          Block clickedBlock = CraftBlock.at(level, clicked);
-@@ -960,7 +_,7 @@
+@@ -963,7 +_,7 @@
  
      private static final java.util.function.Function<org.bukkit.inventory.ItemStack, Entity.DefaultDrop> FROM_FUNCTION = stack -> {
          if (stack == null) return null;
@@ -42,7 +42,7 @@
      };
  
      public static boolean callEntityDeathEvent(ServerLevel level, net.minecraft.world.entity.LivingEntity victim, DamageSource damageSource) {
-@@ -1546,16 +_,13 @@
+@@ -1549,16 +_,13 @@
      public static BlockIgniteEvent callBlockIgniteEvent(Level level, BlockPos pos, BlockPos sourcePos) {
          Block igniter = CraftBlock.at(level, sourcePos);
          final IgniteCause cause;
@@ -66,7 +66,7 @@
          }
  
          BlockIgniteEvent event = new BlockIgniteEvent(CraftBlock.at(level, pos), cause, igniter);
-@@ -1746,9 +_,12 @@
+@@ -1803,9 +_,12 @@
          } else if (stat.getType() == Type.ENTITY) {
              EntityType entityType = CraftStatistic.getEntityTypeFromStatistic((net.minecraft.stats.Stat<net.minecraft.world.entity.EntityType<?>>) statistic);
              event = new PlayerStatisticIncrementEvent(player, stat, current, newValue, entityType);

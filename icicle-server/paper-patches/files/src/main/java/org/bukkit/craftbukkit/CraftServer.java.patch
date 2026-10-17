@@ -1,6 +1,6 @@
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -473,7 +_,6 @@
+@@ -451,7 +_,6 @@
          this.minimumAPI = ApiVersion.getOrCreateVersion(this.configuration.getString("settings.minimum-api"));
          this.loadIcon();
          this.loadCompatibilities();
@@ -8,7 +8,7 @@
  
          // Set map color cache
          if (this.configuration.getBoolean("settings.use-map-color-cache")) {
-@@ -973,7 +_,6 @@
+@@ -951,7 +_,6 @@
          this.console.autosavePeriod = this.configuration.getInt("ticks-per.autosave");
          this.loadIcon();
          this.loadCompatibilities();
@@ -16,7 +16,7 @@
  
          try {
              this.playerList.getIpBans().load();
-@@ -1484,9 +_,6 @@
+@@ -1465,9 +_,6 @@
              if (stack.getType() != result.getType()) {
                  continue;
              }
@@ -26,7 +26,7 @@
          }
          return results;
      }
-@@ -2503,14 +_,14 @@
+@@ -2501,14 +_,14 @@
      }
  
      @Override
@@ -43,7 +43,7 @@
          BlockData data = this.createBlockData(material);
  
          if (consumer != null) {
-@@ -2528,15 +_,9 @@
+@@ -2526,15 +_,9 @@
      }
  
      @Override
@@ -61,7 +61,7 @@
      }
  
      @Override
-@@ -2549,14 +_,14 @@
+@@ -2547,14 +_,14 @@
  
          switch (registry) {
              case org.bukkit.Tag.REGISTRY_BLOCKS -> {
@@ -78,7 +78,7 @@
                  TagKey<Item> itemTagKey = TagKey.create(Registries.ITEM, key);
                  if (BuiltInRegistries.ITEM.get(itemTagKey).isPresent()) {
                      return (org.bukkit.Tag<T>) new CraftItemTag(BuiltInRegistries.ITEM, itemTagKey);
-@@ -2604,12 +_,12 @@
+@@ -2602,12 +_,12 @@
          Preconditions.checkArgument(clazz != null, "Class clazz cannot be null");
          switch (registry) {
              case org.bukkit.Tag.REGISTRY_BLOCKS -> {

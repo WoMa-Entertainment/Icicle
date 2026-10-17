@@ -1,6 +1,6 @@
 --- a/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -3344,7 +_,7 @@
+@@ -3345,7 +_,7 @@
                                  ItemStack cursor = this.player.containerMenu.getCarried();
                                  action = InventoryAction.NOTHING;
                                  // Quick check for if we have any of the item

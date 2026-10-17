@@ -1,7 +1,7 @@
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -13,13 +_,13 @@
- import org.bukkit.Chunk; // Paper
+@@ -17,13 +_,13 @@
+ import org.bukkit.Chunk;
  import org.bukkit.EntityEffect;
  import org.bukkit.Location;
 -import org.bukkit.Material;
@@ -14,8 +14,8 @@
 +import org.bukkit.block.BlockType;
  import org.bukkit.block.PistonMoveReaction;
  import org.bukkit.command.CommandSender;
- import org.bukkit.event.entity.CreatureSpawnEvent;
-@@ -1177,7 +_,7 @@
+ import org.bukkit.damage.DamageSource;
+@@ -1232,7 +_,7 @@
       */
      @Deprecated(since = "1.21.5")
      default boolean isInBubbleColumn() {

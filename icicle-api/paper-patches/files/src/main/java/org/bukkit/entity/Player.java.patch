@@ -1,6 +1,6 @@
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -30,7 +_,6 @@
+@@ -31,7 +_,6 @@
  import org.bukkit.Input;
  import org.bukkit.Instrument;
  import org.bukkit.Location;
@@ -8,7 +8,7 @@
  import org.bukkit.NamespacedKey;
  import org.bukkit.Note;
  import org.bukkit.OfflinePlayer;
-@@ -47,6 +_,7 @@
+@@ -48,6 +_,7 @@
  import org.bukkit.ban.ProfileBanList;
  import org.bukkit.block.Block;
  import org.bukkit.block.BlockState;
@@ -16,7 +16,7 @@
  import org.bukkit.block.Sign;
  import org.bukkit.block.TileState;
  import org.bukkit.block.data.BlockData;
-@@ -952,18 +_,6 @@
+@@ -963,18 +_,6 @@
       * certain location. This will not actually change the world in any way.
       *
       * @param loc The location of the changed block
@@ -35,7 +35,7 @@
       * @param block The new block
       */
      public void sendBlockChange(Location loc, BlockData block);
-@@ -1111,7 +_,7 @@
+@@ -1122,7 +_,7 @@
       * a certain location. This will not actually change the world in any way.
       * This method will use a sign at the location's block or a faked sign
       * sent via
@@ -44,7 +44,7 @@
       * <p>
       * If the client does not have a sign at the given location it will
       * display an error message to the user.
-@@ -1122,7 +_,7 @@
+@@ -1133,7 +_,7 @@
       * @throws IllegalArgumentException if lines is non-null and has a length less than 4
       * @deprecated Use {@link #sendBlockUpdate(Location, TileState)} by creating a new virtual
       * {@link org.bukkit.block.Sign} block state via {@link BlockData#createBlockState()}
@@ -53,7 +53,7 @@
       */
      @Deprecated
      default void sendSignChange(Location loc, java.util.@Nullable List<? extends net.kyori.adventure.text.Component> lines) {
-@@ -1134,7 +_,7 @@
+@@ -1145,7 +_,7 @@
       * a certain location. This will not actually change the world in any way.
       * This method will use a sign at the location's block or a faked sign
       * sent via
@@ -62,7 +62,7 @@
       * <p>
       * If the client does not have a sign at the given location it will
       * display an error message to the user.
-@@ -1147,7 +_,7 @@
+@@ -1158,7 +_,7 @@
       * @throws IllegalArgumentException if lines is non-null and has a length less than 4
       * @deprecated Use {@link #sendBlockUpdate(Location, TileState)} by creating a new virtual
       * {@link org.bukkit.block.Sign} block state via {@link BlockData#createBlockState()}
@@ -71,7 +71,7 @@
       */
      @Deprecated
      default void sendSignChange(Location loc, java.util.@Nullable List<? extends net.kyori.adventure.text.Component> lines, DyeColor color) {
-@@ -1159,7 +_,7 @@
+@@ -1170,7 +_,7 @@
       * a certain location. This will not actually change the world in any way.
       * This method will use a sign at the location's block or a faked sign
       * sent via
@@ -80,7 +80,7 @@
       * <p>
       * If the client does not have a sign at the given location it will
       * display an error message to the user.
-@@ -1172,7 +_,7 @@
+@@ -1183,7 +_,7 @@
       * @throws IllegalArgumentException if lines is non-null and has a length less than 4
       * @deprecated Use {@link #sendBlockUpdate(Location, TileState)} by creating a new virtual
       * {@link org.bukkit.block.Sign} block state via {@link BlockData#createBlockState()}
@@ -89,7 +89,7 @@
       */
      @Deprecated
      default void sendSignChange(Location loc, java.util.@Nullable List<? extends net.kyori.adventure.text.Component> lines, boolean hasGlowingText) {
-@@ -1184,7 +_,7 @@
+@@ -1195,7 +_,7 @@
       * a certain location. This will not actually change the world in any way.
       * This method will use a sign at the location's block or a faked sign
       * sent via
@@ -98,7 +98,7 @@
       * <p>
       * If the client does not have a sign at the given location it will
       * display an error message to the user.
-@@ -1198,7 +_,7 @@
+@@ -1209,7 +_,7 @@
       * @throws IllegalArgumentException if lines is non-null and has a length less than 4
       * @deprecated Use {@link #sendBlockUpdate(Location, TileState)} by creating a new virtual
       * {@link org.bukkit.block.Sign} block state via {@link BlockData#createBlockState()}
@@ -107,7 +107,7 @@
       */
      @Deprecated
      void sendSignChange(Location loc, java.util.@Nullable List<? extends net.kyori.adventure.text.Component> lines, DyeColor color, boolean hasGlowingText);
-@@ -1223,7 +_,7 @@
+@@ -1234,7 +_,7 @@
       * @throws IllegalArgumentException if lines is non-null and has a length less than 4
       * @deprecated Use {@link #sendBlockUpdate(Location, TileState)} by creating a new virtual
       * {@link org.bukkit.block.Sign} block state via {@link BlockData#createBlockState()}
@@ -116,7 +116,7 @@
       */
      @Deprecated // Paper
      default void sendSignChange(Location loc, @Nullable String @Nullable [] lines) {
-@@ -1251,7 +_,7 @@
+@@ -1262,7 +_,7 @@
       * @throws IllegalArgumentException if lines is non-null and has a length less than 4
       * @deprecated Use {@link #sendBlockUpdate(Location, TileState)} by creating a new virtual
       * {@link org.bukkit.block.Sign} block state via {@link BlockData#createBlockState()}
@@ -125,7 +125,7 @@
       */
      @Deprecated // Paper
      default void sendSignChange(Location loc, @Nullable String @Nullable [] lines, DyeColor color) {
-@@ -1280,7 +_,7 @@
+@@ -1291,7 +_,7 @@
       * @throws IllegalArgumentException if lines is non-null and has a length less than 4
       * @deprecated Use {@link #sendBlockUpdate(Location, TileState)} by creating a new virtual
       * {@link org.bukkit.block.Sign} block state via {@link BlockData#createBlockState()}
