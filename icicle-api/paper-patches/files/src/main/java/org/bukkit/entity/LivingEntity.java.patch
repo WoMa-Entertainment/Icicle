@@ -1,6 +1,6 @@
 --- a/src/main/java/org/bukkit/entity/LivingEntity.java
 +++ b/src/main/java/org/bukkit/entity/LivingEntity.java
-@@ -10,12 +_,12 @@
+@@ -11,12 +_,12 @@
  import org.bukkit.Color;
  import org.bukkit.FluidCollisionMode;
  import org.bukkit.Location;
@@ -14,7 +14,7 @@
  import org.bukkit.damage.DamageSource;
  import org.bukkit.entity.memory.MemoryKey;
  import org.bukkit.inventory.EntityEquipment;
-@@ -75,7 +_,7 @@
+@@ -76,7 +_,7 @@
       *     sight
       */
      @NotNull
@@ -23,7 +23,7 @@
  
      /**
       * Gets the block that the living entity has targeted.
-@@ -91,7 +_,7 @@
+@@ -92,7 +_,7 @@
       * @return block that the living entity has targeted
       */
      @NotNull
@@ -32,7 +32,7 @@
  
      // Paper start
      /**
-@@ -270,7 +_,7 @@
+@@ -271,7 +_,7 @@
       *     line of sight
       */
      @NotNull

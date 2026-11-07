@@ -5,10 +5,10 @@ Subject: [PATCH] Change branding
 
 
 diff --git a/src/main/java/io/papermc/paper/ServerBuildInfo.java b/src/main/java/io/papermc/paper/ServerBuildInfo.java
-index 4e099b584c3435ba1ebce492011d35ae1ac0cdf8..b4f982bac30faa05e2a5013cb6e9a94cacf5580a 100644
+index 614b3d9f11b544379ec8facb8860d951d5a0ba3a..03398f7d1a581a3bf09a3006b9584779dc8ffd4e 100644
 --- a/src/main/java/io/papermc/paper/ServerBuildInfo.java
 +++ b/src/main/java/io/papermc/paper/ServerBuildInfo.java
-@@ -17,6 +17,11 @@ public interface ServerBuildInfo {
+@@ -18,6 +18,11 @@ public interface ServerBuildInfo {
       */
      Key BRAND_PAPER_ID = Key.key("papermc", "paper");
  

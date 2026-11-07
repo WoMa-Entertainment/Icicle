@@ -1,6 +1,6 @@
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -3020,7 +_,7 @@
+@@ -3026,7 +_,7 @@
          }
  
          public void runConsumer(final java.util.function.Consumer<org.bukkit.inventory.ItemStack> fallback) {

@@ -1,6 +1,6 @@
 --- a/src/main/java/org/bukkit/craftbukkit/CraftRegionAccessor.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftRegionAccessor.java
-@@ -24,11 +_,11 @@
+@@ -23,11 +_,11 @@
  import net.minecraft.world.level.chunk.ChunkGenerator;
  import net.minecraft.world.level.levelgen.feature.Feature;
  import org.bukkit.Location;
@@ -13,7 +13,7 @@
  import org.bukkit.block.data.BlockData;
  import org.bukkit.craftbukkit.block.CraftBiome;
  import org.bukkit.craftbukkit.block.CraftBlock;
-@@ -104,8 +_,8 @@
+@@ -103,8 +_,8 @@
      }
  
      @Override

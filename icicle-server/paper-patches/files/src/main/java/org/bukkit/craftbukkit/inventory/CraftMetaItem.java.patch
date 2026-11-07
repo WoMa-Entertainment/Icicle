@@ -1,6 +1,6 @@
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -85,11 +_,11 @@
+@@ -87,11 +_,11 @@
  import net.minecraft.world.item.enchantment.ItemEnchantments;
  import net.minecraft.world.item.equipment.Equippable;
  import net.minecraft.world.level.block.state.BlockState;
@@ -13,7 +13,7 @@
  import org.bukkit.block.data.BlockData;
  import org.bukkit.configuration.serialization.DelegateDeserialization;
  import org.bukkit.craftbukkit.CraftEquipmentSlot;
-@@ -123,6 +_,7 @@
+@@ -125,6 +_,7 @@
  import org.bukkit.inventory.ItemFlag;
  import org.bukkit.inventory.ItemRarity;
  import org.bukkit.inventory.ItemStack;
@@ -21,7 +21,7 @@
  import org.bukkit.inventory.meta.BlockDataMeta;
  import org.bukkit.inventory.meta.Damageable;
  import org.bukkit.inventory.meta.ItemMeta;
-@@ -1120,8 +_,8 @@
+@@ -1122,8 +_,8 @@
          tag.put(CraftMetaItem.ATTRIBUTES, list.build());
      }
  
@@ -32,7 +32,7 @@
              return false;
          }
  
-@@ -1130,7 +_,7 @@
+@@ -1132,7 +_,7 @@
          }
  
          // We assume that the corresponding bukkit interface is always the first one
@@ -41,7 +41,7 @@
      }
  
      @Overridden
-@@ -1456,8 +_,8 @@
+@@ -1458,8 +_,8 @@
      }
  
      @Override
@@ -52,7 +52,7 @@
          if (this.blockData == null) {
              return defaultData.asBlockData();
          }
-@@ -2534,38 +_,38 @@
+@@ -2536,38 +_,38 @@
      }
  
      @Override
@@ -109,7 +109,7 @@
              .collect(java.util.stream.Collectors.toSet());
      }
  
-@@ -2598,7 +_,7 @@
+@@ -2600,7 +_,7 @@
          final net.minecraft.core.Registry<net.minecraft.world.level.block.Block> blockRegistry = CraftRegistry.getMinecraftRegistry().lookupOrThrow(net.minecraft.core.registries.Registries.BLOCK);
          for (final com.destroystokyo.paper.Namespaced namespaced : namespaceds) {
              if (namespaced instanceof final org.bukkit.NamespacedKey key) {

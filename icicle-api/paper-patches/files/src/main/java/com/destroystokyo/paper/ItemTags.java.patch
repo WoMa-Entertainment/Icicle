@@ -238,7 +238,7 @@
 +     * Covers all music disc items.
 +     */
 +    public static final ItemSetTag MUSIC_DISCS = new ItemSetTag(keyFor("music_discs"))
-+        .startsWith("music_disc_").lock();
++        .startsWith("music_disc_").ensureSize("MUSIC_DISCS", 22).lock();
 +
 +    /**
 +     * Covers all ores.
